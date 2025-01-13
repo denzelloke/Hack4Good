@@ -17,3 +17,14 @@ Step 3. Install dependencies
 Step 4. Build & deploy website
 
 `npm run dev`
+
+# References
+
+[Mantine](https://mantine.dev/) is a component library with drag and drop components (i.e. Buttons, Forms, Tables etc.) you can use to speed up development time with high quality, easy to use components. 
+
+[Tabler](https://tabler.io/icons) is a icon library. Use this to quickly find appropiate icons to put into the website, it has already been installed so just directly import said icon.
+Example:
+
+ `import { IconHeart, IconShoppingCart } from '@tabler/icons-react';`
+
+[React Router](https://reactrouter.com/start/library/) is a router framework that makes page navigation easy and fast. [NavButton](src\components\NavButton.tsx) and [useNavigate](https://reactrouter.com/start/library/navigating#usenavigate) should be the only things you have to be aware about.

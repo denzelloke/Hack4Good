@@ -11,8 +11,8 @@ export default function App(){
     return (
         <BrowserRouter>
         <Routes>
-          <Route path="/login" element = {<Login />} />
-          <Route path="/" element = {<Market />} />
+          <Route path="/" element = {<Login />} />
+          <Route path="/market" element = {<Market />} />
           <Route path="/cart" element = {<Cart />} />
           <Route path="/account" element={<Account />} />
           <Route path="/auction" element={<Auction />} />

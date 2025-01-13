@@ -8,5 +8,4 @@ export const theme = createTheme({
   */
   primaryColor: "blue",
   fontFamily: "Arial, sans-serif",
-  /* ...reference documentation for any other settings */
 });
