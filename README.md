@@ -27,4 +27,4 @@ Example:
 
  `import { IconHeart, IconShoppingCart } from '@tabler/icons-react';`
 
-[React Router](https://reactrouter.com/start/library/) is a router framework that makes page navigation easy and fast. [NavButton](src\components\NavButton.tsx) and [useNavigate](https://reactrouter.com/start/library/navigating#usenavigate) should be the only things you have to be aware about.
+[React Router](https://reactrouter.com/start/library/) is a router framework that makes page navigation easy and fast. [NavLink](https://reactrouter.com/start/library/navigating#navlink) and [useNavigate](https://reactrouter.com/start/library/navigating#usenavigate) should be the only things you have to be aware about.

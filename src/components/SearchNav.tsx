@@ -16,17 +16,6 @@ export function SearchNav({ searchQuery, onSearchChange }: SearchNavProps) {
         size="md"
         w={400}
       />
-      <Group>
-        <ActionIcon variant="subtle" size="lg">
-          <IconHeart />
-        </ActionIcon>
-        <ActionIcon variant="subtle" size="lg">
-          <IconShoppingCart />
-        </ActionIcon>
-        <ActionIcon variant="subtle" size="lg">
-          <IconUser />
-        </ActionIcon>
-      </Group>
     </Group>
   );
 }
