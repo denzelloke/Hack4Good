@@ -19,3 +19,9 @@ export interface CartState {
   totalPoints: number;
 }
 
+export interface User {
+  id: string;
+  username: string;
+  points: number;
+}
+//not sure if this requires params like pw, email, role etc

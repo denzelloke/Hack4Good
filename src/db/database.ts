@@ -24,3 +24,15 @@ export const getAllProducts = async () => {
   if (error) throw new Error("getAllProducts() call failed. Error: " + error.message);
   return data;
 };
+
+export const getUser = async () => {
+  const user = [
+    {
+      id: '1234567',
+      username: 'denzel',
+      points: 13,
+    }
+  ]
+  return user
+};
+
