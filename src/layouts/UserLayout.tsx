@@ -27,7 +27,10 @@ const navLinks: NavLinkData[] = [
 export default function UserLayout() {
 
   const cart = useSelector((state:any) => state.cart);
-  const cartItemCount = cart.reduce((total: number, product: any) => total + (product.quantity || 1), 0);
+  const cartItemCount = cart.items.reduce(
+    (total: number, item: any) => total + (item.quantity || 1),
+    0
+  );
 
 
   return (
