@@ -14,7 +14,13 @@ Step 3. Install dependencies
 
 `npm install`
 
-Step 4. Build & deploy website
+Step 4. Download .env
+
+Go to telegram chat, find pinned post with a '.env' file
+
+Download it and place in base folder (same folder as package.json)
+
+Step 5. Build & deploy website 
 
 `npm run dev`
 

@@ -1,8 +1,10 @@
 export interface Product {
   id: string;
-  title: string;
+  name: string;
+  description: string;
   img: string;
-  points: number;
+  price: number;
+  stock: number;
   category: string;
 }
 
@@ -16,3 +18,4 @@ export interface CartState {
   totalQuantity: number;
   totalPoints: number;
 }
+

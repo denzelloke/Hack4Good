@@ -1,5 +1,4 @@
-import { Card, Image, Text, Group, Button } from '@mantine/core';
-import { IconShoppingCart } from '@tabler/icons-react';
+import { Card, Image, Text, Group } from '@mantine/core';
 import { Product } from '../types';
 
 interface ProductCardProps {
@@ -11,20 +10,21 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder onClick={onClick} style={{ cursor: 'pointer' }}>
       <Card.Section>
-        <Image src={product.img} height={160} alt={product.title} />
+        <Image
+          src={product.img}
+          height={160}
+          alt={product.name}
+        />
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">
-        <Text fw={500}>{product.title}</Text>
+
+        <Text fw={500}>{product.name}</Text>
         <Text fw={500} color="blue">
           ${product.points.toFixed(2)}
         </Text>
-      </Group>
 
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
-        <IconShoppingCart size={16} />
-        Add to Cart
-      </Button>
+      </Group>
     </Card>
   );
 }
