@@ -1,18 +1,21 @@
-// Use this file to get data from supabase
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
+
 const supabaseURL = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Gets (or creates, if needed) a client to the supabase servers
-const getClient = () => {
-  if (supabaseURL && supabaseAnonKey) {
-    const client = createClient(supabaseURL, supabaseAnonKey);
-    return client;
-  } else {
-    throw new Error(
-      "Failed to connect to Supabase Database. Missing Vite environment variables."
-    );
+let supabaseClient: SupabaseClient | null = null;
+
+// Gets (or creates, if needed) a client to the Supabase servers
+export const getClient = () => {
+  if (!supabaseClient) {
+    if (!supabaseURL || !supabaseAnonKey) {
+      throw new Error(
+        "Failed to connect to Supabase Database. Missing Vite environment variables."
+      );
+    }
+    supabaseClient = createClient(supabaseURL, supabaseAnonKey);
   }
+  return supabaseClient;
 };
 
 export const getAllProducts = async () => {

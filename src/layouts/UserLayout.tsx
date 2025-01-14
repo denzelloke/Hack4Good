@@ -1,5 +1,6 @@
-import { NavLink, Outlet } from 'react-router-dom';
-import { 
+import { useAuth } from "../db/auth";
+import { Navigate, Outlet, NavLink } from "react-router-dom";
+import {
   AppShell,
   Group,
   Text,
@@ -12,6 +13,7 @@ import {
 import { IconHeart, IconShoppingCart, IconUser, Icon } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
 
+
 interface NavLinkData {
   icon: Icon;
   label: string;
@@ -19,12 +21,23 @@ interface NavLinkData {
 }
 
 const navLinks: NavLinkData[] = [
-  { icon: IconHeart, label: 'Auction', path: '/auction' },
-  { icon: IconShoppingCart, label: 'Checkout', path: '/checkout' },
-  { icon: IconUser, label: 'Account', path: '/account' },
+  { icon: IconHeart, label: "Auction", path: "/auction" },
+  { icon: IconShoppingCart, label: "Checkout", path: "/checkout" },
+  { icon: IconUser, label: "Account", path: "/account" },
 ];
 
 export default function UserLayout() {
+
+  const { session, loading, isAdmin } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!session || isAdmin) {
+    // Redirect anon users or admins trying to access user routes
+    return <Navigate to={isAdmin ? "/admin" : "/login"} replace />;
+  }
 
   const cart = useSelector((state:any) => state.cart);
   const cartItemCount = cart.items.reduce(
@@ -32,12 +45,8 @@ export default function UserLayout() {
     0
   );
 
-
   return (
-    <AppShell
-      header={{ height: 60 }}
-      padding="md"
-    >
+    <AppShell header={{ height: 60 }} padding="md">
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
           <Text size="xl" fw={700}>
@@ -47,24 +56,19 @@ export default function UserLayout() {
           {/* Navigation */}
           <Group gap={rem(32)}>
             {navLinks.map(({ icon: Icon, label, path }) => (
-              <NavLink
-                key={path}
-                to={path}
-                style={{ textDecoration: 'none' }}
-              >
+              <NavLink key={path} to={path} style={{ textDecoration: "none" }}>
                 {({ isActive }) => (
                   <UnstyledButton>
                     <Stack align="center" gap={rem(4)}>
-                      <Icon 
+                      <Icon
                         size={24}
-                        style={{ 
-                          color: isActive ? 'var(--mantine-color-blue-filled)' : 'var(--mantine-color-gray-6)'
+                        style={{
+                          color: isActive
+                            ? "var(--mantine-color-blue-filled)"
+                            : "var(--mantine-color-gray-6)",
                         }}
                       />
-                      <Text 
-                        size="sm"
-                        c={isActive ? 'blue' : 'dimmed'}
-                      >
+                      <Text size="sm" c={isActive ? "blue" : "dimmed"}>
                         {label}
                       </Text>
                     </Stack>
