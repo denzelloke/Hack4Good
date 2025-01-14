@@ -5,9 +5,12 @@ import {
   Text,
   UnstyledButton,
   Stack,
-  rem
+  rem,
+  Badge, 
+  Box
 } from '@mantine/core';
 import { IconHeart, IconShoppingCart, IconUser, Icon } from '@tabler/icons-react';
+import { useSelector } from 'react-redux';
 
 interface NavLinkData {
   icon: Icon;
@@ -22,6 +25,11 @@ const navLinks: NavLinkData[] = [
 ];
 
 export default function UserLayout() {
+
+  const cart = useSelector((state:any) => state.cart);
+  const cartItemCount = cart.reduce((total: number, product: any) => total + (product.quantity || 1), 0);
+
+
   return (
     <AppShell
       header={{ height: 60 }}
@@ -68,6 +76,33 @@ export default function UserLayout() {
       <AppShell.Main>
         <Outlet />
       </AppShell.Main>
+
+     {/* Cart Icon with Item Count */}
+     <Box
+       component="div"
+       style={{
+       position: 'absolute',
+       bottom: '20px',
+       right: '20px',
+       display: 'flex',
+       justifyContent: 'center',
+       alignItems: 'center',
+     }}
+  >
+
+        <NavLink to="/checkout">
+          <UnstyledButton>
+            <Stack align="center">
+              <IconShoppingCart size={24} />
+              {cartItemCount > 0 && (
+                <Badge color="teal" size="sm">
+                  {cartItemCount}
+                </Badge>
+              )}
+            </Stack>
+          </UnstyledButton>
+        </NavLink>
+      </Box>
     </AppShell>
   );
 }

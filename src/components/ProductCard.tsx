@@ -17,7 +17,7 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{product.title}</Text>
         <Text fw={500} color="blue">
-          ${product.price.toFixed(2)}
+          ${product.points.toFixed(2)}
         </Text>
       </Group>
 

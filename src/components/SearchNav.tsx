@@ -10,7 +10,7 @@ export function SearchNav({ searchQuery, onSearchChange }: SearchNavProps) {
   return (
     <Group justify="space-between">
       <TextInput
-        placeholder="Search for shoes..."
+        placeholder="Search for ..."
         value={searchQuery}
         onChange={(event) => onSearchChange(event.currentTarget.value)}
         size="md"
