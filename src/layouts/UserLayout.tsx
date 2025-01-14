@@ -22,7 +22,7 @@ interface NavLinkData {
 
 const navLinks: NavLinkData[] = [
   { icon: IconHeart, label: "Auction", path: "/auction" },
-  { icon: IconShoppingCart, label: "Checkout", path: "/checkout" },
+  { icon: IconShoppingCart, label: "Checkou", path: "/checkout" },
   { icon: IconUser, label: "Account", path: "/account" },
 ];
 
