@@ -9,6 +9,7 @@ import Auction from "./pages/user/Auction";
 import Inventory from "./pages/admin/Inventory";
 
 export default function App() {
+  console.log("hello");
   return (
       <BrowserRouter>
         <Routes>
