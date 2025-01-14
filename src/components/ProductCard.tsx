@@ -60,7 +60,7 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
         fullWidth
         variant="light"
         color="blue"
-        leftIcon={<IconShoppingCart size={18} />}
+        //leftIcon={<IconShoppingCart size={18} />}
         onClick={onClick}
         style={{
           marginTop: rem(10),

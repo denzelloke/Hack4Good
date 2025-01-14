@@ -6,7 +6,7 @@ import { RecommendedFilters } from '../../components/RecommendedFilters';
 import { Product } from '../../types';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../actions/cartActions';
-import { ProductModal } from '../../components/productModal';
+import { ProductModal } from '../../components/ProductModal';
 
 import { getAllProducts } from "../../db/database";
 
