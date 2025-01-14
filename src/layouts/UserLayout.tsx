@@ -50,7 +50,7 @@ export default function UserLayout() {
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
           <Text size="xl" fw={700}>
-            LOGO
+            LOGO123
           </Text>
 
           {/* Navigation */}
