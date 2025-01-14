@@ -1,12 +1,9 @@
 export interface Product {
-    id: string;
-    title: string;
-    img: string;
-    rating: number;
-    reviewCount: number;
-    prevPrice: number;
-    newPrice: number;
-    category: string;
-    color: string;
-    company: string;
-  }
+  id: string;
+  name: string;
+  description: string;
+  img: string;
+  price: number;
+  stock: number;
+  category: string;
+}

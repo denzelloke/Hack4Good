@@ -5,36 +5,18 @@ import { SearchNav } from '../../components/SearchNav';
 import { RecommendedFilters } from '../../components/RecommendedFilters';
 import { Product } from '../../types';
 
-//This file and almost all its contents is directly ripped from the boilerplate site
-//Will need changes to fit what we want, esp in our data fields:
-
-const products: Product[] = [
-  {
-    id: '1',
-    title: 'Nike Air Max',
-    img: '/path-to-image',
-    rating: 4.5,
-    reviewCount: 123,
-    prevPrice: 199.99,
-    newPrice: 159.99,
-    category: 'Nike',
-    color: 'black',
-    company: 'Nike',
-  },
-  // Add more products...
-];
+import { getAllProducts } from "../../db/database"
 
 export default function MarketPage() {
+  const [products, setProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = !selectedCategory ||
-      product.category === selectedCategory ||
-      product.company === selectedCategory ||
-      product.color === selectedCategory;
+  getAllProducts().then(products => setProducts(products));
 
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = !selectedCategory || product.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 

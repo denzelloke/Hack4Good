@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router";
+import { lazy } from "react";
 //Import your pages here:
-import Inventory from "./pages/admin/Inventory";
-import Market from "./pages/user/Market";
-import Login from "./pages/Login"
-import Account from "./pages/user/Account";
-import Auction from "./pages/user/Auction";
-import Cart from "./pages/user/Cart";
+const Market = lazy(() => import('./pages/user/Market'));
+const Cart = lazy(() => import('./pages/user/Cart'));
+const Login = lazy(() => import('./pages/Login'));
+const Account = lazy(() => import('./pages/user/Account'));
+const Auction = lazy(() => import('./pages/user/Auction'));
+const Inventory = lazy(() => import('./pages/admin/Inventory'));
 
 import UserLayout from "./layouts/UserLayout";
 
@@ -20,7 +21,6 @@ export default function App(){
             <Route path="/account" element={<Account />} />
             <Route path="/auction" element={<Auction />} />
           </Route>
-          <Route path="/admin/inventory" element={<Inventory/>} />
           {/* 
             Link up your new page here with a path i.e. "/about" and element i.e <AboutPage /> 
             Reference: https://reactrouter.com/start/library/routing

@@ -1,5 +1,4 @@
-import { TextInput, Group, ActionIcon } from '@mantine/core';
-import { IconHeart, IconShoppingCart, IconUser } from '@tabler/icons-react';
+import { TextInput, Group } from '@mantine/core';
 
 interface SearchNavProps {
   searchQuery: string;
