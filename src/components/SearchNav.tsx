@@ -1,5 +1,4 @@
-import { TextInput, Group, ActionIcon } from '@mantine/core';
-import { IconHeart, IconShoppingCart, IconUser } from '@tabler/icons-react';
+import { TextInput, Group } from '@mantine/core';
 
 interface SearchNavProps {
   searchQuery: string;
@@ -10,7 +9,7 @@ export function SearchNav({ searchQuery, onSearchChange }: SearchNavProps) {
   return (
     <Group justify="space-between">
       <TextInput
-        placeholder="Search for shoes..."
+        placeholder="Search for ..."
         value={searchQuery}
         onChange={(event) => onSearchChange(event.currentTarget.value)}
         size="md"

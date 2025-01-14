@@ -1,7 +1,21 @@
 export interface Product {
-    id: string;
-    title: string;
-    img: string;
-    price: number;
-    category: string;
-  }
+  id: string;
+  name: string;
+  description: string;
+  img: string;
+  points: number;
+  stock: number;
+  category: string;
+}
+
+export interface CartItem {
+  productId: string;
+  quantity: number;
+}
+
+export interface CartState {
+  items: CartItem[];
+  totalQuantity: number;
+  totalPoints: number;
+}
+

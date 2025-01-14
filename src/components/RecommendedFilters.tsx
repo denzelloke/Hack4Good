@@ -9,7 +9,7 @@ export function RecommendedFilters({
   selectedCategory, 
   onCategoryChange 
 }: RecommendedFiltersProps) {
-  const categories = ['Nike', 'Adidas', 'Puma', 'Vans'];
+  const categories = ['Snacks', 'Drinks', 'Toiletries', 'Stationery', 'Books'];
 
   return (
     <div>
