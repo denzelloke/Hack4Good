@@ -1,47 +1,30 @@
-import { Card, Image, Text, Badge, Group, Button } from '@mantine/core';
-import { IconHeart, IconShoppingCart } from '@tabler/icons-react';
+import { Card, Image, Text, Group, Button } from '@mantine/core';
+import { IconShoppingCart } from '@tabler/icons-react';
 import { Product } from '../types';
 
 interface ProductCardProps {
   product: Product;
+  onClick?: () => void;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, onClick }: ProductCardProps) {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder>
+    <Card shadow="sm" padding="lg" radius="md" withBorder onClick={onClick} style={{ cursor: 'pointer' }}>
       <Card.Section>
-        <Image
-          src={product.img}
-          height={160}
-          alt={product.title}
-        />
+        <Image src={product.img} height={160} alt={product.title} />
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">
         <Text fw={500}>{product.title}</Text>
-        <Badge color="yellow" variant="light">
-          {product.rating} ★ ({product.reviewCount})
-        </Badge>
+        <Text fw={500} color="blue">
+          ${product.price.toFixed(2)}
+        </Text>
       </Group>
 
-      <Group justify="space-between" mt="md">
-        <div>
-          <Text size="sm" td="line-through" c="dimmed">
-            ${product.prevPrice}
-          </Text>
-          <Text size="lg" fw={500} c="blue">
-            ${product.newPrice}
-          </Text>
-        </div>
-        <Group>
-          <Button variant="light" color="gray" size="sm">
-            <IconHeart size={16} />
-          </Button>
-          <Button variant="light" color="blue" size="sm">
-            <IconShoppingCart size={16} />
-          </Button>
-        </Group>
-      </Group>
+      <Button variant="light" color="blue" fullWidth mt="md" radius="md">
+        <IconShoppingCart size={16} />
+        Add to Cart
+      </Button>
     </Card>
   );
 }
