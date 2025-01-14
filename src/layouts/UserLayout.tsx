@@ -29,9 +29,12 @@ export default function UserLayout() {
     >
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
-          <Text size="xl" fw={700}>
-            LOGO123
+        <NavLink to="/" style={{ textDecoration: 'none' }}>
+          <Text size="xl" fw={700} style={{ cursor: 'pointer' }}>
+            HOME!!!
           </Text>
+        </NavLink>
+
 
           {/* Navigation */}
           <Group gap={rem(32)}>
