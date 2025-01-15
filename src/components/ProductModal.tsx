@@ -1,4 +1,4 @@
-import { Modal, Image, Text, Button, Divider, Group } from '@mantine/core';
+import { Modal, Image, Text, Button, Divider, Group, Slider } from '@mantine/core';
 import { useState } from 'react';
 import { Product } from '../types';
 import { useNavigate } from 'react-router-dom';

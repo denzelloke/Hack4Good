@@ -26,6 +26,14 @@ export interface User {
 }
 //not sure if this requires params like pw, email, role etc
 
+export interface ProductRequestFormData {
+  name: string;
+  productName: string;
+  quantity: number;
+  description: string;
+}
+
+
 export interface Voucher {
   id: number;
   user_id: number;
