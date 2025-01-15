@@ -99,7 +99,7 @@ export function ProductModal({
             {product.stock > 1 ? 'items' : 'item'} left
           </Text>
           <Text mt="sm" size="lg" color="green">
-            <strong>Points:</strong> {product.points ? product.points.toFixed(2) : 'N/A'}
+            <strong>Points:</strong> {product.points ? product.points : 'N/A'}
           </Text>
           <Divider my="sm" />
 

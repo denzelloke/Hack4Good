@@ -33,6 +33,12 @@ export default function Market() {
     return matchesSearch && matchesCategory;
   });
 
+  const sortedProducts = filteredProducts.sort((a, b) => {
+    if(a.stock > 0 && b.stock <= 0) return -1;
+    if(b.stock > 0 && a.stock <= 0) return 1;
+    return 0;
+  })
+
   const openModal = (product: Product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
@@ -45,7 +51,6 @@ export default function Market() {
 
   const handleAddToCart = (product: Product, quantity: number) => {
     dispatch(addToCart({ ...product, quantity }));
-    //closeModal(); // Close modal after adding to cart
   };
 
   return (
@@ -56,7 +61,7 @@ export default function Market() {
         onCategoryChange={setSelectedCategory}
       />
       <Grid mt="xl">
-        {filteredProducts.length === 0 ? (
+        {sortedProducts.length === 0 ? (
           <Text>No products found matching your criteria.</Text>
         ) : (
           filteredProducts.map((product) => (

@@ -16,6 +16,11 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
       style={{
         cursor: 'pointer',
         transition: 'transform 0.2s ease',
+        width: rem(300),
+        height: rem(450),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
       }}
       className="product-card"
     >
@@ -37,7 +42,7 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
           {product.name}
         </Text>
         <Text fw={700} style={{ color: '#17B978' }}>
-          {product.points ? product.points.toFixed(2) : 'N/A'}
+          {product.points ? product.points : 'N/A'}
         </Text>
       </Group>
 
@@ -60,22 +65,29 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
           onClick={onClick}
           style={{
             marginTop: rem(10),
+            height: rem(40),
           }}
         >
           Add to Cart
         </Button>
       ) : (
-        <Text
-          size="sm"
-          color="dimmed"
-          style={{
-            marginTop: rem(10),
-            textAlign: 'center',
-            fontStyle: 'italic',
-          }}
-        >
-          Stock Coming Soon
-        </Text>
+        <div
+         style={{
+           marginTop: rem(10),
+           height: rem(40), // Same height as the button
+           display: 'flex',
+           alignItems: 'center',
+           justifyContent: 'center',
+           backgroundColor: '#f1f1f1', // Light gray background
+           borderRadius: rem(8), // Match button border radius
+           color: '#999', // Dimmed text color
+           fontStyle: 'italic',
+           fontSize: rem(14),
+           cursor: 'default', // Prevent pointer cursor
+    }}
+  >
+    Stock Coming Soon
+  </div>
       )}
     </Card>
   );
