@@ -1,5 +1,6 @@
 //version 4.0: voucher filter
 
+//version 5 TODO: click valid vouchers to open pop up and claim voucher 
 import { useState, useEffect } from 'react';
 import { getUser, getVoucher, getProduct } from '../../backend/database';
 import { User, Voucher, Product } from '../../types';
