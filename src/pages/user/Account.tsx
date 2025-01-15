@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getUser } from '../../db/database';
 import { User } from '../../types';
-import { Container, Box, Text, Select } from '@mantine/core';
+import { Container, Box, Text, Select, Button } from '@mantine/core';
+import { NavLink } from "react-router-dom";
 
 export default function Account() {
   const [user, setUser] = useState<User | null>(null);
@@ -30,6 +31,7 @@ export default function Account() {
 
   return (
     <Container size="sm" mt="lg">
+
       {/* Profile Card */}
       <Box
         style={{
@@ -54,6 +56,10 @@ export default function Account() {
           Points: {user.points}
         </Text>
       </Box>
+
+
+
+
 
       {/* Dropdown Menu */}
       <Box mt="lg">
