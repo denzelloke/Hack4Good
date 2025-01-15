@@ -1,4 +1,4 @@
-import { useAuth } from "../db/auth";
+import { useAuth } from "../backend/authProvider";
 import { Navigate, Outlet, NavLink } from "react-router-dom";
 import {
   AppShell,
@@ -9,7 +9,6 @@ import {
   rem,
   Badge, 
   Box,
-  Loader
 } from '@mantine/core';
 import { IconHeart, IconShoppingCart, IconUser, Icon } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
@@ -32,6 +31,12 @@ export default function UserLayout() {
 
   const { session, loading, isAdmin } = useAuth();
 
+  const cart : any = useSelector((state: RootState) => state.cart);
+  const cartItemCount = cart.items.reduce(
+    (total: number, item: any) => total + (item.quantity || 1),
+    0
+  );
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -40,12 +45,6 @@ export default function UserLayout() {
     // Redirect anon users or admins trying to access user routes
     return <Navigate to={isAdmin ? "/admin" : "/login"} replace />;
   }
-
-  const cart = useSelector((state: RootState) => state.cart);
-  const cartItemCount = cart.items.reduce(
-    (total: number, item: any) => total + (item.quantity || 1),
-    0
-  );
 
   return (
     <AppShell header={{ height: 60 }} padding="md">
