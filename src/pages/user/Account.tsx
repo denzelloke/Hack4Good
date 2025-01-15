@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUser } from '../../backend/database';
 import { User } from '../../types';
-import { Container, Box, Text, Select, Button, Group } from '@mantine/core';
+import { Container, Box, Text, Select, Button } from '@mantine/core';
 import { NavLink } from "react-router-dom";
 
 export default function Account() {
@@ -35,9 +35,9 @@ export default function Account() {
       {/* Profile Card */}
       <Box
         style={{
-          width: '600px', // Increased size for profile card
+          width: '600px', 
           height: '400px',
-          backgroundImage: `url('testBG.jpg')`, // Replace with actual image
+          backgroundImage: `url('assets/testBG.jpg')`, // Replace with MWH background
           backgroundSize: 'cover',
           borderRadius: '12px',
           display: 'flex',
