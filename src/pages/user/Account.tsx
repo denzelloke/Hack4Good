@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { getUser, getVoucher, getProduct } from '../../backend/database';
 import { User, Voucher, Product } from '../../types';
-import { Container, Box, Text, Button, Card } from '@mantine/core';
+import { Container, Box, Text, Button, Card, Select } from '@mantine/core';
 import { NavLink } from "react-router-dom";
 
 export default function Account() {
   const [user, setUser] = useState<User | null>(null);
   const [vouchers, setVouchers] = useState<Voucher[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
+  const [filter, setFilter] = useState<string>('ALL'); // State for dropdown filter
 
   // Fetch user data on component load
   useEffect(() => {
@@ -27,6 +28,14 @@ export default function Account() {
   }, []);
 
   const isExpired = (expiredAt: number) => Date.now() >= expiredAt;
+
+  // Filter vouchers based on selected filter
+  const filteredVouchers = vouchers.filter((voucher) => {
+    if (filter === 'VALID') return !voucher.is_claimed && !isExpired(voucher.expired_at);
+    if (filter === 'CLAIMED') return voucher.is_claimed;
+    if (filter === 'EXPIRED') return isExpired(voucher.expired_at);
+    return true; // Show all if 'ALL' is selected
+  });
 
   if (!user) {
     return <Text>Loading...</Text>;
@@ -78,9 +87,37 @@ export default function Account() {
         LOGOUT
       </Button>
 
+        {/* Banner with Dropdown */}
+      <Box
+        mt="lg"
+        style={{
+          padding: '16px',
+          backgroundColor: '#f5f5f5',
+          borderRadius: '8px',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        }}
+      >
+        <Text size="lg" mb="sm">
+          Filter Vouchers:
+        </Text>
+        <Select
+        placeholder="Select a filter"
+         data={[
+          { value: 'ALL', label: 'All Vouchers' },
+          { value: 'VALID', label: 'Valid' },
+          { value: 'CLAIMED', label: 'Claimed' },
+          { value: 'EXPIRED', label: 'Expired' },
+        ]}
+        value={filter}
+        onChange={(value) => setFilter(value ?? 'ALL')} // Default to 'ALL' if value is null
+        />
+
+      </Box>
+
+
       {/* Voucher Cards */}
       <Box mt="lg">
-        {vouchers.map((voucher) => {
+        {filteredVouchers.map((voucher) => {
           const product = products.find((prod) => prod.id === String(voucher.product_id));
           //finds product_id of each indiv voucher and pulls data from that product_id in database
 
