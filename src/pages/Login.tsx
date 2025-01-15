@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../db/auth";  
+import { useAuth } from "../backend/authProvider";  
 import { TextInput, PasswordInput, Button, Group, Text, Container, Radio } from "@mantine/core";
 
 export default function Login() {
   const navigate = useNavigate();
   const { login, loading } = useAuth();
 
-  const [userType, setUserType] = useState<"user" | "admin">("user");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -17,8 +17,8 @@ export default function Login() {
     setError(null);
 
     try {
-      await login(username, password, userType);
-      if (userType === "admin") {
+      await login(username, password, isAdmin);
+      if (isAdmin) {
         navigate("/admin");
       } else {
         navigate("/");
@@ -36,8 +36,8 @@ export default function Login() {
       <form onSubmit={handleSubmit}>
         <Radio.Group
           label="Login as"
-          value={userType}
-          onChange={(value) => setUserType(value as "user" | "admin")}
+          value={isAdmin ? "user" : "admin"}
+          onChange={(value) => setIsAdmin(value == "admin")}
           mb="lg"
         >
           <Group>
