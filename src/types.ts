@@ -25,3 +25,13 @@ export interface User {
   points: number;
 }
 //not sure if this requires params like pw, email, role etc
+
+export interface Voucher {
+  voucher_id: number;
+  user_id: number;
+  product_id: number;
+  price: number;
+  is_expired: boolean;
+  created_at: any;
+  expired_at: any;
+}
