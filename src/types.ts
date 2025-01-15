@@ -27,7 +27,7 @@ export interface User {
 //not sure if this requires params like pw, email, role etc
 
 export interface Voucher {
-  voucher_id: number;
+  id: number;
   user_id: number;
   product_id: number;
   price: number;

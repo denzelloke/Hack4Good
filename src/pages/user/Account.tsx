@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
-import { getUser } from '../../backend/database';
-import { User } from '../../types';
-import { getVoucher } from '../../backend/database';
-import { Voucher } from '../../types';
-import { Container, Box, Text, Select, Button } from '@mantine/core';
+import { getUser, getVoucher } from '../../backend/database';
+import { User, Voucher } from '../../types';
+import { Container, Box, Text, Select, Button, Card, Group } from '@mantine/core';
 import { NavLink } from "react-router-dom";
 
 export default function Account() {
   const [user, setUser] = useState<User | null>(null);
-  const [transactionHistory, setTransactionHistory] = useState<string[]>([]);
+  const [vouchers, setVouchers] = useState<Voucher[]>([]);
 
   // Fetch user data on component load
   useEffect(() => {
@@ -16,16 +14,24 @@ export default function Account() {
       const [fetchedUser] = await getUser();
       setUser(fetchedUser);
 
-      // TO DO: clicking the dropdown should link to transaction history stored in DB
-      setTransactionHistory([
-        'This Week',
-        'This Month',
-        'All Time',
-      ]);
+      const allVouchers = await getVoucher();
+
+      // Filter and sort vouchers based on the current user's ID and date
+      const userVouchers = allVouchers
+        //.filter((voucher) => voucher.user_id === fetchedUser.id)
+        //i think the current user has no id or smth thats why the above line doesnt work
+        .sort((a, b) => b.created_at - a.created_at); // Most recent first
+
+      setVouchers(userVouchers);
     };
 
     fetchData();
   }, []);
+
+  const isExpired = (expiredAt: number) => {
+    const currentMillis = Date.now();
+    return expiredAt <= currentMillis;
+  };
 
   if (!user) {
     return <Text>Loading...</Text>;
@@ -73,22 +79,34 @@ export default function Account() {
       </Button>
 
     
-    
-
-
-      {/* Dropdown Menu */}
-      <Box mt="lg">
-        <Select
-          placeholder="Select a transaction"
-          data={transactionHistory.map((transaction, index) => ({
-            value: `transaction-${index}`,
-            label: transaction,
-          }))}
-          label="Transaction History"
-        />
-      </Box>
-
-     
+    {/* Voucher Cards */}
+    <Box mt="lg">
+        {vouchers.map((voucher) => (
+          <Card
+            key={voucher.id}
+            shadow="sm"
+            p="lg"
+            style={{
+              backgroundColor: isExpired(voucher.expired_at)
+                ? '#f29f99'
+                : '#94f78b',
+              color: 'black',
+              marginBottom: '10px',
+            }}
+          >
+            <Group>
+              <Text size="md">Voucher ID: {voucher.id}</Text>
+              <Text size="md">Product ID: {voucher.product_id}</Text>
+            </Group>
+            <Text size="sm">
+              Purchased: {new Date(voucher.created_at).toLocaleString()}
+            </Text>
+            <Text size="sm">
+              Expires On: {new Date(voucher.expired_at).toLocaleString()}
+            </Text>
+          </Card>
+        ))}
+      </Box>   
       
 
     
