@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getUser } from '../../backend/database';
 import { User } from '../../types';
 import { Container, Box, Text, Select, Button } from '@mantine/core';
-import { Navigate, Outlet, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Account() {
   const [user, setUser] = useState<User | null>(null);
