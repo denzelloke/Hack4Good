@@ -1,6 +1,5 @@
-import { Card, Image, Text, Group, Button, rem, Progress, Divider } from '@mantine/core';
+import { Card, Image, Text, Group, Button, rem, Divider } from '@mantine/core';
 import { Product } from '../types';
-import { IconShoppingCart } from '@tabler/icons-react';
 
 interface ProductCardProps {
   product: Product;
@@ -8,17 +7,20 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, onClick }: ProductCardProps) {
-
   return (
     <Card
       shadow="lg"
       padding="lg"
       radius="md"
       withBorder
-      onClick={onClick}
       style={{
         cursor: 'pointer',
         transition: 'transform 0.2s ease',
+        width: rem(300),
+        height: rem(450),
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
       }}
       className="product-card"
     >
@@ -40,34 +42,54 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
           {product.name}
         </Text>
         <Text fw={700} style={{ color: '#17B978' }}>
-          {product.points ? product.points.toFixed(2) : 'N/A'}
+          {product.points ? product.points : 'N/A'}
         </Text>
       </Group>
 
       {/* Stock Progress */}
       <Group justify="space-between" mb="xs">
         <Text size="sm" color="dimmed">Stock:</Text>
-        <Text size="sm" color={product.stock > 0 ? "teal" : "red"}>
-         {product.stock > 0 ? 'Item available' : 'Out of stock'}
+        <Text size="sm" color={product.stock > 0 ? 'teal' : 'red'}>
+          {product.stock > 0 ? 'Item available' : 'Out of stock'}
         </Text>
       </Group>
 
-
       <Divider mb="xs" />
 
-      {/* Add to Cart Button */}
-      <Button
-        fullWidth
-        variant="light"
-        color="blue"
-        //leftIcon={<IconShoppingCart size={18} />}
-        onClick={onClick}
-        style={{
-          marginTop: rem(10),
-        }}
-      >
-        Add to Cart
-      </Button>
+      {/* Add to Cart or Stock Coming Soon */}
+      {product.stock > 0 ? (
+        <Button
+          fullWidth
+          variant="light"
+          color="blue"
+          onClick={onClick}
+          style={{
+            marginTop: rem(10),
+            height: rem(40),
+          }}
+        >
+          Add to Cart
+        </Button>
+      ) : (
+        <div
+         style={{
+           marginTop: rem(10),
+           height: rem(40), // Same height as the button
+           display: 'flex',
+           alignItems: 'center',
+           justifyContent: 'center',
+           backgroundColor: '#f1f1f1', // Light gray background
+           borderRadius: rem(8), // Match button border radius
+           color: '#999', // Dimmed text color
+           fontStyle: 'italic',
+           fontSize: rem(14),
+           cursor: 'default', // Prevent pointer cursor
+    }}
+  >
+    Stock Coming Soon
+  </div>
+      )}
     </Card>
   );
 }
+

@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Container, Grid, Modal, Image, Text, Button, Notification } from '@mantine/core';
-import { ProductCard, } from '../../components/ProductCard';
+import { Container, Grid, Text } from '@mantine/core';
+import { ProductCard } from '../../components/ProductCard';
 import { SearchNav } from '../../components/SearchNav';
 import { RecommendedFilters } from '../../components/RecommendedFilters';
 import { Product } from '../../types';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../actions/cartActions';
+import { addToCart } from '../../slices/cartSlice';
 import { ProductModal } from '../../components/ProductModal';
 
-import { getAllProducts } from "../../db/database";
+import { getAllProducts } from "../../backend/database";
 
 export default function Market() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,9 +18,10 @@ export default function Market() {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
 
-  getAllProducts().then((products) => setProducts(products));
+  useEffect(() => {
+    getAllProducts().then((products) => setProducts(products));
+  }, []);
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name
@@ -32,6 +33,12 @@ export default function Market() {
     return matchesSearch && matchesCategory;
   });
 
+  const sortedProducts = filteredProducts.sort((a, b) => {
+    if(a.stock > 0 && b.stock <= 0) return -1;
+    if(b.stock > 0 && a.stock <= 0) return 1;
+    return 0;
+  })
+
   const openModal = (product: Product) => {
     setSelectedProduct(product);
     setIsModalOpen(true);
@@ -42,10 +49,8 @@ export default function Market() {
     setIsModalOpen(false);
   };
 
-  const handleAddToCart = (product: Product) => {
-    dispatch(addToCart(product));
-    setShowNotification(true);
-    setTimeout(() => setShowNotification(false), 2000);
+  const handleAddToCart = (product: Product, quantity: number) => {
+    dispatch(addToCart({ ...product, quantity }));
   };
 
   return (
@@ -56,7 +61,7 @@ export default function Market() {
         onCategoryChange={setSelectedCategory}
       />
       <Grid mt="xl">
-        {filteredProducts.length === 0 ? (
+        {sortedProducts.length === 0 ? (
           <Text>No products found matching your criteria.</Text>
         ) : (
           filteredProducts.map((product) => (
@@ -74,17 +79,6 @@ export default function Market() {
         onClose={closeModal}
         onAddToCart={handleAddToCart}
       />
-
-      {/* Cart Added Notification */}
-      {showNotification && (
-        <Notification
-          title="Added to Cart"
-          color="teal"
-          onClose={() => setShowNotification(false)}
-        >
-          {selectedProduct?.name} has been added to your cart.
-        </Notification>
-      )}
     </Container>
   );
 }

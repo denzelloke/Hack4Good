@@ -1,4 +1,4 @@
-import { useAuth } from "../db/auth";
+import { useAuth } from "../backend/authProvider";
 import { Navigate, Outlet, NavLink } from "react-router-dom";
 import {
   AppShell,
@@ -8,10 +8,11 @@ import {
   Stack,
   rem,
   Badge, 
-  Box
+  Box,
 } from '@mantine/core';
 import { IconHeart, IconShoppingCart, IconUser, Icon } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
+import { RootState } from "../store";
 
 
 interface NavLinkData {
@@ -22,13 +23,19 @@ interface NavLinkData {
 
 const navLinks: NavLinkData[] = [
   { icon: IconHeart, label: "Auction", path: "/auction" },
-  { icon: IconShoppingCart, label: "Checkout", path: "/cart" },
+  { icon: IconShoppingCart, label: "Cart", path: "/cart" },
   { icon: IconUser, label: "Account", path: "/account" },
 ];
 
 export default function UserLayout() {
 
   const { session, loading, isAdmin } = useAuth();
+
+  const cart : any = useSelector((state: RootState) => state.cart);
+  const cartItemCount = cart.items.reduce(
+    (total: number, item: any) => total + (item.quantity || 1),
+    0
+  );
 
   if (loading) {
     return <div>Loading...</div>;
@@ -39,19 +46,13 @@ export default function UserLayout() {
     return <Navigate to={isAdmin ? "/admin" : "/login"} replace />;
   }
 
-  const cart = useSelector((state:any) => state.cart);
-  const cartItemCount = cart.items.reduce(
-    (total: number, item: any) => total + (item.quantity || 1),
-    0
-  );
-
   return (
     <AppShell header={{ height: 60 }} padding="md">
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
         <NavLink to="/" style={{ textDecoration: 'none' }}>
           <Text size="xl" fw={700} style={{ cursor: 'pointer' }}>
-            HOME!!!
+            E-Mart
           </Text>
         </NavLink>
 
@@ -92,15 +93,16 @@ export default function UserLayout() {
        component="div"
        style={{
        position: 'absolute',
-       bottom: '20px',
+       bottom: '50px',
        right: '20px',
        display: 'flex',
        justifyContent: 'center',
        alignItems: 'center',
+       zIndex: 10,
      }}
   >
 
-        <NavLink to="/checkout">
+        <NavLink to="/cart">
           <UnstyledButton>
             <Stack align="center">
               <IconShoppingCart size={24} />

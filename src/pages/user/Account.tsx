@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { getUser } from '../../db/database';
+import { getUser } from '../../backend/database';
 import { User } from '../../types';
-import { Container, Box, Text, Select, Button } from '@mantine/core';
+import { Container, Box, Text, Select, Button, Group } from '@mantine/core';
 import { NavLink } from "react-router-dom";
 
 export default function Account() {
@@ -35,10 +35,9 @@ export default function Account() {
       {/* Profile Card */}
       <Box
         style={{
-          margin: '0 auto',
-          width: '300px',
-          height: '200px',
-          backgroundImage: `url('testBG.jpg')`, //replace img w photo from MWH
+          width: '400px', // Increased size for profile card
+          height: '250px',
+          backgroundImage: `url('testBG.jpg')`, // Replace with actual image
           backgroundSize: 'cover',
           borderRadius: '12px',
           display: 'flex',
@@ -48,17 +47,31 @@ export default function Account() {
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
       >
-        
-        <Text size="md" color="Black">
+        <Text size="lg" weight={700} color="black">
           User: {user.username}
         </Text>
-        <Text size="md" color="Black">
+        <Text size="md" color="black">
           Points: {user.points}
         </Text>
       </Box>
 
+      {/* Logout Button */}
+      <Button
+        component={NavLink}
+        to="/login"
+        color="blue"
+        variant="filled"
+        style={{
+          position: 'absolute',
+          top: '100px', // Position the button at the top-right corner
+          right: '10px',
+        }}
+      >
+        LOGOUT
+      </Button>
 
-
+    
+    
 
 
       {/* Dropdown Menu */}
@@ -72,6 +85,12 @@ export default function Account() {
           label="Transaction History"
         />
       </Box>
+
+     
+      
+
+    
+      
     </Container>
   );
 }
