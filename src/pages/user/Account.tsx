@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { getUser } from '../../backend/database';
 import { User } from '../../types';
-import { Container, Box, Text, Select } from '@mantine/core';
+import { Container, Box, Text, Select, Button } from '@mantine/core';
+import { NavLink } from "react-router-dom";
 
 export default function Account() {
   const [user, setUser] = useState<User | null>(null);
@@ -55,6 +56,29 @@ export default function Account() {
         </Text>
       </Box>
 
+    
+    {/* logout button */}
+      <Box
+       component="div"
+       style={{
+       position: 'absolute',
+       bottom: '20px',
+       right: '20px',
+       display: 'flex',
+       justifyContent: 'center',
+       alignItems: 'center',
+     }}
+     >
+        <NavLink to="/login">
+        <Button
+          color="blue"
+          variant="filled">
+              LOGOUT
+          </Button>
+        </NavLink>
+      </Box>
+
+
       {/* Dropdown Menu */}
       <Box mt="lg">
         <Select
@@ -66,6 +90,12 @@ export default function Account() {
           label="Transaction History"
         />
       </Box>
+
+     
+      
+
+    
+      
     </Container>
   );
 }

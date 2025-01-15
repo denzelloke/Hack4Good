@@ -38,7 +38,7 @@ Example:
 # Blackboxing backend
 
 1. Create a new function in db/database.ts to return your dummy data. 
-ex.
+ex. (remb to make a new class on types.ts with variables matching ur function!)
 ```
 export const getAllProducts = async () => {
   const products = [
