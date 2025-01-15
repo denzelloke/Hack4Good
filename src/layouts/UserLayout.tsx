@@ -33,7 +33,7 @@ export default function UserLayout() {
   const { session, loading, isAdmin } = useAuth();
 
   if (loading) {
-    return <Loader size="lg" />;
+    return <div>Loading...</div>;
   }
 
   if (!session || isAdmin) {
