@@ -9,12 +9,10 @@ import {
   rem,
   Badge, 
   Box,
-  Loader
 } from '@mantine/core';
 import { IconHeart, IconShoppingCart, IconUser, Icon } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
 import { RootState } from "../store";
-import { CartState } from "../types";
 
 
 interface NavLinkData {
@@ -33,6 +31,12 @@ export default function UserLayout() {
 
   const { session, loading, isAdmin } = useAuth();
 
+  const cart : any = useSelector((state: RootState) => state.cart);
+  const cartItemCount = cart.items.reduce(
+    (total: number, item: any) => total + (item.quantity || 1),
+    0
+  );
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -41,12 +45,6 @@ export default function UserLayout() {
     // Redirect anon users or admins trying to access user routes
     return <Navigate to={isAdmin ? "/admin" : "/login"} replace />;
   }
-
-  const cart : any = useSelector((state: RootState) => state.cart);
-  const cartItemCount = cart.items.reduce(
-    (total: number, item: any) => total + (item.quantity || 1),
-    0
-  );
 
   return (
     <AppShell header={{ height: 60 }} padding="md">

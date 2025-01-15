@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchUserRole = async (userId: string) => {
     const { data, error } = await supabase
-      .from("customer")
+      .from("users")
       .select("is_admin")
       .eq("id", userId)
       .single();
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     isAdmin: boolean
   ) => {
     const { data: authUserData } = await supabase
-      .from("customer")
+      .from("users")
       .select("email")
       .eq("username", username)
       .eq("is_admin", isAdmin)
