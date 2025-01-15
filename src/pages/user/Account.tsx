@@ -31,13 +31,13 @@ export default function Account() {
 
   return (
     <Container size="sm" mt="lg">
+
       {/* Profile Card */}
       <Box
         style={{
-          margin: '0 auto',
-          width: '300px',
-          height: '200px',
-          backgroundImage: `url('testBG.jpg')`, //replace img w photo from MWH
+          width: '600px', 
+          height: '400px',
+          backgroundImage: `url('/assets/testBG.jpg')`, // Replace with MWH background
           backgroundSize: 'cover',
           borderRadius: '12px',
           display: 'flex',
@@ -47,36 +47,31 @@ export default function Account() {
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
       >
-        
-        <Text size="md" color="Black">
-          User: {user.username}
+        <Text size="xl" color="black">
+          {user.username}
         </Text>
-        <Text size="md" color="Black">
-          Points: {user.points}
+        <Text size="md" color="black">
+          Wallet: {user.points} points
         </Text>
       </Box>
 
+      {/* Logout Button */}
+      <Button
+        component={NavLink}
+        to="/login"
+        color="blue"
+        variant="filled"
+        style={{
+          position: 'absolute',
+          top: '100px', // Position the button at the top-right corner
+          right: '70px',
+        }}
+      >
+        LOGOUT
+      </Button>
+
     
-    {/* logout button */}
-      <Box
-       component="div"
-       style={{
-       position: 'absolute',
-       bottom: '20px',
-       right: '20px',
-       display: 'flex',
-       justifyContent: 'center',
-       alignItems: 'center',
-     }}
-     >
-        <NavLink to="/login">
-        <Button
-          color="blue"
-          variant="filled">
-              LOGOUT
-          </Button>
-        </NavLink>
-      </Box>
+    
 
 
       {/* Dropdown Menu */}
