@@ -1,12 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Text, Group, Button, Divider, Grid, Card, Image, Select } from '@mantine/core';
+import { Container, Text, Group, Button, Divider, Grid, Card, Image, Select, } from '@mantine/core';
 import { RootState } from '../../store'; // Import RootState from your store file
-import { addToCart, removeFromCart, updateQuantity } from '../../slices/cartSlice';
-import { Product } from '../../types';
+import { removeFromCart, updateQuantity } from '../../slices/cartSlice';
 
-interface CartItem extends Product {
-  quantity: number;
-}
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -21,6 +17,11 @@ export default function Cart() {
   const handleRemoveItem = (id: string) => {
     dispatch(removeFromCart(id));
   };
+
+  //Update checkout feature here
+  const handleCheckout =() => {
+    //Update here
+  }
 
   // Calculate total points
   const totalPoints = cart.reduce((total, item) => total + item.points * item.quantity, 0);
@@ -107,6 +108,11 @@ export default function Cart() {
                 Total: {totalPoints.toFixed(2)}
               </Text>
             </Group>
+
+            {/* Checkout Button */}
+            <Button fullWidth color="blue" onClick={handleCheckout}>
+                Proceed to Checkout
+            </Button>
           </Card>
         </Grid.Col>
       </Grid>

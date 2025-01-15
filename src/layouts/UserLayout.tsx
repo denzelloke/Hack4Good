@@ -9,6 +9,7 @@ import {
   rem,
   Badge, 
   Box,
+  Image
 } from '@mantine/core';
 import { IconHeart, IconShoppingCart, IconUser, Icon } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
@@ -50,10 +51,14 @@ export default function UserLayout() {
     <AppShell header={{ height: 60 }} padding="md">
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
-        <NavLink to="/" style={{ textDecoration: 'none' }}>
-          <Text size="xl" fw={700} style={{ cursor: 'pointer' }}>
-            E-Mart
-          </Text>
+        <NavLink to="/" style={{ textDecoration: 'none', display: 'flex', alignItems:'center', justifyContent: 'center' }}>
+          <Image 
+              src="/assets/Logo.png"  
+              alt="Logo" 
+              width={110}  // Adjust the width as needed
+              height={60}  // Adjust the height as needed
+              style={{ cursor: 'pointer' }}
+            />
         </NavLink>
 
 
