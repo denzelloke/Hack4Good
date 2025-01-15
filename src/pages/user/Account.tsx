@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUser, getVoucher } from '../../backend/database';
 import { User, Voucher } from '../../types';
-import { Container, Box, Text, Select, Button, Card, Group } from '@mantine/core';
+import { Container, Box, Text, Button, Card, Group } from '@mantine/core';
 import { NavLink } from "react-router-dom";
 
 export default function Account() {

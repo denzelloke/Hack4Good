@@ -28,7 +28,17 @@ export const getVoucher = async () => {
       is_expired: false,
       created_at: 1736937366609,
       expired_at: 1736937366609 + 1209600000, // creation+2weeks
+    },
+
+    {
+      id: 2,
+      user_id: 1234567,
+      product_id: 8765432,
+      price: 2.50,
+      is_expired: false,
+      created_at: 1635937266609,
+      expired_at: 1635937266609 + 1209600000, // creation+2weeks
     }
   ]
   return voucher
-};
+}
