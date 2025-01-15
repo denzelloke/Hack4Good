@@ -37,7 +37,7 @@ export default function Account() {
         style={{
           width: '600px', 
           height: '400px',
-          backgroundImage: `url('assets/testBG.jpg')`, // Replace with MWH background
+          backgroundImage: `url('/assets/testBG.jpg')`, // Replace with MWH background
           backgroundSize: 'cover',
           borderRadius: '12px',
           display: 'flex',
