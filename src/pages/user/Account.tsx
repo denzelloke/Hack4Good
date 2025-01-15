@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUser, getVoucher, getProduct } from '../../backend/database';
 import { User, Voucher, Product } from '../../types';
-import { Container, Box, Text, Button, Card, Group } from '@mantine/core';
+import { Container, Box, Text, Button, Card } from '@mantine/core';
 import { NavLink } from "react-router-dom";
 
 export default function Account() {
@@ -50,7 +50,7 @@ export default function Account() {
         }}
       >
         <Text size="xl" color="black">
-          {new Date().toLocaleString('en-US', {
+          {new Date().toLocaleString('en-UK', {
             weekday: 'long',
             month: 'short',
             day: 'numeric',
@@ -82,13 +82,30 @@ export default function Account() {
       <Box mt="lg">
         {vouchers.map((voucher) => {
           const product = products.find((prod) => prod.id === String(voucher.product_id));
+          //finds product_id of each indiv voucher and pulls data from that product_id in database
+
+          // Determine card status and styles
+    let statusText = '';
+    let backgroundColor = '';
+
+    if (voucher.is_claimed) {
+      statusText = 'CLAIMED';
+      backgroundColor = '#f5bc5b';
+    } else if (isExpired(voucher.expired_at)) {
+      statusText = 'EXPIRED';
+      backgroundColor = '#f29f99';
+    } else {
+      statusText = 'VALID';
+      backgroundColor = '#94f78b';
+    }
+
           return (
             <Card
               key={voucher.id}
               shadow="sm"
               p="lg"
               style={{
-                backgroundColor: isExpired(voucher.expired_at) ? '#f29f99' : '#94f78b',
+                backgroundColor,
                 color: 'black',
                 marginBottom: '10px',
                 display: 'flex',
@@ -118,6 +135,21 @@ export default function Account() {
                 <Text size="sm">Expires On: {new Date(voucher.expired_at).toLocaleString()}</Text>
                 <Text size="sm">Voucher ID: {voucher.id}</Text>
               </Box>
+
+              {/* Status Text */}
+              <Text
+                size="lg"
+                style={{
+                  position: 'absolute',
+                  right: '16px', // Flush right
+                  textAlign: 'center',
+                  top: '50%', // Vertically centered
+                  transform: 'translateY(-50%)', // Adjust for true centering
+               }}
+              >
+                 {statusText}
+               </Text>
+
             </Card>
           );
         })}

@@ -36,21 +36,31 @@ export const purchaseVouchers = async (items : CartItem[]) => {
 export const getVoucher = async () => {
   const voucher = [
     {
-      id: '11',
-      user_id: '1234567',
+      id: '1',
+      user_id: 'test_user',
       product_id: '7654321',
       price: 2.50,
-      is_expired: false,
+      is_claimed: false,
       created_at: 1736937366609,
       expired_at: 1736937366609 + 1209600000, // creation+2weeks
     },
 
     {
       id: '2',
-      user_id: '1234567',
+      user_id: 'test_user',
       product_id: '8765432',
       price: 2.50,
-      is_expired: false,
+      is_claimed: true,
+      created_at: 1736937366609,
+      expired_at: 1736937366609 + 1209600000, // creation+2weeks
+    },
+
+    {
+      id: '3',
+      user_id: 'test_user',
+      product_id: '8765432',
+      price: 2.50,
+      is_claimed: false,
       created_at: 1635937266609,
       expired_at: 1635937266609 + 1209600000, // creation+2weeks
     }
