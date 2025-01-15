@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextInput, Textarea, NumberInput, Button, Group, Box, Notification, rem, Slider } from '@mantine/core';
+import { TextInput, Textarea, Button, Group, Box, Notification, Slider, Text } from '@mantine/core';
 import { ProductRequestFormData } from '../types';
 
 interface ProductRequestFormProps {
@@ -84,6 +84,10 @@ export function ProductRequestForm({ onSubmit }: ProductRequestFormProps) {
           marks={[{ value: 1, label: '1'}, {value: 30, label: '30'}]}
           mb="md"
         />
+
+        <Text style={{ textAlign: 'center' }} mt="xs">
+            You request {formData.quantity} Items.
+        </Text>
 
         <Textarea
           label="Description"
