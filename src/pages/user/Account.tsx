@@ -35,8 +35,8 @@ export default function Account() {
       {/* Profile Card */}
       <Box
         style={{
-          width: '400px', // Increased size for profile card
-          height: '250px',
+          width: '600px', // Increased size for profile card
+          height: '400px',
           backgroundImage: `url('testBG.jpg')`, // Replace with actual image
           backgroundSize: 'cover',
           borderRadius: '12px',
@@ -47,11 +47,11 @@ export default function Account() {
           boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
         }}
       >
-        <Text size="lg" weight={700} color="black">
-          User: {user.username}
+        <Text size="xl" color="black">
+          {user.username}
         </Text>
         <Text size="md" color="black">
-          Points: {user.points}
+          Wallet: {user.points} points
         </Text>
       </Box>
 
@@ -64,7 +64,7 @@ export default function Account() {
         style={{
           position: 'absolute',
           top: '100px', // Position the button at the top-right corner
-          right: '10px',
+          right: '70px',
         }}
       >
         LOGOUT
