@@ -4,35 +4,23 @@ import {
   AppShell,
   Group,
   Text,
-  UnstyledButton,
-  Stack,
+  Badge,
   rem,
-  Badge, 
-  Box,
+  Tooltip,
   Image
-} from '@mantine/core';
-import { IconHeart, IconShoppingCart, IconUser, Icon } from '@tabler/icons-react';
-import { useSelector } from 'react-redux';
+} from "@mantine/core";
+import {
+  IconShoppingCart,
+  IconBuildingStore,
+  IconUser
+} from "@tabler/icons-react";
+import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
-
-interface NavLinkData {
-  icon: Icon;
-  label: string;
-  path: string;
-}
-
-const navLinks: NavLinkData[] = [
-  { icon: IconHeart, label: "Auction", path: "/auction" },
-  { icon: IconShoppingCart, label: "Cart", path: "/cart" },
-  { icon: IconUser, label: "Account", path: "/account" },
-];
-
 export default function UserLayout() {
-
   const { session, loading, isAdmin } = useAuth();
 
-  const cart : any = useSelector((state: RootState) => state.cart);
+  const cart: any = useSelector((state: RootState) => state.cart);
   const cartItemCount = cart.items.reduce(
     (total: number, item: any) => total + (item.quantity || 1),
     0
@@ -51,7 +39,6 @@ export default function UserLayout() {
     <AppShell header={{ height: 60 }} padding="md">
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
-        <NavLink to="/" style={{ textDecoration: 'none', display: 'flex', alignItems:'center', justifyContent: 'center' }}>
           <Image 
               src="/assets/Logo.png"  
               alt="Logo" 
@@ -59,32 +46,46 @@ export default function UserLayout() {
               height={60}  // Adjust the height as needed
               style={{ cursor: 'pointer' }}
             />
-        </NavLink>
-
 
           {/* Navigation */}
           <Group gap={rem(32)}>
-            {navLinks.map(({ icon: Icon, label, path }) => (
-              <NavLink key={path} to={path} style={{ textDecoration: "none" }}>
-                {({ isActive }) => (
-                  <UnstyledButton>
-                    <Stack align="center" gap={rem(4)}>
-                      <Icon
-                        size={24}
-                        style={{
-                          color: isActive
-                            ? "var(--mantine-color-blue-filled)"
-                            : "var(--mantine-color-gray-6)",
-                        }}
-                      />
-                      <Text size="sm" c={isActive ? "blue" : "dimmed"}>
-                        {label}
-                      </Text>
-                    </Stack>
-                  </UnstyledButton>
+            <Tooltip label="Mart">
+              <NavLink to="/">
+                <IconBuildingStore />
+              </NavLink>
+            </Tooltip>
+
+            <Tooltip label="Cart">
+              <NavLink to="/cart" style={{ position: "relative", cursor: "pointer" }}>
+                <IconShoppingCart size={24} />
+                {cartItemCount > 0 && (
+                  <Badge
+                    size="xs"
+                    color="red"
+                    variant="filled"
+                    style={{
+                      position: "absolute",
+                      top: "-5px",
+                      right: "-10px",
+                      borderRadius: "50%",
+                      height: "20px",
+                      minWidth: "20px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {cartItemCount}
+                  </Badge>
                 )}
               </NavLink>
-            ))}
+            </Tooltip>
+
+            <Tooltip label="Account">
+              <NavLink to="/account">
+                <IconUser />
+              </NavLink>
+            </Tooltip>
           </Group>
         </Group>
       </AppShell.Header>
@@ -92,34 +93,6 @@ export default function UserLayout() {
       <AppShell.Main>
         <Outlet />
       </AppShell.Main>
-
-     {/* Cart Icon with Item Count */}
-     <Box
-       component="div"
-       style={{
-       position: 'absolute',
-       bottom: '50px',
-       right: '20px',
-       display: 'flex',
-       justifyContent: 'center',
-       alignItems: 'center',
-       zIndex: 10,
-     }}
-  >
-
-        <NavLink to="/cart">
-          <UnstyledButton>
-            <Stack align="center">
-              <IconShoppingCart size={24} />
-              {cartItemCount > 0 && (
-                <Badge color="teal" size="sm">
-                  {cartItemCount}
-                </Badge>
-              )}
-            </Stack>
-          </UnstyledButton>
-        </NavLink>
-      </Box>
     </AppShell>
   );
 }

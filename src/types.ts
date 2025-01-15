@@ -8,17 +8,15 @@ export interface Product {
   category: string;
 }
 
-export interface CartItem {
-  productId: string;
+export interface CartItem extends Product{
   quantity: number;
 }
 
 export interface CartState {
   items: CartItem[];
-  totalQuantity: number;
-  totalPoints: number;
 }
 
+//not sure if this requires params like pw, email, role etc
 export interface User {
   id: string;
   username: string;
