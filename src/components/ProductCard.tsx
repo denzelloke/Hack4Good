@@ -1,6 +1,5 @@
-import { Card, Image, Text, Group, Button, rem, Progress, Divider } from '@mantine/core';
+import { Card, Image, Text, Group, Button, rem, Divider } from '@mantine/core';
 import { Product } from '../types';
-import { IconShoppingCart } from '@tabler/icons-react';
 
 interface ProductCardProps {
   product: Product;
@@ -8,14 +7,12 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, onClick }: ProductCardProps) {
-
   return (
     <Card
       shadow="lg"
       padding="lg"
       radius="md"
       withBorder
-      onClick={onClick}
       style={{
         cursor: 'pointer',
         transition: 'transform 0.2s ease',
@@ -47,27 +44,40 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
       {/* Stock Progress */}
       <Group justify="space-between" mb="xs">
         <Text size="sm" color="dimmed">Stock:</Text>
-        <Text size="sm" color={product.stock > 0 ? "teal" : "red"}>
-         {product.stock > 0 ? 'Item available' : 'Out of stock'}
+        <Text size="sm" color={product.stock > 0 ? 'teal' : 'red'}>
+          {product.stock > 0 ? 'Item available' : 'Out of stock'}
         </Text>
       </Group>
 
-
       <Divider mb="xs" />
 
-      {/* Add to Cart Button */}
-      <Button
-        fullWidth
-        variant="light"
-        color="blue"
-        //leftIcon={<IconShoppingCart size={18} />}
-        onClick={onClick}
-        style={{
-          marginTop: rem(10),
-        }}
-      >
-        Add to Cart
-      </Button>
+      {/* Add to Cart or Stock Coming Soon */}
+      {product.stock > 0 ? (
+        <Button
+          fullWidth
+          variant="light"
+          color="blue"
+          onClick={onClick}
+          style={{
+            marginTop: rem(10),
+          }}
+        >
+          Add to Cart
+        </Button>
+      ) : (
+        <Text
+          size="sm"
+          color="dimmed"
+          style={{
+            marginTop: rem(10),
+            textAlign: 'center',
+            fontStyle: 'italic',
+          }}
+        >
+          Stock Coming Soon
+        </Text>
+      )}
     </Card>
   );
 }
+

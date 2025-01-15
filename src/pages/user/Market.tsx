@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Container, Grid, Modal, Image, Text, Button, Notification } from '@mantine/core';
-import { ProductCard, } from '../../components/ProductCard';
+import { Container, Grid, Modal, Image, Text, Button } from '@mantine/core';
+import { ProductCard } from '../../components/ProductCard';
 import { SearchNav } from '../../components/SearchNav';
 import { RecommendedFilters } from '../../components/RecommendedFilters';
 import { Product } from '../../types';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../actions/cartActions';
+import { addToCart } from '../../slices/cartSlice';
 import { ProductModal } from '../../components/ProductModal';
 
 import { getAllProducts } from "../../db/database";
@@ -18,9 +18,10 @@ export default function Market() {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
 
-  getAllProducts().then((products) => setProducts(products));
+  useEffect(() => {
+    getAllProducts().then((products) => setProducts(products));
+  }, []);
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name
@@ -42,10 +43,9 @@ export default function Market() {
     setIsModalOpen(false);
   };
 
-  const handleAddToCart = (product: Product) => {
-    dispatch(addToCart(product));
-    setShowNotification(true);
-    setTimeout(() => setShowNotification(false), 2000);
+  const handleAddToCart = (product: Product, quantity: number) => {
+    dispatch(addToCart({ ...product, quantity }));
+    //closeModal(); // Close modal after adding to cart
   };
 
   return (
@@ -74,17 +74,6 @@ export default function Market() {
         onClose={closeModal}
         onAddToCart={handleAddToCart}
       />
-
-      {/* Cart Added Notification */}
-      {showNotification && (
-        <Notification
-          title="Added to Cart"
-          color="teal"
-          onClose={() => setShowNotification(false)}
-        >
-          {selectedProduct?.name} has been added to your cart.
-        </Notification>
-      )}
     </Container>
   );
 }
