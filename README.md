@@ -81,7 +81,6 @@ For reference though this is the relevant documentation: https://developer.mozil
 
 TLDR is your webpage will have two states.
 
-
 Initial: Your data hasn't arrived yet, the website loads with the default value. (In above example, it will load up with products value being empty array.
 
 After fetch: your data arrives from supabase (above is getAllProducts()) and your products value updates. This triggers the webpage to reload with all your data now properly displayed.
