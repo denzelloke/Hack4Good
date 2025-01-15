@@ -8,10 +8,12 @@ import {
   Stack,
   rem,
   Badge, 
-  Box
+  Box,
+  Loader
 } from '@mantine/core';
 import { IconHeart, IconShoppingCart, IconUser, Icon } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
+import { RootState } from "../store";
 
 
 interface NavLinkData {
@@ -22,7 +24,7 @@ interface NavLinkData {
 
 const navLinks: NavLinkData[] = [
   { icon: IconHeart, label: "Auction", path: "/auction" },
-  { icon: IconShoppingCart, label: "Checkout", path: "/cart" },
+  { icon: IconShoppingCart, label: "Cart", path: "/cart" },
   { icon: IconUser, label: "Account", path: "/account" },
 ];
 
@@ -31,7 +33,7 @@ export default function UserLayout() {
   const { session, loading, isAdmin } = useAuth();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader size="lg" />;
   }
 
   if (!session || isAdmin) {
@@ -39,7 +41,7 @@ export default function UserLayout() {
     return <Navigate to={isAdmin ? "/admin" : "/login"} replace />;
   }
 
-  const cart = useSelector((state:any) => state.cart);
+  const cart = useSelector((state: RootState) => state.cart);
   const cartItemCount = cart.items.reduce(
     (total: number, item: any) => total + (item.quantity || 1),
     0
@@ -100,7 +102,7 @@ export default function UserLayout() {
      }}
   >
 
-        <NavLink to="/checkout">
+        <NavLink to="/cart">
           <UnstyledButton>
             <Stack align="center">
               <IconShoppingCart size={24} />
