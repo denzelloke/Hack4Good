@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getUser } from '../../db/database';
+import { getUser } from '../../backend/database';
 import { User } from '../../types';
 import { Container, Box, Text, Select } from '@mantine/core';
 
