@@ -52,7 +52,7 @@ export default function UserLayout() {
         <Group h="100%" px="md" justify="space-between">
         <NavLink to="/" style={{ textDecoration: 'none' }}>
           <Text size="xl" fw={700} style={{ cursor: 'pointer' }}>
-            HOME!!!
+            E-Mart
           </Text>
         </NavLink>
 
@@ -93,11 +93,12 @@ export default function UserLayout() {
        component="div"
        style={{
        position: 'absolute',
-       bottom: '20px',
+       bottom: '50px',
        right: '20px',
        display: 'flex',
        justifyContent: 'center',
        alignItems: 'center',
+       zIndex: 10,
      }}
   >
 
