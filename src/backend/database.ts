@@ -12,7 +12,7 @@ export const getUser = async () => {
   const user = [
     {
       id: '1234567',
-      username: 'denzel',
+      username: 'STANLEY CARTER',
       points: 13,
     }
   ]
@@ -32,12 +32,13 @@ export const purchaseVouchers = async (items : CartItem[]) => {
   if (error) throw error;
 }
 
+//for account page blackbox
 export const getVoucher = async () => {
   const voucher = [
     {
-      id: 1,
-      user_id: 1234567,
-      product_id: 7654321,
+      id: '11',
+      user_id: '1234567',
+      product_id: '7654321',
       price: 2.50,
       is_expired: false,
       created_at: 1736937366609,
@@ -45,9 +46,9 @@ export const getVoucher = async () => {
     },
 
     {
-      id: 2,
-      user_id: 1234567,
-      product_id: 8765432,
+      id: '2',
+      user_id: '1234567',
+      product_id: '8765432',
       price: 2.50,
       is_expired: false,
       created_at: 1635937266609,
@@ -56,3 +57,29 @@ export const getVoucher = async () => {
   ]
   return voucher
 }
+
+//for account page blackbox
+export const getProduct = async () => {
+  const products = [
+    {
+      id: '7654321',
+      name: 'Marigold UHT Milk',
+      description: '06 x 200ml tetrapack',
+      img: 'public/assets/Milk.jpg',
+      points: 10,
+      stock: 5,
+      category: 'snacks',
+    },
+
+    {
+      id: '8765432',
+      name: 'Bananas',
+      description: '200g bunch of bananas',
+      img: 'public/assets/Bananas.jpg',
+      points: 10,
+      stock: 10,
+      category: 'Fruits',
+    }
+  ]
+  return products
+};

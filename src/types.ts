@@ -33,9 +33,9 @@ export interface ProductRequestFormData {
 
 
 export interface Voucher {
-  id: number;
-  user_id: number;
-  product_id: number;
+  id: string;
+  user_id: string;
+  product_id: string;
   price: number;
   is_expired: boolean;
   created_at: any;
