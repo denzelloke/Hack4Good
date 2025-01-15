@@ -52,6 +52,7 @@ export function ProductModal({
   // Continue shopping or go to cart
   const handleContinueShopping = () => {
     setAddedToCart(false); // Reset confirmation screen
+    onClose();
   };
 
   const handleViewBag = () => {
