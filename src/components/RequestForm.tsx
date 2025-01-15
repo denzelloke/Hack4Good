@@ -44,7 +44,7 @@ export function ProductRequestForm({ onSubmit }: ProductRequestFormProps) {
   };
 
   return (
-    <Box sx={{ maxWidth: rem(500), margin: '0 auto' }}>
+    <Box style={{ maxWidth: '500px', margin: '0 auto' }}>
       {notification && (
         <Notification
           color={notification.startsWith('Failed') ? 'red' : 'teal'}
