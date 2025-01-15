@@ -1,4 +1,4 @@
-import { useAuth } from "../db/auth";
+import { useAuth } from "../backend/authProvider";
 import { Navigate, Outlet, NavLink } from "react-router-dom";
 import {
   AppShell,
@@ -14,6 +14,7 @@ import {
 import { IconHeart, IconShoppingCart, IconUser, Icon } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
 import { RootState } from "../store";
+import { CartState } from "../types";
 
 
 interface NavLinkData {
@@ -41,7 +42,7 @@ export default function UserLayout() {
     return <Navigate to={isAdmin ? "/admin" : "/login"} replace />;
   }
 
-  const cart = useSelector((state: RootState) => state.cart);
+  const cart : any = useSelector((state: RootState) => state.cart);
   const cartItemCount = cart.items.reduce(
     (total: number, item: any) => total + (item.quantity || 1),
     0

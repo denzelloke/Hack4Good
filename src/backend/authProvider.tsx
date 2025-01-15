@@ -1,12 +1,22 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { getClient } from "./database";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { getClient } from "./supabase";
 import { Session } from "@supabase/supabase-js";
 
 interface AuthContextType {
   session: Session | null;
   loading: boolean;
   isAdmin: boolean;
-  login: (username: string, password: string, role: "user" | "admin") => Promise<void>;
+  login: (
+    username: string,
+    password: string,
+    isAdmin: boolean
+  ) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -18,10 +28,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Fetch the user's role from the database
   const fetchUserRole = async (userId: string) => {
     const { data, error } = await supabase
-      .from("customer") // Assuming 'users' table holds the is_admin field
+      .from("customer")
       .select("is_admin")
       .eq("id", userId)
       .single();
@@ -29,7 +38,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (error) throw new Error(error.message);
   };
 
-  // Check for existing session and listen for auth changes
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -47,38 +55,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return () => subscription?.unsubscribe();
   }, [supabase]);
 
-  // Sign in function with username instead of email
-  const login = async (username: string, password: string, role: "user" | "admin") => {
-    // Query the customers table to get the uid associated with the username
+  const login = async (
+    username: string,
+    password: string,
+    isAdmin: boolean
+  ) => {
     const { data: authUserData } = await supabase
-      .from("customer") // The table that holds the username
+      .from("customer")
       .select("email")
       .eq("username", username)
+      .eq("is_admin", isAdmin)
       .single();
 
     if (!authUserData?.email) {
       throw new Error("Failed to retrieve email for this user.");
     }
 
-    // Sign in using the retrieved email
-    const { error: signInError, data: signInData } = await supabase.auth.signInWithPassword({
+    await supabase.auth.signInWithPassword({
       email: authUserData.email,
       password,
     });
-
-    if (signInError) throw new Error(signInError.message);
-
-    if (signInData?.user?.id) {
-      await fetchUserRole(signInData.user.id); // Set user role
-      if (role === "admin" && !isAdmin) {
-        throw new Error("You do not have admin rights.");
-      }
-    } else {
-      throw new Error("Sign-in failed.");
-    }
   };
 
-  // Logout function
   const logout = async () => {
     await supabase.auth.signOut();
     setSession(null);
@@ -92,7 +90,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Hook to use auth context
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {

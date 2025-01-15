@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Grid, Modal, Image, Text, Button } from '@mantine/core';
+import { Container, Grid, Text } from '@mantine/core';
 import { ProductCard } from '../../components/ProductCard';
 import { SearchNav } from '../../components/SearchNav';
 import { RecommendedFilters } from '../../components/RecommendedFilters';
@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../../slices/cartSlice';
 import { ProductModal } from '../../components/ProductModal';
 
-import { getAllProducts } from "../../db/database";
+import { getAllProducts } from "../../backend/database";
 
 export default function Market() {
   const [products, setProducts] = useState<Product[]>([]);

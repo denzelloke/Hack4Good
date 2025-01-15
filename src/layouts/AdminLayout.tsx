@@ -1,4 +1,4 @@
-import { useAuth } from "../db/auth";
+import { useAuth } from "../backend/authProvider";
 import { Navigate, Outlet } from "react-router-dom";
 
 export default function AdminLayout() {
