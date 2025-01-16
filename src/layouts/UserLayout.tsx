@@ -56,8 +56,8 @@ export default function UserLayout() {
             </Tooltip>
 
             <Tooltip label="Cart">
-              <NavLink to="/cart" style={{ position: "relative", cursor: "pointer" }}>
-                <IconShoppingCart size={24} />
+              <NavLink to="/cart" style={{ position: "relative", cursor: "pointer" }} color="blue">
+                <IconShoppingCart size={24}  />
                 {cartItemCount > 0 && (
                   <Badge
                     size="xs"
