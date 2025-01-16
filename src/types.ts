@@ -36,8 +36,7 @@ export interface Voucher {
   id: string;
   user_id: string;
   product_id: string;
-  price: number;
-  is_claimed: boolean;
+  points: number;
   created_at: any;
-  expired_at: any;
+  claimed_on: any;
 }
