@@ -1,4 +1,4 @@
-import { Card, Image, Text, Group, Button, rem, Divider, Transition } from '@mantine/core';
+import { Card, Image, Text, Group, Button, rem, Divider, } from '@mantine/core';
 import { useState } from 'react';
 import { Product } from '../../types';
 

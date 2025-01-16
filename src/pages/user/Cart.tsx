@@ -4,7 +4,7 @@ import { Container, Text, Divider, Grid } from '@mantine/core';
 import { RootState } from '../../store'; // Import RootState from your store file
 import { removeFromCart, updateQuantity, clearCart } from '../../slices/cartSlice';
 import { purchaseVouchers } from '../../backend/database';
-import { CartList } from '../../components/cartComponents/cartList';
+import { CartList } from '../../components/cartComponents/CartList';
 import { OrderSummary } from '../../components/cartComponents/OrderSummary';
 
 export default function Cart() {

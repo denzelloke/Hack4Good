@@ -1,4 +1,3 @@
-// OrderSummary.tsx
 import { Card, Group, Text, Divider, Button } from '@mantine/core';
 
 interface OrderSummaryProps {
