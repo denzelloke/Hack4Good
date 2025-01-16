@@ -20,7 +20,16 @@ export function RecommendedFilters({
 
   return (
     <div>
-      <Title order={4} mt="xl" mb="md">CATEGORIES</Title>
+      <Title order={4} mt="xl" mb="md"
+      style={{
+        fontSize: '22px', // Make the font size larger
+        color: 'black', // A strong color for the title
+        textAlign: 'left', // Center the title
+        letterSpacing: '1px', // Add slight spacing between letters for a more refined look
+        textTransform: 'uppercase', // Make the text uppercase for emphasis
+        fontFamily: 'Arial, sans-serif', // Use a clean, modern font
+      }}
+      >CATEGORIES</Title>
       <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
         <Button 
           variant={!selectedCategory ? 'filled' : 'light'}
