@@ -32,9 +32,21 @@ export default function Cart() {
 
   return (
     <Container size="lg" py="xl">
-      <Text size="xl" fw={700} mb="lg">
-        Your Cart
-      </Text>
+      <Text
+  size="xl"
+  fw={900} // Make the font weight heavier to give it more presence
+  mb="lg"
+  style={{
+    fontSize: '25px', // Make the font size larger
+    color: 'black', // A strong color for the title
+    textAlign: 'left', // Center the title
+    letterSpacing: '1px', // Add slight spacing between letters for a more refined look
+    textTransform: 'uppercase', // Make the text uppercase for emphasis
+    fontFamily: 'Arial, sans-serif', // Use a clean, modern font
+  }}
+>
+  Your Cart
+</Text>
 
       <Divider mb="md" />
 

@@ -52,7 +52,7 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
           {product.name}
         </Text>
         <Text fw={700} style={{ color: '#17B978', fontSize: rem(16) }}>
-          {product.points ? product.points : 'N/A'}
+          Points: {product.points ? product.points : 'N/A'}
         </Text>
       </Group>
 
