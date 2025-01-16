@@ -84,7 +84,7 @@ export function ProductModal({
               boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)'
             }}
           />
-          <Text size="sm">{product.description}</Text>
+          <Text size="sm"><strong>Description:</strong> {product.description}</Text>
           <Divider my="sm" />
           <Group justify="space-between">
             <Button onClick={handleContinueShopping} style={{ flex: 1, marginRight: '8px', transition: 'transform 0.2s ease' }}>Continue Shopping</Button>
