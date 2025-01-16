@@ -41,23 +41,27 @@ export default function Account() {
   return (
     <Container size="sm" mt="lg">
       
-      <ProfileCard user={user} />
+      <Box mb="lg">
+  <ProfileCard user={user} />
+</Box>
 
+
+      <Box>
+        <VoucherFilter filter={filter} setFilter={setFilter} />
       
-      
-      <VoucherFilter filter={filter} setFilter={setFilter} />
-      
-      <Box mt="lg">
-        {filteredVouchers.map((voucher) => {
-          const product = products.find((prod) => prod.id === String(voucher.product_id));
-          return (
-            <VoucherCard
-              key={voucher.id}
-              voucher={voucher}
-              product={product}
-            />
-          );
-        })}
+        <Box mt="lg">
+          {filteredVouchers.map((voucher) => {
+            const product = products.find((prod) => prod.id === String(voucher.product_id));
+           return (
+              <VoucherCard
+                key={voucher.id}
+                voucher={voucher}
+                product={product}
+             />
+            );
+          })}
+        </Box>
+
       </Box>
 
     </Container>

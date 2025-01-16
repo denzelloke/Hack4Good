@@ -16,7 +16,7 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
 
   // card status and styles
   const statusText = voucher.claimed_on == null ? 'VALID' : 'CLAIMED';
-  const backgroundColor = voucher.claimed_on == null ? '#b2edc0' : 'grey';
+  const backgroundColor = voucher.claimed_on == null ? '#d9f7d7' : '#c5c9c9';
 
   // handle card click for VALID vouchers
   const handleCardClick = () => {
