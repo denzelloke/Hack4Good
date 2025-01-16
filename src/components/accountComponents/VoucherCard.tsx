@@ -4,25 +4,19 @@ import { Product, Voucher } from '../../types';
 interface VoucherCardProps {
   voucher: Voucher;
   product: Product | undefined;
-  isExpired: (expiredAt: number) => boolean;
 }
 
-export function VoucherCard({ voucher, product, isExpired }: VoucherCardProps) {
+export function VoucherCard({ voucher, product }: VoucherCardProps) {
   let statusText = '';
   let backgroundColor = '';
-  let color = '';
 
-  if (voucher.is_claimed) {
-    statusText = 'CLAIMED';
-    backgroundColor = 'grey';
-  } 
-  else if (isExpired(voucher.expired_at)) {
-    statusText = 'EXPIRED';
-    backgroundColor = 'grey';
-  } 
-  else {
+ if (voucher.claimed_on == null) {
     statusText = 'VALID';
     backgroundColor = '#b2edc0';
+  } 
+  else {
+    statusText = 'CLAIMED';
+    backgroundColor = 'grey';
   }
 
  
@@ -61,7 +55,6 @@ export function VoucherCard({ voucher, product, isExpired }: VoucherCardProps) {
       <Box style={{ flex: 1 }}>
         <Text size="lg">{product?.name}</Text>
         <Text size="sm">Purchased: {new Date(voucher.created_at).toLocaleString()}</Text>
-        <Text size="sm">Expires On: {new Date(voucher.expired_at).toLocaleString()}</Text>
       </Box>
 
       {/* Status Text */}

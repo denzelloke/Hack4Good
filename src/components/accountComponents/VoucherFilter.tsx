@@ -25,7 +25,6 @@ export function VoucherFilter({ filter, setFilter }: VoucherFilterProps) {
           { value: 'ALL', label: 'All Vouchers' },
           { value: 'VALID', label: 'Valid' },
           { value: 'CLAIMED', label: 'Claimed' },
-          { value: 'EXPIRED', label: 'Expired' },
         ]}
         value={filter}
         onChange={(value) => setFilter(value ?? 'ALL')}

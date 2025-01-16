@@ -39,30 +39,28 @@ export const getVoucher = async () => {
       id: '1',
       user_id: 'test_user',
       product_id: '7654321',
-      price: 2.50,
+      points: 2.50,
       is_claimed: false,
       created_at: 1736937366609,
-      expired_at: 1736937366609 + 1209600000, // creation+2weeks
+      claimed_on: 1736937366609 + 1209600000, // creation+2weeks
     },
 
     {
       id: '2',
       user_id: 'test_user',
       product_id: '8765432',
-      price: 2.50,
-      is_claimed: true,
-      created_at: 1736937366609,
-      expired_at: 1736937366609 + 1209600000, // creation+2weeks
+      points: 2.50,
+      created_at: 1236937366609,
+      claimed_on: null,
     },
 
     {
       id: '3',
       user_id: 'test_user',
       product_id: '8765432',
-      price: 2.50,
-      is_claimed: false,
+      points: 2.50,
       created_at: 1635937266609,
-      expired_at: 1635937266609 + 1209600000, // creation+2weeks
+      claimed_on: null,
     }
   ]
   return voucher

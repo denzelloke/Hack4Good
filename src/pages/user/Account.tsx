@@ -27,12 +27,10 @@ export default function Account() {
     fetchData();
   }, []);
 
-  const isExpired = (expiredAt: number) => Date.now() >= expiredAt;
 
   const filteredVouchers = vouchers.filter((voucher) => {
-    if (filter === 'VALID') return !voucher.is_claimed && !isExpired(voucher.expired_at);
-    if (filter === 'CLAIMED') return voucher.is_claimed;
-    if (filter === 'EXPIRED') return isExpired(voucher.expired_at);
+    if (filter === 'CLAIMED') return voucher.claimed_on != null;
+    if (filter === 'VALID') return voucher.claimed_on == null;
     return true;
   });
 
@@ -57,7 +55,6 @@ export default function Account() {
               key={voucher.id}
               voucher={voucher}
               product={product}
-              isExpired={isExpired}
             />
           );
         })}
