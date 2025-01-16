@@ -1,4 +1,4 @@
-import { Box, Text } from '@mantine/core';
+import { Card, Image, Text, Badge, Group, rem } from '@mantine/core';
 import { User } from '../../types';
 import { LogoutButton } from './LogoutButton';
 
@@ -8,21 +8,32 @@ interface ProfileCardProps {
 
 export function ProfileCard({ user }: ProfileCardProps) {
   return (
-    <Box
-      style={{
-        
-        height: '400px',
-        backgroundImage: `url('/assets/testBG.jpg')`,
-        backgroundSize: 'cover',
-        borderRadius: '12px',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-      }}
-    >
-      <Text size="xl" color="black">
+     <Card 
+          shadow="lg"
+           padding="lg"
+           radius="md"
+           withBorder
+           style={{
+             height: rem(400),
+             display: 'flex',
+             borderRadius: rem(12),
+           }}
+           >
+      <Card.Section>
+        <Image
+          src="/assets/MWHLogo.jpg"
+          height={200}
+          alt="Muhammadiyah Welfare Home"
+          style={{
+            objectFit: 'cover',
+            borderRadius: rem(12),
+            boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.1)',
+          }}
+        />
+      </Card.Section>
+
+      <Group justify="space-between" mt="md" mb="xs">
+        <Text fw={500}>
         {new Date().toLocaleString('en-UK', {
           weekday: 'long',
           month: 'short',
@@ -31,10 +42,14 @@ export function ProfileCard({ user }: ProfileCardProps) {
           minute: '2-digit',
           hour12: false,
         })}
-      </Text>
-      <Text size="xl" color="black">{user.username}</Text>
-      <Text size="md" color="black">Wallet: {user.points} points</Text>
+        </Text>
+        <Badge variant="outline" color="blue" size="lg">Points: {user.points}</Badge>
+      </Group>
+
+      <Text size="xl"> {user.username} </Text>
+
       <LogoutButton/>
-    </Box>
+
+    </Card>
   );
 }

@@ -1,34 +1,31 @@
-import { Box, Select, Text } from '@mantine/core';
+import { Tabs } from '@mantine/core';
+import { IconSquareRoundedCheck, IconSquareRoundedX } from '@tabler/icons-react';
 
 interface VoucherFilterProps {
   filter: string;
   setFilter: (value: string) => void;
 }
 
-export function VoucherFilter({ filter, setFilter }: VoucherFilterProps) {
+export function VoucherFilter({setFilter }: VoucherFilterProps) {
   return (
-    <Box
-      mt="lg"
-      style={{
-        padding: '16px',
-        backgroundColor: '#f5f5f5',
-        borderRadius: '8px',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-      }}
+    <Tabs 
+    
+    radius="md" 
+    defaultValue="ALL"
+    onChange={(value) => setFilter(value ?? 'ALL')}
     >
-      <Text size="lg" mb="sm">
-        Filter Vouchers:
-      </Text>
-      <Select
-        placeholder="Select a filter"
-        data={[
-          { value: 'ALL', label: 'All Vouchers' },
-          { value: 'VALID', label: 'Valid' },
-          { value: 'CLAIMED', label: 'Claimed' },
-        ]}
-        value={filter}
-        onChange={(value) => setFilter(value ?? 'ALL')}
-      />
-    </Box>
+      <Tabs.List>
+        <Tabs.Tab value="ALL">
+        All Vouchers
+        </Tabs.Tab>
+        <Tabs.Tab value="VALID" leftSection={<IconSquareRoundedCheck size={12} />} color='#02f702' >
+        Valid
+        </Tabs.Tab>
+        <Tabs.Tab value="CLAIMED" leftSection={<IconSquareRoundedX size={12} />} color='#ed2125' >
+        Claimed  
+        </Tabs.Tab>
+      </Tabs.List>
+   
+    </Tabs>
   );
 }
