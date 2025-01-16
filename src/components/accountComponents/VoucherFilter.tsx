@@ -1,4 +1,4 @@
-import { Tabs } from '@mantine/core';
+import { Tabs, Title } from '@mantine/core';
 import { IconSquareRoundedCheck, IconSquareRoundedX } from '@tabler/icons-react';
 
 interface VoucherFilterProps {
@@ -8,12 +8,24 @@ interface VoucherFilterProps {
 
 export function VoucherFilter({setFilter }: VoucherFilterProps) {
   return (
-    <Tabs 
-    
-    radius="md" 
-    defaultValue="ALL"
-    onChange={(value) => setFilter(value ?? 'ALL')}
-    >
+    <div>
+      <Title order={4} mt="xl" mb="md"
+            style={{
+              fontSize: '22px', 
+              color: 'black', 
+              textAlign: 'left', 
+              letterSpacing: '1px', 
+              textTransform: 'uppercase', 
+              fontFamily: 'Arial, sans-serif', 
+            }}
+            >VOUCHER RECEIPTS</Title>
+            <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}></div>
+            
+      <Tabs 
+      radius="md" 
+      defaultValue="ALL"
+      onChange={(value) => setFilter(value ?? 'ALL')}
+      >
       <Tabs.List>
         <Tabs.Tab value="ALL">
         All Vouchers
@@ -25,7 +37,7 @@ export function VoucherFilter({setFilter }: VoucherFilterProps) {
         Claimed  
         </Tabs.Tab>
       </Tabs.List>
-   
-    </Tabs>
+      </Tabs>
+    </div>
   );
 }

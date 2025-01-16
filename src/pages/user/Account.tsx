@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUser, getVoucher, getProduct } from '../../backend/database';
 import { User, Voucher, Product } from '../../types';
-import { Container, Box } from '@mantine/core';
+import { Container, Box, Text, Divider } from '@mantine/core';
 import { ProfileCard } from '../../components/accountComponents/ProfileCard';
 import { VoucherFilter } from '../../components/accountComponents/VoucherFilter';
 import { VoucherCard } from '../../components/accountComponents/VoucherCard';
@@ -39,11 +39,27 @@ export default function Account() {
   }
 
   return (
+
     <Container size="sm" mt="lg">
       
+        <Text
+        fw={900}
+        style={{
+          fontSize: '25px',
+          color: 'black', 
+          textAlign: 'left',
+          letterSpacing: '1px',
+          textTransform: 'uppercase',
+          fontFamily: 'Arial, sans-serif',
+        }}>
+          ACCOUNT
+        </Text>
+        <Divider mb="md"/>
+
+
       <Box mb="lg">
-  <ProfileCard user={user} />
-</Box>
+       <ProfileCard user={user} />
+      </Box>
 
 
       <Box>
