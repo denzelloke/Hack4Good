@@ -1,4 +1,4 @@
-import { Card, Box, Text, rem, Modal, Button, Group } from '@mantine/core';
+import { Card, Box, Text, rem, Modal, Button, Group, Badge } from '@mantine/core';
 import { useState } from 'react';
 import { Product, Voucher } from '../../types';
 
@@ -14,16 +14,34 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
   // modal visibility
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // card status and styles
-  const statusText = voucher.claimed_on == null ? 'VALID' : 'CLAIMED';
-  const backgroundColor = voucher.claimed_on == null ? '#d9f7d7' : '#c5c9c9';
-
+  
   // handle card click for VALID vouchers
   const handleCardClick = () => {
     if (statusText === 'VALID') {
       setIsModalOpen(true); // Open modal
     }
   };
+
+  //badge props
+  const isValid = voucher.claimed_on == null;
+  const badgeProps = isValid
+    ? {
+        variant: 'outline',
+        color: '#008000',
+        style: {
+          outline: '3px solid #008000', // Custom thick green outline
+          outlineOffset: '-1px',
+        },
+      }
+    : {
+        variant: 'filled',
+        color: '#9e0808',
+      };
+
+    // card status and styles
+    const statusText = isValid ? 'VALID' : 'CLAIMED';
+    const backgroundColor = voucher.claimed_on == null ? '#caf2c2' : '#a6abab';
+
 
   return (
     <>
@@ -69,24 +87,42 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
 
         {/* Product Details */}
         <Box style={{ flex: 1 }}>
-          <Text size="lg">{product?.name}</Text>
-          <Text size="sm">Purchased: {new Date(voucher.created_at).toLocaleString()}</Text>
+          <Text  
+          style={{
+            fontSize: rem(20) 
+            }}
+            > 
+            {product?.name} 
+          </Text>
+
+          <Text 
+          size="md"
+          c="#1f2121"
+          style={{
+            fontSize: rem(16) 
+            }}
+            > 
+            Purchased: {new Date(voucher.created_at).toLocaleString()}
+          </Text>
         </Box>
 
-        {/* Status Text */}
-        <Text
-          size="lg"
-          style={{
-            position: 'absolute',
-            right: '16px',
-            textAlign: 'center',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            color: 'black',
-          }}
-        >
-          {statusText}
-        </Text>
+       {/* Status Badge */}
+      <Badge
+        {...badgeProps}
+        radius="sm"
+        size="xl"
+        style={{
+          ...badgeProps.style, // Merge custom styles
+          position: 'absolute',
+          right: '40px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          fontWeight: 60,
+        }}
+      >
+        {statusText}
+      </Badge>
+
       </Card>
 
       {/* Modal for VALID vouchers */}
@@ -117,8 +153,8 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
               fontWeight: 700,
             }}
             onClick={() => {
-              console.log('Voucher claimed!'); // TODO: IMPLEMENT CLAIMED LOGIC
-              setIsModalOpen(false);           // claiming auto closes modal
+              voucher.claimed_on = Date(); // TODO: LINK TO DATABASE 
+              setIsModalOpen(false);       // claiming auto closes modal
             }}
           >
             CLAIM

@@ -52,7 +52,7 @@ export default function Account() {
           textTransform: 'uppercase',
           fontFamily: 'Arial, sans-serif',
         }}>
-          ACCOUNT
+          MY ACCOUNT
         </Text>
         <Divider mb="md"/>
 

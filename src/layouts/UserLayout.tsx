@@ -7,8 +7,6 @@ import {
   rem,
   Tooltip,
   Image,
-  Box,
-  Button
 } from "@mantine/core";
 import {
   IconShoppingCart,
@@ -24,7 +22,6 @@ import { useState, useEffect } from 'react';
 export default function UserLayout() {
   const { session, loading, isAdmin } = useAuth();
   const [user, setUser] = useState<User | null>(null);
-  const [isFlipped, setIsFlipped] = useState(false); // State for wallet flip
 
   // Fetch user data on component load
   useEffect(() => {
@@ -51,8 +48,6 @@ export default function UserLayout() {
     return <Navigate to={isAdmin ? "/admin" : "/login"} replace />;
   }
 
-  // Toggle wallet flip state
-  const toggleFlip = () => setIsFlipped((prev) => !prev);
 
   return (
     <AppShell header={{ height: 60 }} padding="md">
@@ -68,8 +63,21 @@ export default function UserLayout() {
 
           {/* Navigation */}
           <Group gap={rem(32)}>
-            
-            
+          
+            <Badge 
+            variant="outline" 
+            radius="sm" 
+            color="#390961" 
+            size="lg"
+            style={{
+              position: 'relative',
+              bottom: '3px',
+              left: '5px',
+              outline: '2px solid #6b26a3',
+            }}
+            >
+              Points: {user ? user.points : 'Loading...'}
+            </Badge>
            
 
             <Tooltip label="Mart">

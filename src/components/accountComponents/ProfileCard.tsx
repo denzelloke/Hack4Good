@@ -43,7 +43,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
           hour12: false,
         })}
         </Text>
-        <Badge variant="outline" color="blue" size="lg">Points: {user.points}</Badge>
+        <Badge variant="outline" radius="sm" color="blue" size="lg">Points: {user.points}</Badge>
       </Group>
 
       <Text size="xl"> {user.username} </Text>
