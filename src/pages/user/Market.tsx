@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Container, Grid, Text, Modal, Button, Box } from '@mantine/core';
-import { ProductCard } from '../../components/ProductCard';
+import { ProductCard } from '../../components/marketComponents/ProductCard';
 import { SearchNav } from '../../components/SearchNav';
 import { RecommendedFilters } from '../../components/RecommendedFilters';
 import { Product } from '../../types';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../slices/cartSlice';
-import { ProductModal } from '../../components/ProductModal';
-import { ProductRequestForm } from '../../components/RequestForm';
+import { ProductModal } from '../../components/marketComponents/ProductModal';
+import { ProductRequestForm } from '../../components/marketComponents/RequestForm';
+import RequestProductButton from '../../components/marketComponents/RequestProductButton';
 
 import { getAllProducts } from "../../backend/database";
 
@@ -100,16 +101,8 @@ export default function Market() {
         }} />
       </Modal>
 
-      {/* Request Button */} 
-      <Box style={{ position: 'fixed', bottom: '30px', right: '30px' }}>
-        <Button
-        onClick={openRequestModal}
-        variant="filled"
-        color="blue"
-        >
-          Request a Product
-        </Button>
-      </Box>
+      {/* Use the RequestProductButton Component */}
+      <RequestProductButton onClick={openRequestModal} />
     </Container>
   );
 }
