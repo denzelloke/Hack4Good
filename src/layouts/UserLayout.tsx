@@ -3,11 +3,11 @@ import { Navigate, Outlet, NavLink } from "react-router-dom";
 import {
   AppShell,
   Group,
-  Text,
   Badge,
   rem,
   Tooltip,
-  Image
+  Image,
+  Box
 } from "@mantine/core";
 import {
   IconShoppingCart,
@@ -37,7 +37,7 @@ export default function UserLayout() {
 
   return (
     <AppShell header={{ height: 60 }} padding="md">
-      <AppShell.Header>
+        <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
           <Image 
               src="/assets/Logo.png"  
@@ -49,6 +49,11 @@ export default function UserLayout() {
 
           {/* Navigation */}
           <Group gap={rem(32)}>
+
+            <Box>
+              MASKED WALLET
+            </Box>
+
             <Tooltip label="Mart">
               <NavLink to="/">
                 <IconBuildingStore />
@@ -94,5 +99,7 @@ export default function UserLayout() {
         <Outlet />
       </AppShell.Main>
     </AppShell>
+
+    
   );
 }

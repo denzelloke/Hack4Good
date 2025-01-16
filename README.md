@@ -85,4 +85,5 @@ Initial: Your data hasn't arrived yet, the website loads with the default value.
 
 After fetch: your data arrives from supabase (above is getAllProducts()) and your products value updates. This triggers the webpage to reload with all your data now properly displayed.
 
+
 This can be a source of bugs if you don't handle the initial state gracefully so just a heads up :)
