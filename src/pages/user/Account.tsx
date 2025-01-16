@@ -3,7 +3,6 @@ import { getUser, getVoucher, getProduct } from '../../backend/database';
 import { User, Voucher, Product } from '../../types';
 import { Container, Box } from '@mantine/core';
 import { ProfileCard } from '../../components/accountComponents/ProfileCard';
-import { LogoutButton } from '../../components/accountComponents/logoutButton';
 import { VoucherFilter } from '../../components/accountComponents/VoucherFilter';
 import { VoucherCard } from '../../components/accountComponents/VoucherCard';
 
@@ -46,7 +45,7 @@ export default function Account() {
       
       <ProfileCard user={user} />
 
-      <LogoutButton />
+      
       
       <VoucherFilter filter={filter} setFilter={setFilter} />
       
@@ -63,7 +62,7 @@ export default function Account() {
           );
         })}
       </Box>
-      
+
     </Container>
   );
 }

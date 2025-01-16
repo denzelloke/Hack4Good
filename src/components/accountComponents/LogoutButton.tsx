@@ -9,9 +9,8 @@ export function LogoutButton() {
       color="blue"
       variant="filled"
       style={{
-        position: 'absolute',
-        top: '100px',
-        right: '70px',
+        position: 'relative',
+        top: '50px',
       }}
     >
       LOGOUT

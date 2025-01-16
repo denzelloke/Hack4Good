@@ -1,5 +1,6 @@
 import { Box, Text } from '@mantine/core';
 import { User } from '../../types';
+import { LogoutButton } from '../../components/accountComponents/logoutButton';
 
 interface ProfileCardProps {
   user: User;
@@ -9,7 +10,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
   return (
     <Box
       style={{
-        width: '600px',
+        
         height: '400px',
         backgroundImage: `url('/assets/testBG.jpg')`,
         backgroundSize: 'cover',
@@ -33,6 +34,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
       </Text>
       <Text size="xl" color="black">{user.username}</Text>
       <Text size="md" color="black">Wallet: {user.points} points</Text>
+      <LogoutButton/>
     </Box>
   );
 }

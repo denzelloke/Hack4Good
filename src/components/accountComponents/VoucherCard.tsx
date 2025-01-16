@@ -1,4 +1,4 @@
-import { Card, Box, Text } from '@mantine/core';
+import { Card, Box, Text, rem,  } from '@mantine/core';
 import { Product, Voucher } from '../../types';
 
 interface VoucherCardProps {
@@ -10,18 +10,22 @@ interface VoucherCardProps {
 export function VoucherCard({ voucher, product, isExpired }: VoucherCardProps) {
   let statusText = '';
   let backgroundColor = '';
+  let color = '';
 
   if (voucher.is_claimed) {
     statusText = 'CLAIMED';
-    backgroundColor = '#f5bc5b';
-  } else if (isExpired(voucher.expired_at)) {
+    backgroundColor = 'grey';
+  } 
+  else if (isExpired(voucher.expired_at)) {
     statusText = 'EXPIRED';
-    backgroundColor = '#f29f99';
-  } else {
+    backgroundColor = 'grey';
+  } 
+  else {
     statusText = 'VALID';
-    backgroundColor = '#94f78b';
+    backgroundColor = '#b2edc0';
   }
 
+ 
   return (
     <Card
       key={voucher.id}
@@ -35,6 +39,7 @@ export function VoucherCard({ voucher, product, isExpired }: VoucherCardProps) {
         flexDirection: 'row',
         alignItems: 'center',
         position: 'relative',
+        borderRadius: rem(15),
       }}
     >
       {/* Product Image */}
@@ -54,10 +59,9 @@ export function VoucherCard({ voucher, product, isExpired }: VoucherCardProps) {
 
       {/* Product Details */}
       <Box style={{ flex: 1 }}>
-        <Text size="md">{product?.name}</Text>
+        <Text size="lg">{product?.name}</Text>
         <Text size="sm">Purchased: {new Date(voucher.created_at).toLocaleString()}</Text>
         <Text size="sm">Expires On: {new Date(voucher.expired_at).toLocaleString()}</Text>
-        <Text size="sm">Voucher ID: {voucher.id}</Text>
       </Box>
 
       {/* Status Text */}
@@ -69,6 +73,8 @@ export function VoucherCard({ voucher, product, isExpired }: VoucherCardProps) {
           textAlign: 'center',
           top: '50%',
           transform: 'translateY(-50%)',
+          size: 'xl',
+          color: 'black',
         }}
       >
         {statusText}
