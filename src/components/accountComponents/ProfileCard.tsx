@@ -1,6 +1,6 @@
 import { Box, Text } from '@mantine/core';
 import { User } from '../../types';
-import { LogoutButton } from '../../components/accountComponents/logoutButton';
+import { LogoutButton } from './LogoutButton';
 
 interface ProfileCardProps {
   user: User;
