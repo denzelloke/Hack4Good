@@ -41,7 +41,7 @@ export default function Inventory() {
     // Filter by stock status
     if (stockFilter === "in-stock") {
       filtered = filtered.filter((product) => product.stock > 0);
-    } else if (stockFilter === "out-of-stock") {
+    } else if (stockFilter === "not-in-stock") {
       filtered = filtered.filter((product) => product.stock === 0);
     }
 
@@ -63,6 +63,7 @@ export default function Inventory() {
         break; // "none" does not sort
     }
 
+    console.log('setfilteredProduct',filteredProducts, filtered);
     setFilteredProducts(filtered);
   }, [selectedCategory, stockFilter, sortOption, products]); // Re-run when any of these values change
 

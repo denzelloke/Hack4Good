@@ -1,39 +1,55 @@
 import { useState, useEffect } from 'react';
-import { Container, Text} from '@mantine/core';
-import AuctionCard from '../../components/userComponents/auctionComponents/AuctionCard';
-import { AuctionItem } from '../../types';
+import { Container, Text } from '@mantine/core';
 
-// Mock data for the auction item
-const mockAuctionItem: AuctionItem = {
-    id: '1',
-    name: 'Luxury Chair',
-    description: 'A handcrafted luxury chair made from premium materials.',
-    url: 'https://via.placeholder.com/400',
-    currentBid: 150,
-    auctionEndTime: new Date(Date.now() + 3600 * 1000).toISOString(), // 1 hour from now
-};
+import { AuctionItem, AuctionBid, User } from '../../types';
+import { getAuctionItem, getBids, getAllUsers } from "../../backend/database";
+
+import AuctionCard from '../../components/userComponents/auctionComponents/AuctionCard';
+import Leaderboard from '../../components/userComponents/auctionComponents/Leaderboard';
 
 export default function AuctionPage() {
-    const [auctionItem, setAuctionItem] = useState<AuctionItem | null>(null);
-    const minimumIncrement = 10;
+  const minimumIncrement = 10; // should be changeable by admin
+  const [auctionItem, setAuctionItem] = useState<AuctionItem | null>(null);
+  const [bids, setBids] = useState<AuctionBid[]>([]); // Updated type to array
+  const [users, setUsers] = useState<User[]>([]); // Add users state
 
-    useEffect(() => {
-        // Simulate fetching data from the backend
-        setAuctionItem(mockAuctionItem);
-    }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [fetchedAuctionItem] = await getAuctionItem();
+        setAuctionItem(fetchedAuctionItem);
 
-    const handlePlaceBid = () => {
-        console.log('Place Bid clicked');
+        const fetchedBids = await getBids();
+        setBids(fetchedBids);
+
+        const fetchedUsers = await getAllUsers(); // Fetch all users
+        setUsers(fetchedUsers);
+      } catch (error) {
+        console.error('Error fetching auction data:', error);
+      }
     };
 
-    if (!auctionItem) {
-        return <Text>Loading auction item...</Text>;
-    }
+    fetchData();
+  }, []);
 
-    return (
-        <Container size="md" py="xl">
-            <AuctionCard auctionItem={auctionItem} timeLeft={3600} onBidClick={handlePlaceBid} minimumIncrement={minimumIncrement} />
-        </Container>
-    );
+  const handlePlaceBid = () => {
+    console.log('Place Bid clicked');
+    
+  };
+
+  if (!auctionItem) {
+    return <Text>Loading auction item...</Text>;
+  }
+
+  return (
+    <Container size="md" py="xl">
+      <AuctionCard
+        auctionItem={auctionItem}
+        timeLeft={3600}
+        onBidClick={handlePlaceBid}
+        minimumIncrement={minimumIncrement}
+      />
+      <Leaderboard bids={bids.filter(bid => bid.product_id === auctionItem.product_id)} users={users} />
+    </Container>
+  );
 }
-

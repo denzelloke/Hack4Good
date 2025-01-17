@@ -14,7 +14,7 @@ const getUserId = async () => {
 
 export const getAllProducts = async () => {
   const client = getClient();
-  const { data, error } = await client.from("products").select();
+  const { data, error } = await client.from("products").select().eq("is_auction_item",false);
   if (error) throw error;
   return data;
 };
@@ -128,3 +128,32 @@ export const getTransactionDetail = async () => {
 export const getProductCount = () => getRowCount('products');
 export const getUserCount = () => getRowCount('users');
 export const getVoucherCount = () => getRowCount('vouchers');
+
+export const getAuctionItem = async () => {
+  const client = getClient();
+  const { data, error } = await client.from("products").select().eq("is_auction_item",true);
+  if (error) throw error;
+  return data;
+};
+
+
+export const getAllUsers = async () => {
+  const client = getClient();
+  const { data, error } = await client
+    .from("users")
+    .select("*") // Fetch all columns or specify the ones you need
+      
+  if (error) {
+    console.error("Error fetching non-admin users:", error);
+    throw error;
+  }
+
+  return data;
+};
+
+export const getBids = async () => {
+  const client = getClient();
+  const { data, error } = await client.from("bids").select();
+  if (error) throw error;
+  return data;
+};

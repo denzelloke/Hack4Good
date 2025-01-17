@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Grid, Text, Modal, Divider, } from '@mantine/core';
+import { Container, Grid, Text, Modal, } from '@mantine/core';
 import { ProductCard } from '../../components/userComponents/marketComponents/ProductCard';
 import { SearchNav } from '../../components/userComponents/SearchNav';
 import { RecommendedFilters } from '../../components/userComponents/RecommendedFilters';
