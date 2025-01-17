@@ -1,38 +1,26 @@
 import { useEffect, useState } from "react";
-import { Table, Text, Select, TextInput, Badge, SegmentedControl } from "@mantine/core"; 
-import { Voucher } from "../../types"; 
+import { Table, Select, TextInput, Badge, SegmentedControl } from "@mantine/core";
+import { getTransactionDetail } from "../../backend/database"; // Updated import
 
 export default function Transactions() {
-  const [vouchers, setVouchers] = useState<Voucher[]>([]);
-  const [filteredVouchers, setFilteredVouchers] = useState<Voucher[]>([]);
+  const [vouchers, setVouchers] = useState<any[]>([]); // Updated for joined data
+  const [filteredVouchers, setFilteredVouchers] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>(""); 
-  const [searchBy, setSearchBy] = useState<"user_id" | "product_id">("user_id"); 
-  const [statusFilter, setStatusFilter] = useState<"all" | "claimed" | "valid">("all"); 
+  const [searchBy, setSearchBy] = useState<"username" | "product_name">("username"); // Updated search fields
+  const [statusFilter, setStatusFilter] = useState<"all" | "claimed" | "valid">("all");
 
   useEffect(() => {
-    // Adding two dummy vouchers for editing purpose
-    const dummyVouchers: Voucher[] = [
-      {
-        id: "1",
-        user_id: "user1",
-        product_id: "prod1",
-        points: 10,
-        created_at: new Date().toISOString(),
-        claimed_on: new Date().toISOString(),
-      },
-      {
-        id: "2",
-        user_id: "user2",
-        product_id: "prod2",
-        points: 20,
-        created_at: new Date().toISOString(),
-        claimed_on: "", // This voucher is not claimed
-      },
-    ];
+    async function fetchTransactionDetails() {
+      try {
+        const transactionDetails = await getTransactionDetail(); // Fetch joined data
+        setVouchers(transactionDetails);
+        setFilteredVouchers(transactionDetails); // Initialize with all vouchers
+      } catch (error) {
+        console.error("Failed to fetch transaction details:", error);
+      }
+    }
 
-    // Set the dummy vouchers state
-    setVouchers(dummyVouchers);
-    setFilteredVouchers(dummyVouchers); 
+    fetchTransactionDetails();
   }, []);
 
   // Helper function to format dates
@@ -42,116 +30,118 @@ export default function Transactions() {
     return newDate.toLocaleDateString(); // Returns date in format "MM/DD/YYYY"
   };
 
-  // Function to handle the search functionality
+  // Handle search and status filters
   const handleSearch = (term: string) => {
     setSearchTerm(term);
-    filterVouchers(term, statusFilter); 
+    filterVouchers(term, statusFilter);
   };
 
-  // Function to filter vouchers by search term and status
   const filterVouchers = (term: string, status: "all" | "claimed" | "valid") => {
     let filtered = vouchers.filter((voucher) => {
-      // Filter by search term
-      if (searchBy === "user_id" && !voucher.user_id.toLowerCase().includes(term.toLowerCase())) {
+      // Search by username or product_name
+      if (searchBy === "username" && !voucher.users.username.toLowerCase().includes(term.toLowerCase())) {
         return false;
       }
-      if (searchBy === "product_id" && !voucher.product_id.toLowerCase().includes(term.toLowerCase())) {
+      if (searchBy === "product_name" && !voucher.products.name.toLowerCase().includes(term.toLowerCase())) {
         return false;
       }
-
-      return true; // Voucher passes search term checks
+      return true;
     });
 
     // Filter by status
     if (status === "claimed") {
-      filtered = filtered.filter((voucher) => voucher.claimed_on !== "");
+      filtered = filtered.filter((voucher) => voucher.claimed_on !== null && voucher.claimed_on !== "");
     } else if (status === "valid") {
-      filtered = filtered.filter((voucher) => voucher.claimed_on === "");
+      filtered = filtered.filter((voucher) => !voucher.claimed_on);
     }
 
-    setFilteredVouchers(filtered); // Update filtered vouchers
-  };
-
-  // Function to determine the status of the voucher
-  const getStatus = (claimedOn: string) => {
-    const badgeStyle = {
-      display: "inline-block",
-      margin: "auto",
-      width: "80px", // Set a fixed width for consistent sizing
-      textAlign: "center", // Center text within the badge
-    };
-  
-    return claimedOn ? (
-      <Badge color="gray" variant="outline" style={badgeStyle}>
-        Claimed
-      </Badge> // Grey for claimed vouchers
-    ) : (
-      <Badge color="blue" variant="outline" style={badgeStyle}>
-        Valid
-      </Badge> // Blue for valid vouchers
-    );
+    setFilteredVouchers(filtered);
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <Text size="xl" fw={700} mb="lg">
-        Voucher List
-      </Text>
+    <div>
+      {/* Filter Controls */}
+      <div style={{ marginBottom: "20px", display: "flex", alignItems: "center", gap: "15px" }}>
+        <Select
+          value={searchBy}
+          onChange={(value) => setSearchBy(value as "username" | "product_name")}
+          data={[
+            { value: "username", label: "Search by Username" },
+            { value: "product_name", label: "Search by Product Name" },
+          ]}
+        />
+        <TextInput
+          value={searchTerm}
+          onChange={(e) => handleSearch(e.target.value)}
+          placeholder="Search"
+          style={{ width: "250px" }}
+        />
+        <SegmentedControl
+          value={statusFilter}
+          onChange={(value) => {
+            setStatusFilter(value as "all" | "claimed" | "valid");
+            filterVouchers(searchTerm, value as "all" | "claimed" | "valid");
+          }}
+          data={[
+            { label: "Claimed", value: "claimed" },
+            { label: "All", value: "all" },
+            { label: "Valid", value: "valid" },
+          ]}
+        />
+      </div>
 
-      {/* Search bar and dropdown */}
-      <div style={{ marginBottom: "20px", display: "flex", alignItems: "center", gap: "20px" }}>
-  <Select
-    value={searchBy}
-    onChange={setSearchBy}
-    data={[
-      { value: "user_id", label: "Search by User ID" },
-      { value: "product_id", label: "Search by Product ID" },
-    ]}
-    style={{ minWidth: "200px" }} // Ensure consistent width
-  />
-  <TextInput
-    value={searchTerm}
-    onChange={(e) => handleSearch(e.target.value)}
-    placeholder="Search"
-    style={{ flexGrow: 1, maxWidth: "300px" }} // Allow flexibility
-  />
-  <SegmentedControl
-    value={statusFilter}
-    onChange={(value) => {
-      setStatusFilter(value as "all" | "claimed" | "valid");
-      filterVouchers(searchTerm, value as "all" | "claimed" | "valid"); // Filter when status is changed
-    }}
-    data={[
-      { label: "Claimed", value: "claimed" },
-      { label: "All", value: "all" },
-      { label: "Valid", value: "valid" },
-    ]}
-    style={{ flexShrink: 0 }} // Ensure consistent size
-  />
-</div>
-
-      {/* Table displaying vouchers */}
-      <Table striped highlightOnHover withColumnBorders>
+      {/* Table */}
+      <Table striped
+        highlightOnHover
+        verticalSpacing="md"
+        horizontalSpacing="lg"
+        style={{
+          width: "100%",
+          tableLayout: "fixed",
+        }}>
         <thead style={{ backgroundColor: "#f5f7fa", borderRadius: "8px" }}>
-          <tr>
-            <th style={{ textAlign: "center" }}>Voucher ID</th>
-            <th style={{ textAlign: "center" }}>User ID</th>
-            <th style={{ textAlign: "center" }}>Product ID</th>
-            <th style={{ textAlign: "center" }}>Points</th>
-            <th style={{ textAlign: "center" }}>Claimed On</th>
-            <th style={{ textAlign: "center" }}>Status</th>
+          <tr
+          >
+            <th>User</th>
+            <th>Product</th>
+            <th>Points</th>
+            <th>Claimed On</th>
+            <th>Status</th>
           </tr>
-        </thead>
-        <tbody>
-          {filteredVouchers.map((voucher) => (
-            <tr key={voucher.id}>
-              <td style={{ textAlign: "center" }}>{voucher.id}</td>
-              <td style={{ textAlign: "center" }}>{voucher.user_id}</td>
-              <td style={{ textAlign: "center" }}>{voucher.product_id}</td>
-              <td style={{ textAlign: "center" }}>{voucher.points}</td>
-              <td style={{ textAlign: "center" }}>{formatDate(voucher.claimed_on)}</td>
-              <td style={{ textAlign: "center" }}>
-                {getStatus(voucher.claimed_on)}
+        </thead >
+        <tbody >
+          {filteredVouchers.map((voucher, index) => (
+            <tr key={voucher.id}
+                style={{
+                  backgroundColor: index % 2 === 0 ? "#ffffff" : "#f9f9f9",
+                  borderRadius: "8px",
+                  boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
+            >
+              <td style={{ textAlign: "center", padding: "8px 12px" }}>{voucher.users.username}</td>
+              <td style={{ textAlign: "center", padding: "8px 12px" }}>{voucher.products.name}</td>
+              <td style={{ textAlign: "center", padding: "8px 12px" }}>{voucher.points}</td>
+              <td style={{ textAlign: "center", padding: "8px 12px" }}>{formatDate(voucher.claimed_on)}</td>
+              <td style={{ textAlign: "center", padding: "8px 12px" }}>
+                {voucher.claimed_on ? (
+                  <Badge
+                  size="md"
+                  color="gray"
+                  variant="outline"
+                  style={{ width: "80px", textAlign: "center" }} // Fixed width and centered text
+                >
+                  Claimed
+                </Badge>
+                ) : (
+                <Badge
+                  size="sm"
+                  color="blue"
+                  variant="outline"
+                  style={{ width: "80px", textAlign: "center" }} // Fixed width and centered text
+                >
+                  Valid
+                </Badge>
+                )}
               </td>
             </tr>
           ))}
