@@ -1,5 +1,7 @@
 import { getClient } from "./supabase";
 import { CartItem, Product } from "../types";
+import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
+import { IconPointerSearch } from "@tabler/icons-react";
 
 const getUserId = async () => {
   const client = getClient();
@@ -103,6 +105,25 @@ const getRowCount = async (table: string) => {
   .select('*', { count: 'exact', head: true })
   return count;
 }
+
+export const getTransactionDetail = async () => {
+  const client = getClient();
+  try {
+    const {data, error} = await client.from('vouchers').select(`
+      id,
+      points,
+      claimed_on,
+      products:product_id (id, name),
+      users:user_id (id, username)
+    `);
+
+    if(error) throw error;
+
+    return data;
+} catch (error) {
+  throw error;
+}
+};
 
 export const getProductCount = () => getRowCount('products');
 export const getUserCount = () => getRowCount('users');
