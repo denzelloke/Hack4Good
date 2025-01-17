@@ -63,7 +63,6 @@ export default function Inventory() {
         break; // "none" does not sort
     }
 
-    console.log('setfilteredProduct',filteredProducts, filtered);
     setFilteredProducts(filtered);
   }, [selectedCategory, stockFilter, sortOption, products]); // Re-run when any of these values change
 

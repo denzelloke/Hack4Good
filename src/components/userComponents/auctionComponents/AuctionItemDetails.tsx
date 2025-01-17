@@ -12,7 +12,7 @@ function AuctionItemDetails({ name, description, currentBid }: AuctionItemDetail
             <Group style={{ justifyContent: 'space-between', marginTop: '16px', marginBottom: '8px' }}>
                 <Title order={2}>{name}</Title>
                 <Badge style={{ backgroundColor: 'green', fontSize: '1rem' }}>
-                    Current Bid: {currentBid} credits
+                    Current Bid: {currentBid} points
                 </Badge>
             </Group>
             <Text size="sm" color="dimmed">

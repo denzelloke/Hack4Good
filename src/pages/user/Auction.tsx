@@ -8,7 +8,7 @@ import AuctionCard from '../../components/userComponents/auctionComponents/Aucti
 import Leaderboard from '../../components/userComponents/auctionComponents/Leaderboard';
 
 export default function AuctionPage() {
-  const minimumIncrement = 10; // should be changeable by admin
+  const minimumIncrement = 10; 
   const [auctionItem, setAuctionItem] = useState<AuctionItem | null>(null);
   const [bids, setBids] = useState<AuctionBid[]>([]); // Updated type to array
   const [users, setUsers] = useState<User[]>([]); // Add users state
@@ -33,7 +33,6 @@ export default function AuctionPage() {
   }, []);
 
   const handlePlaceBid = async (bid : number) => {
-    console.log('Place Bid clicked', bid);
     if (!auctionItem || !auctionItem.id){
       throw new Error("Cannot placed bid yet.");
     }
@@ -51,8 +50,6 @@ export default function AuctionPage() {
   if (!auctionItem) {
     return <Text>Loading auction item...</Text>;
   }
-
-  console.log('prefilter bids',bids);
 
   return (
     <Container size="md" py="xl">
