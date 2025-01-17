@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Grid, Text, Modal } from '@mantine/core';
+import { Container, Grid, Text, Modal, Divider, } from '@mantine/core';
 import { ProductCard } from '../../components/marketComponents/ProductCard';
 import { SearchNav } from '../../components/SearchNav';
 import { RecommendedFilters } from '../../components/RecommendedFilters';
@@ -62,6 +62,21 @@ export default function Market() {
 
   return (
     <Container size="xl" py="xl">
+
+    <Text
+    fw={900}
+    style={{
+      fontSize: '25px', // Make the font size larger
+      color: 'black', // A strong color for the title
+      textAlign: 'left', // Center the title
+      letterSpacing: '1px', // Add slight spacing between letters for a more refined look
+      textTransform: 'uppercase', // Make the text uppercase for emphasis
+      fontFamily: 'Arial, sans-serif', // Use a clean, modern font
+    }}>
+      Welcome to the Market!
+    </Text>
+
+    <Divider mb="md"/>
       <SearchNav searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       <RecommendedFilters
         selectedCategory={selectedCategory}

@@ -3,17 +3,22 @@ import { NavLink } from 'react-router-dom';
 
 export function LogoutButton() {
   return (
-    <Button
+    <Button  
+      
+      radius="md"
       component={NavLink}
       to="/login"
       color="blue"
       variant="filled"
+      size="regular-md"
       style={{
         position: 'relative',
-        top: '50px',
+        top: '30px',
+        
       }}
     >
       LOGOUT
     </Button>
   );
 }
+

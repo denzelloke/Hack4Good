@@ -1,8 +1,11 @@
+// Cart.tsx
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, Text, Group, Button, Divider, Grid, Card, Image, Select, } from '@mantine/core';
+import { Container, Text, Divider, Grid } from '@mantine/core';
 import { RootState } from '../../store'; // Import RootState from your store file
 import { removeFromCart, updateQuantity, clearCart } from '../../slices/cartSlice';
-import { purchaseVouchers } from '../../backend/database'
+import { purchaseVouchers } from '../../backend/database';
+import { CartList } from '../../components/cartComponents/CartList';
+import { OrderSummary } from '../../components/cartComponents/OrderSummary';
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -29,9 +32,21 @@ export default function Cart() {
 
   return (
     <Container size="lg" py="xl">
-      <Text size="xl" fw={700} mb="lg">
-        Your Cart
-      </Text>
+      <Text
+  size="xl"
+  fw={900} // Make the font weight heavier to give it more presence
+  mb="lg"
+  style={{
+    fontSize: '25px', // Make the font size larger
+    color: 'black', // A strong color for the title
+    textAlign: 'left', // Center the title
+    letterSpacing: '1px', // Add slight spacing between letters for a more refined look
+    textTransform: 'uppercase', // Make the text uppercase for emphasis
+    fontFamily: 'Arial, sans-serif', // Use a clean, modern font
+  }}
+>
+  Your Cart
+</Text>
 
       <Divider mb="md" />
 
@@ -40,79 +55,23 @@ export default function Cart() {
         <Grid.Col span={8}>
           <div>
             {cart.map((item) => (
-              <Card key={item.id} mb="md" shadow="sm">
-                <Group>
-                  <Image src={item.img} alt={item.name} width={80} height={80} />
-                  <div>
-                    <Text fw={500} size="lg">
-                      {item.name}
-                    </Text>
-                    <Text size="sm">{item.description}</Text>
-                    <Text size="sm" mt="sm">
-                      <strong>Category:</strong> {item.category}
-                    </Text>
-                    <Group mt="sm" justify="space-between" align="center">
-                      <Group align="center">
-                        <Text size="sm" fw={500} mr="sm">
-                          Quantity:
-                        </Text>
-                        <Select
-                          value={String(item.quantity)}
-                          onChange={(value) => handleUpdateQuantity(item.id, parseInt(value || '1', 10))}
-                          data={Array.from({ length: item.stock }, (_, index) => ({
-                            value: String(index + 1),
-                            label: `${index + 1}`,
-                          }))}
-                          style={{ width: 80 }}
-                        />
-                      </Group>
-
-                      <Button
-                        color="red"
-                        variant="outline"
-                        size="xs"
-                        onClick={() => handleRemoveItem(item.id)}
-                      >
-                        Remove
-                      </Button>
-                    </Group>
-                  </div>
-                </Group>
-
-                <Divider my="sm" />
-
-                <Group justify="space-between" mt="md">
-                  <Text size="md">
-                    <strong>Points: </strong> {item.points ? item.points.toFixed(2) : 'N/A'}
-                  </Text>
-                  <Text size="md">
-                    <strong>Total: </strong> {(item.points * item.quantity).toFixed(2)}
-                  </Text>
-                </Group>
-              </Card>
+              <CartList
+                key={item.id}
+                item={item}
+                handleUpdateQuantity={handleUpdateQuantity}
+                handleRemoveItem={handleRemoveItem}
+              />
             ))}
           </div>
         </Grid.Col>
 
         {/* Right side - Order Summary */}
         <Grid.Col span={4}>
-          <Card shadow="sm" padding="md">
-            <Text size="lg" fw={700} mb="sm">
-              Order Summary
-            </Text>
-            <Group justify="space-between" mb="md">
-              <Text size="md" fw={500}>
-                Subtotal ({itemCount} items)
-              </Text>
-              <Text size="md" fw={500}>
-                Total: {totalPoints.toFixed(2)}
-              </Text>
-            </Group>
-            <Divider mb="md" />
-            <Button fullWidth color="blue" size="md" onClick={handleCheckout}>
-              Checkout
-            </Button>
-          </Card>
+          <OrderSummary
+            itemCount={itemCount}
+            totalPoints={totalPoints}
+            handleCheckout={handleCheckout}
+          />
         </Grid.Col>
       </Grid>
     </Container>

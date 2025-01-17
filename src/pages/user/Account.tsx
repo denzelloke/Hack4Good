@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getUser, getVoucher, getProduct } from '../../backend/database';
 import { User, Voucher, Product } from '../../types';
-import { Container, Box } from '@mantine/core';
+import { Container, Box, Text, Divider } from '@mantine/core';
 import { ProfileCard } from '../../components/accountComponents/ProfileCard';
 import { VoucherFilter } from '../../components/accountComponents/VoucherFilter';
 import { VoucherCard } from '../../components/accountComponents/VoucherCard';
@@ -39,25 +39,45 @@ export default function Account() {
   }
 
   return (
+
     <Container size="sm" mt="lg">
       
-      <ProfileCard user={user} />
+        <Text
+        fw={900}
+        style={{
+          fontSize: '25px',
+          color: 'black', 
+          textAlign: 'left',
+          letterSpacing: '1px',
+          textTransform: 'uppercase',
+          fontFamily: 'Arial, sans-serif',
+        }}>
+          MY ACCOUNT
+        </Text>
+        <Divider mb="md"/>
 
+
+      <Box mb="lg">
+       <ProfileCard user={user} />
+      </Box>
+
+
+      <Box>
+        <VoucherFilter filter={filter} setFilter={setFilter} />
       
-      
-      <VoucherFilter filter={filter} setFilter={setFilter} />
-      
-      <Box mt="lg">
-        {filteredVouchers.map((voucher) => {
-          const product = products.find((prod) => prod.id === String(voucher.product_id));
-          return (
-            <VoucherCard
-              key={voucher.id}
-              voucher={voucher}
-              product={product}
-            />
-          );
-        })}
+        <Box mt="lg">
+          {filteredVouchers.map((voucher) => {
+            const product = products.find((prod) => prod.id === String(voucher.product_id));
+           return (
+              <VoucherCard
+                key={voucher.id}
+                voucher={voucher}
+                product={product}
+             />
+            );
+          })}
+        </Box>
+
       </Box>
 
     </Container>

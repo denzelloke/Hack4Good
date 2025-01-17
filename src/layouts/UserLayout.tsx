@@ -7,7 +7,6 @@ import {
   rem,
   Tooltip,
   Image,
-  Box
 } from "@mantine/core";
 import {
   IconShoppingCart,
@@ -17,9 +16,23 @@ import {
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
+import { getUser } from '../backend/database';
+import { User } from '../types';
+import { useState, useEffect } from 'react';
 
 export default function UserLayout() {
   const { session, loading, isAdmin } = useAuth();
+  const [user, setUser] = useState<User | null>(null);
+
+  // Fetch user data on component load
+  useEffect(() => {
+    const fetchData = async () => {
+      const [fetchedUser] = await getUser();
+      setUser(fetchedUser);
+    };
+
+    fetchData();
+  }, []);
 
   const cart: any = useSelector((state: RootState) => state.cart);
   const cartItemCount = cart.items.reduce(
@@ -36,24 +49,37 @@ export default function UserLayout() {
     return <Navigate to={isAdmin ? "/admin" : "/login"} replace />;
   }
 
+
   return (
     <AppShell header={{ height: 60 }} padding="md">
-        <AppShell.Header>
+      <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
           <Image 
-              src="/assets/Logo.png"  
-              alt="Logo" 
-              width={110}  // Adjust the width as needed
-              height={60}  // Adjust the height as needed
-              style={{ cursor: 'pointer' }}
-            />
+            src="/assets/Logo.png"  
+            alt="Logo" 
+            width={110}  // Adjust the width as needed
+            height={60}  // Adjust the height as needed
+            style={{ cursor: 'pointer' }}
+          />
 
           {/* Navigation */}
           <Group gap={rem(32)}>
-
-            <Box>
-              MASKED WALLET
-            </Box>
+          
+            <Badge 
+            variant="outline" 
+            radius="sm" 
+            color="#390961" 
+            size="lg"
+            style={{
+              position: 'relative',
+              bottom: '3px',
+              left: '5px',
+              outline: '2px solid #6b26a3',
+            }}
+            >
+              Points: {user ? user.points : 'Loading...'}
+            </Badge>
+           
 
             <Tooltip label="Mart">
               <NavLink to="/">
@@ -106,7 +132,5 @@ export default function UserLayout() {
         <Outlet />
       </AppShell.Main>
     </AppShell>
-
-    
   );
 }
