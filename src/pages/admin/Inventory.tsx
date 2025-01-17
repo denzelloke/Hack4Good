@@ -38,14 +38,11 @@ export default function Inventory() {
       );
     }
 
-    console.log('before filtering', filtered);
     // Filter by stock status
     if (stockFilter === "in-stock") {
       filtered = filtered.filter((product) => product.stock > 0);
-      console.log('after filtering for in-stock', filtered);
     } else if (stockFilter === "not-in-stock") {
       filtered = filtered.filter((product) => product.stock === 0);
-      console.log('after filtering for out-of-stock', filtered);
     }
 
     // Sort products based on selected sort option

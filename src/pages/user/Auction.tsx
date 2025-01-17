@@ -34,6 +34,7 @@ export default function AuctionPage() {
 
   const handlePlaceBid = () => {
     console.log('Place Bid clicked');
+    
   };
 
   if (!auctionItem) {
