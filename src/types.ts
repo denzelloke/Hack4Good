@@ -44,4 +44,7 @@ export interface Voucher {
 export interface AuctionItem extends Product {
   currentBid: number;
   auctionEndTime: string;
+  name: string;
+  description: string;
+  url: string;
 }

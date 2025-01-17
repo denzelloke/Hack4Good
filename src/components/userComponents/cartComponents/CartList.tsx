@@ -1,6 +1,5 @@
-import { Card, Group, Image, Text, Select, Button, Tooltip, Modal } from '@mantine/core';
+import { Card, Group, Text, Select, Button, Tooltip, Modal } from '@mantine/core';
 import { useState } from 'react';
-import { getImageUrl } from '../../../backend/storage';
 
 interface CartItemProps {
   item: any; // Replace 'any' with your cart item type
@@ -39,14 +38,7 @@ export function CartList({ item, handleUpdateQuantity, handleRemoveItem }: CartI
       }}
     >
       <Group align="flex-start">
-        <Text
-          style={{
-            borderRadius: '8px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-            maxHeight: '40px',
-            maxWidth: '40px'
-          }}
-        >{item.name} </Text>
+
         <div style={{ flex: 1 }}>
           <Text fw={600} size="lg" style={{ color: '#333' }}>
             {item.name}
