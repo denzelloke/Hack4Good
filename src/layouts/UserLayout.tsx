@@ -3,7 +3,6 @@ import { Navigate, Outlet, NavLink } from "react-router-dom";
 import {
   AppShell,
   Group,
-  Text,
   Badge,
   rem,
   Tooltip,

@@ -1,7 +1,7 @@
 //version 4.0: voucher filter
 
 import { useState, useEffect } from 'react';
-import { getUser, getVoucher, getProduct } from '../../backend/database';
+import { getUser, getVoucher, getAllProducts } from '../../backend/database';
 import { User, Voucher, Product } from '../../types';
 import { Container, Box, Text, Button, Card, Select } from '@mantine/core';
 import { NavLink } from "react-router-dom";
@@ -22,7 +22,7 @@ export default function Account() {
       const userVouchers = allVouchers.sort((a, b) => b.created_at - a.created_at);
       setVouchers(userVouchers);
 
-      const allProducts = await getProduct();
+      const allProducts = await getAllProducts();
       setProducts(allProducts);
     };
 
