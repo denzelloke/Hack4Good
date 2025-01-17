@@ -39,16 +39,14 @@ export function CartList({ item, handleUpdateQuantity, handleRemoveItem }: CartI
       }}
     >
       <Group align="flex-start">
-        <Image
-          src={getImageUrl(item.url)}
-          alt={item.name}
+        <Text
           style={{
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
             maxHeight: '40px',
             maxWidth: '40px'
           }}
-        />
+        >{item.name} </Text>
         <div style={{ flex: 1 }}>
           <Text fw={600} size="lg" style={{ color: '#333' }}>
             {item.name}
