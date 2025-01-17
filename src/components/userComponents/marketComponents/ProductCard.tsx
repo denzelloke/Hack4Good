@@ -2,6 +2,7 @@
 import { Card, Image, Text, Group, Button, rem, Divider, } from '@mantine/core';
 import { useState } from 'react';
 import { Product } from '../../../types';
+import { getImageUrl } from '../../../backend/storage';
 
 interface ProductCardProps {
   product: Product;
@@ -36,7 +37,7 @@ export function ProductCard({ product, onClick }: ProductCardProps) {
     >
       <Card.Section>
         <Image
-          src={product.img}
+          src={getImageUrl(product.url)}
           height={200}
           alt={product.name}
           style={{

@@ -5,6 +5,7 @@ export interface Product {
   img: string;
   points: number;
   stock: number;
+  url: string;
   category: string;
 }
 
@@ -39,4 +40,9 @@ export interface Voucher {
   points: number;
   created_at: any;
   claimed_on: any;
+}
+
+export interface AuctionItem extends Product {
+  currentBid: number;
+  auctionEndTime: string;
 }

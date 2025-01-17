@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Product } from '../../../types';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { getImageUrl } from '../../../backend/storage';
 
 interface ProductModalProps {
   product: Product | null;
@@ -75,7 +76,7 @@ export function ProductModal({
             {quantity} {product.name} added to cart
           </Text>
           <Image
-            src={product.img}
+            src={getImageUrl(product.img)}
             alt={product.name}
             style={{
               border: '5px solid #007bff', 
