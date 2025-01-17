@@ -77,7 +77,6 @@ export default function Market() {
 
   return (
     <div>
-    {auctionItem && <AuctionBanner product={auctionItem} />}
 
     <Container size="xl" py="xl">
       <SearchNav searchQuery={searchQuery} onSearchChange={setSearchQuery} />
