@@ -102,7 +102,7 @@ export default function Market() {
       </Modal>
 
       {/* Use the RequestProductButton Component */}
-      <RequestProductButton onClick={openRequestModal} />
+      <RequestProductButton label="Request a product" onClick={openRequestModal} />
     </Container>
   );
 }

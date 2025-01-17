@@ -1,6 +1,5 @@
 import { getClient } from "./supabase";
-import { CartItem } from "../types";
-
+import { CartItem, Product } from "../types";
 
 export const getAllProducts = async () => {
   const client = getClient();
@@ -54,4 +53,20 @@ export const claimVoucher = async (id : string) => {
   const client = getClient();
   const { error } = await client.from("vouchers").update({claimed_on: new Date().toISOString()}).eq("id",id);
   if (error) throw error;
+}
+
+export const createProduct = (newProduct: Product) => {
+  return;
+}
+
+export const deleteProduct = (productId: string) => {
+  return;
+}
+
+export const updateProductStock = (productId: string, newStock: number) => {
+  return;
+}
+
+export const updateUserPoints = (userId: string, newPoints: number) => {
+  return;
 }

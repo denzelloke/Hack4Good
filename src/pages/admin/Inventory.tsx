@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Product } from "../../types";
 import { getAllProducts } from "../../backend/database";
-import { Modal, Button } from "@mantine/core";
+import { Modal } from "@mantine/core";
+import { updateProductStock, deleteProduct, createProduct } from "../../backend/database";
 import InventoryProduct from "../../components/adminComponents/inventoryComponents/InventoryProduct";
 import SearchSortFilter from "../../components/adminComponents/inventoryComponents/SearchSortFilter";
 import InventoryTable from "../../components/adminComponents/inventoryComponents/InventoryTable";
 import ProductAddForm from "../../components/adminComponents/inventoryComponents/ProductAddForm";
+import RequestProductButton from "../../components/userComponents/marketComponents/RequestProductButton";
 
 export default function Inventory() {
   const [products, setProducts] = useState<Product[]>([]); // Initializing with an empty array
@@ -30,7 +32,9 @@ export default function Inventory() {
 
     // Filter by selected category
     if (selectedCategory) {
-      filtered = filtered.filter((product) => product.category === selectedCategory);
+      filtered = filtered.filter(
+        (product) => product.category === selectedCategory
+      );
     }
 
     // Filter by stock status
@@ -62,7 +66,9 @@ export default function Inventory() {
   }, [selectedCategory, stockFilter, sortOption, products]); // Re-run when any of these values change
 
   // Get unique categories for filter options
-  const categories = Array.from(new Set(products.map((product) => product.category)));
+  const categories = Array.from(
+    new Set(products.map((product) => product.category))
+  );
 
   const handleOpenModal = (product: Product) => {
     setSelectedProduct(product);
@@ -80,12 +86,16 @@ export default function Inventory() {
       p.id === product.id ? { ...p, stock: change } : p
     );
     setProducts(updatedProducts);
+    updateProductStock(product.id, change);
   };
 
   // Function to delete the product
   const handleDelete = (productId: string) => {
-    const updatedProducts = products.filter((product) => product.id !== productId);
+    const updatedProducts = products.filter(
+      (product) => product.id !== productId
+    );
     setProducts(updatedProducts); // Update the state by removing the product
+    deleteProduct(productId);
   };
 
   const handleOpenAddProductModal = () => {
@@ -114,23 +124,20 @@ export default function Inventory() {
         categories={categories}
       />
 
-<Modal 
-      opened={isAddFormOpen}
-      onClose={handleCloseAddProductModal}
-      title="Add a Product"
-      size="lg"
+      <Modal
+        opened={isAddFormOpen}
+        onClose={handleCloseAddProductModal}
+        title="Add a Product"
+        size="lg"
       >
-        <ProductAddForm onSubmit={(data) => {
-          //Handle submission
-          console.log('Product request data:', data);
-          handleCloseAddProductModal();
-        }} />
+        <ProductAddForm
+          onSubmit={(data) => {
+            //Handle submission
+            console.log("Product request data:", data);
+            handleCloseAddProductModal();
+          }}
+        />
       </Modal>
-
-      {/* Use the RequestProductButton Component */}
-      <Button onClick={handleOpenAddProductModal}>
-        Add a Product
-      </Button>
 
       <InventoryTable
         filteredProducts={filteredProducts}
@@ -139,10 +146,18 @@ export default function Inventory() {
         handleDelete={handleDelete}
       />
       {openedModal && selectedProduct && (
-        <InventoryProduct opened={openedModal} onClose={handleCloseModal} product={selectedProduct} />
+        <InventoryProduct
+          opened={openedModal}
+          onClose={handleCloseModal}
+          product={selectedProduct}
+        />
       )}
 
-
+      {/* Use the RequestProductButton Component */}
+      <RequestProductButton
+        onClick={handleOpenAddProductModal}
+        label="Add a Product"
+      />
     </div>
   );
 }

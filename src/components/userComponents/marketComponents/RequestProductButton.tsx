@@ -2,10 +2,11 @@ import React from 'react';
 import { Button, Box } from '@mantine/core';
 
 interface RequestProductButtonProps {
+  label: string;
   onClick: () => void;
 }
 
-const RequestProductButton: React.FC<RequestProductButtonProps> = ({ onClick }) => {
+const RequestProductButton: React.FC<RequestProductButtonProps> = ({ label, onClick }) => {
   return (
     <Box
       style={{
@@ -35,7 +36,7 @@ const RequestProductButton: React.FC<RequestProductButtonProps> = ({ onClick }) 
           e.currentTarget.style.boxShadow = '0px 4px 12px rgba(0, 0, 0, 0.2)'; // Reset shadow
         }}
       >
-        Request a Product
+        {label}
       </Button>
     </Box>
   );
