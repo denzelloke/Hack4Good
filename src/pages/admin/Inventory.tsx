@@ -38,11 +38,14 @@ export default function Inventory() {
       );
     }
 
+    console.log('before filtering', filtered);
     // Filter by stock status
     if (stockFilter === "in-stock") {
       filtered = filtered.filter((product) => product.stock > 0);
-    } else if (stockFilter === "out-of-stock") {
+      console.log('after filtering for in-stock', filtered);
+    } else if (stockFilter === "not-in-stock") {
       filtered = filtered.filter((product) => product.stock === 0);
+      console.log('after filtering for out-of-stock', filtered);
     }
 
     // Sort products based on selected sort option
@@ -63,6 +66,7 @@ export default function Inventory() {
         break; // "none" does not sort
     }
 
+    console.log('setfilteredProduct',filteredProducts, filtered);
     setFilteredProducts(filtered);
   }, [selectedCategory, stockFilter, sortOption, products]); // Re-run when any of these values change
 

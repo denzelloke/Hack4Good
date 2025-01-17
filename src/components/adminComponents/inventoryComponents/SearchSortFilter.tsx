@@ -52,9 +52,9 @@ const SearchSortFilter: React.FC<SearchSortFilterProps> = ({
         value={stockFilter}
         onChange={setStockFilter}
         data={[
-          { label: "Not In Stock", value: "not_in_stock" },
+          { label: "Not In Stock", value: "not-in-stock" },
           { label: "All", value: "all" },
-          { label: "In Stock", value: "in_stock" },
+          { label: "In Stock", value: "in-stock" },
         ]}
         style={{ maxWidth: "20%" }}
       />
@@ -66,10 +66,10 @@ const SearchSortFilter: React.FC<SearchSortFilterProps> = ({
         onChange={setSortOption}
         data={[
           { value: "", label: "None" },
-          { value: "points_asc", label: "Ascending Points" },
-          { value: "points_desc", label: "Descending Points" },
-          { value: "stock_asc", label: "Ascending Stock" },
-          { value: "stock_desc", label: "Descending Stock" },
+          { value: "points-asc", label: "Ascending Points" },
+          { value: "points-desc", label: "Descending Points" },
+          { value: "stock-asc", label: "Ascending Stock" },
+          { value: "stock-desc", label: "Descending Stock" },
         ]}
         style={{ maxWidth: "15%" }}
       />

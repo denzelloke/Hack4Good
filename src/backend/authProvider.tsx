@@ -60,7 +60,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     password: string,
     isAdmin: boolean
   ) => {
-    console.log("logging in with", username, password, isAdmin);
     const { data: authUserData } = await supabase
       .from("users")
       .select("email")
@@ -71,7 +70,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (!authUserData?.email) {
       throw new Error("Failed to retrieve email for this user.");
     }
-    console.log("Signing in with", authUserData.email, password);
     await supabase.auth.signInWithPassword({
       email: authUserData.email,
       password,
