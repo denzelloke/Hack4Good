@@ -4,12 +4,14 @@ Go to https://bbb-mini-mart.vercel.app/
 As the project is for a closed system (i.e. public users should not be able to access into it by creating an account), demo users will need to use the following credentials:
 
 ### User account
-Username: test_user
-Password: password
+**Username**: test_user
+
+**Password**: password
 
 ### Admin account
-Username: test_admin
-Password: password
+**Username**: test_admin
+
+**Password**: password
 
 # Documentation
 
