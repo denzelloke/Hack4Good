@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom';
 export function LogoutButton() {
   return (
     <Button  
-      
       radius="md"
       component={NavLink}
       to="/login"
@@ -14,7 +13,6 @@ export function LogoutButton() {
       style={{
         position: 'relative',
         top: '30px',
-        
       }}
     >
       LOGOUT

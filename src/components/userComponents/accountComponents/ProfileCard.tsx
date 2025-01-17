@@ -1,6 +1,7 @@
 import { Card, Image, Text, Badge, Group, rem } from '@mantine/core';
 import { User } from '../../../types';
 import { LogoutButton } from './LogoutButton';
+import { getImageUrl } from '../../../backend/storage';
 
 interface ProfileCardProps {
   user: User;
@@ -21,7 +22,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
            >
       <Card.Section>
         <Image
-          src="/assets/MWHLogo.jpg"
+          src={getImageUrl("MWHLogo.jpg")}
           height={200}
           alt="Muhammadiyah Welfare Home"
           style={{
