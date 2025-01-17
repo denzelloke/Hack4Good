@@ -1,6 +1,7 @@
 import { getClient } from "./supabase";
 import { CartItem } from "../types";
 
+
 export const getAllProducts = async () => {
   const client = getClient();
   const { data, error } = await client.from("products").select();
@@ -10,7 +11,12 @@ export const getAllProducts = async () => {
 
 export const getUser = async () => {
   const client = getClient();
-  const { data, error } = await client.from("users").select();
+  const { data : { user  } }  = await client.auth.getUser();
+  if (!user || !user.id){
+    throw new Error("User not found.");
+  }
+
+  const { data, error } = await client.from("users").select().eq("id",user.id);
   if (error) throw error;
   return data;
 };
@@ -26,4 +32,11 @@ export const getVoucher = async () => {
   const { data, error } = await client.from("vouchers").select();
   if (error) throw error;
   return data;
+}
+
+export const claimVoucher = async (id : string) => {
+  const client = getClient();
+  console.log("claimVoucher",id);
+  const { error } = await client.from("vouchers").update({claimed_on: new Date().toISOString()}).eq("id",id);
+  if (error) throw error;
 }

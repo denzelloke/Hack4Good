@@ -76,7 +76,7 @@ export function ProductModal({
             {quantity} {product.name} added to cart
           </Text>
           <Image
-            src={getImageUrl(product.img)}
+            src={getImageUrl(product.url)}
             alt={product.name}
             style={{
               border: '5px solid #007bff', 
@@ -97,7 +97,7 @@ export function ProductModal({
       ) : (
         <>
           <Image
-            src={product.img}
+            src={getImageUrl(product.url)}
             alt={product.name}
             style={{
               border: '5px solid #f1f1f1', 

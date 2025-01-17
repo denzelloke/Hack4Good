@@ -1,5 +1,6 @@
 import { Card, Box, Text, rem, Modal, Button, Group, Badge } from '@mantine/core';
 import { useState } from 'react';
+import { claimVoucher } from '../../../backend/database';
 import { Product, Voucher } from '../../../types';
 
 interface VoucherCardProps {
@@ -76,7 +77,7 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
             style={{
               width: '100px',
               height: '100px',
-              backgroundImage: `url(${product.img})`,
+              backgroundImage: `url(${product.url})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               borderRadius: '8px',
@@ -154,6 +155,7 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
             }}
             onClick={() => {
               voucher.claimed_on = Date(); // TODO: LINK TO DATABASE 
+              claimVoucher(voucher.id);
               setIsModalOpen(false);       // claiming auto closes modal
             }}
           >

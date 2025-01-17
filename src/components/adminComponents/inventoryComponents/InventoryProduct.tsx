@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Text, Group, Image, Button, Box, Divider, Stack } from "@mantine/core";
+import { Modal, Text, Group, Image, Button, Box, Stack } from "@mantine/core";
 import { Product } from "../../../types";
 
 interface InventoryProductProps {
@@ -25,7 +25,7 @@ const InventoryProduct: React.FC<InventoryProductProps> = ({ opened, onClose, pr
       >
         {/* Product Image */}
         <Image
-          src={product.img}
+          src={product.url}
           alt={product.name}
           width={200}
           height={200}
