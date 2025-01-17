@@ -20,12 +20,12 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<UserLayout />}>
             <Route index element={<Market />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/auction" element={<Auction />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="account" element={<Account />} />
+            <Route path="auction" element={<Auction />} />
           </Route>
           <Route path="/admin" element={<AdminLayout />}>
-            <Route path = "dashboard" element={<Dashboard />} />
+            <Route index element={<Dashboard />} />
             <Route path="inventory" element={<Inventory />} />
             <Route path ="people" element={<People />} />
             <Route path ="transactions" element={<Transactions />} />
