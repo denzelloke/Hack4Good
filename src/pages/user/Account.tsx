@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getUser, getVoucher, getProduct } from '../../backend/database';
+import { getUser, getVoucher, getAllProducts } from '../../backend/database';
 import { User, Voucher, Product } from '../../types';
 import { Container, Box, Text, Divider } from '@mantine/core';
 import { ProfileCard } from '../../components/userComponents/accountComponents/ProfileCard';
@@ -20,7 +20,7 @@ export default function Account() {
       const allVouchers = await getVoucher();
       setVouchers(allVouchers.sort((a, b) => b.created_at - a.created_at));
 
-      const allProducts = await getProduct();
+      const allProducts = await getAllProducts();
       setProducts(allProducts);
     };
 

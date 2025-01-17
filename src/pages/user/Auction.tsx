@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Text} from '@mantine/core';
-import AuctionCard, { AuctionItem } from "../../components/userComponents/auctionComponents/AuctionCard.tsx";
-
+import AuctionCard, { AuctionItem } from '../../components/userComponents/auctionComponents/AuctionCard';
 // Mock data for the auction item
 const mockAuctionItem: AuctionItem = {
     id: '1',

@@ -19,6 +19,7 @@ import { RootState } from "../store";
 import { getUser } from '../backend/database';
 import { User } from '../types';
 import { useState, useEffect } from 'react';
+import { getImageUrl } from "../backend/storage";
 
 export default function UserLayout() {
   const { session, loading, isAdmin } = useAuth();
@@ -49,38 +50,22 @@ export default function UserLayout() {
     return <Navigate to={isAdmin ? "/admin" : "/login"} replace />;
   }
 
-
   return (
     <AppShell header={{ height: 60 }} padding="md">
       <AppShell.Header>
         <Group h="100%" px="md" justify="space-between">
           <Image 
-            src="/assets/Logo.png"  
-            alt="Logo" 
-            width={110}  // Adjust the width as needed
-            height={60}  // Adjust the height as needed
-            style={{ cursor: 'pointer' }}
-          />
-
+              src={getImageUrl("Logo.png")}
+              alt="Logo"
+              style={{
+                objectFit: 'contain',    
+                maxWidth: '100%',        
+                maxHeight: 60,          
+                width: 'auto',           
+              }} 
+            />
           {/* Navigation */}
           <Group gap={rem(32)}>
-          
-            <Badge 
-            variant="outline" 
-            radius="sm" 
-            color="#390961" 
-            size="lg"
-            style={{
-              position: 'relative',
-              bottom: '3px',
-              left: '5px',
-              outline: '2px solid #6b26a3',
-            }}
-            >
-              Points: {user ? user.points : 'Loading...'}
-            </Badge>
-           
-
             <Tooltip label="Mart">
               <NavLink to="/">
                 <IconBuildingStore />
@@ -94,8 +79,8 @@ export default function UserLayout() {
             </Tooltip>
 
             <Tooltip label="Cart">
-              <NavLink to="/cart" style={{ position: "relative", cursor: "pointer" }}>
-                <IconShoppingCart size={24} />
+              <NavLink to="/cart" style={{ position: "relative", cursor: "pointer" }} color="blue">
+                <IconShoppingCart size={24}  />
                 {cartItemCount > 0 && (
                   <Badge
                     size="xs"

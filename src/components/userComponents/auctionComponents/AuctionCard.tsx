@@ -2,15 +2,8 @@ import AuctionTimer from "./AuctionTimer.tsx";
 import AuctionItemDetails from "./AuctionItemDetails.tsx";
 import PlaceBidButton from "./PlaceBidButton.tsx";
 import { Card, Image } from '@mantine/core';
-
-export interface AuctionItem {
-    id: string;
-    name: string;
-    description: string;
-    imageUrl: string;
-    currentBid: number;
-    auctionEndTime: string;
-}
+import { getImageUrl } from "../../../backend/storage.ts";
+import { AuctionItem } from "../../../types.ts";
 
 interface AuctionCardProps {
     auctionItem: AuctionItem;
@@ -28,7 +21,7 @@ function AuctionCard({ auctionItem, timeLeft, onBidClick, minimumIncrement }: Au
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Card.Section>
-                <Image src={auctionItem.imageUrl} alt={auctionItem.name} height={250} />
+                <Image src={getImageUrl(auctionItem.url)} alt={auctionItem.name} height={250} />
             </Card.Section>
             <AuctionItemDetails
                 name={auctionItem.name}
