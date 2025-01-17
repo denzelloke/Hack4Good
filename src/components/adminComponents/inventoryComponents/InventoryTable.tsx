@@ -44,7 +44,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
     <>
       <Paper shadow="sm" p="lg" style={{ borderRadius: "10px", marginTop: "20px" }}>
         <Table highlightOnHover withColumnBorders>
-          <thead>
+          <thead style={{ backgroundColor: "#f5f7fa", borderRadius: "8px" }}>
             <tr>
               <th style={{ width: "20%" }}>Product Name</th>
               <th style={{ width: "10%" }}>ID</th>

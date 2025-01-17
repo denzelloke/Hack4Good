@@ -25,7 +25,7 @@ export default function App() {
             <Route path="/auction" element={<Auction />} />
           </Route>
           <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Dashboard />} />
+            <Route path = "dashboard" element={<Dashboard />} />
             <Route path="inventory" element={<Inventory />} />
             <Route path ="people" element={<People />} />
             <Route path ="transactions" element={<Transactions />} />

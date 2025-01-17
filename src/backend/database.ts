@@ -15,6 +15,21 @@ export const getUser = async () => {
   return data;
 };
 
+export const getStudentUsers = async () => {
+  const client = getClient();
+  const { data, error } = await client
+    .from("users")
+    .select("*") // Fetch all columns or specify the ones you need
+    .eq("is_admin", false); // Filter where isAdmin is false
+
+  if (error) {
+    console.error("Error fetching non-admin users:", error);
+    throw error;
+  }
+
+  return data;
+};
+
 export const purchaseVouchers = async (purchase_items : CartItem[]) => {
   const client = getClient();
   const { error } = await client.rpc('process_purchase', { purchase_items });

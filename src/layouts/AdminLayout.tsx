@@ -57,7 +57,9 @@ export default function AdminLayout() {
     logout();
   };
 
-  
+  if (location.pathname === "/admin") {
+    return <Navigate to="/admin/dashboard" replace />;
+  }  
 
   return (
     <AppShell
@@ -94,7 +96,7 @@ export default function AdminLayout() {
           <Divider />
 
           {/* Navigation */}
-          <NavLink to="/admin" style={({ isActive }) => ({
+          <NavLink to="/admin/dashboard" style={({ isActive }) => ({
             backgroundColor: isActive ? "#e1bee7" : "transparent", 
             padding: "8px", 
             borderRadius: "4px",
