@@ -23,7 +23,8 @@ export const getUser = async () => {
 
 export const purchaseVouchers = async (purchase_items : CartItem[]) => {
   const client = getClient();
-  const { error } = await client.rpc('process_purchase', { purchase_items });
+  const total_cost = purchase_items.reduce((acc, curr) => acc + curr.points * curr.quantity, 0);
+  const { error } = await client.rpc('process_purchase', { purchase_items, total_cost });
   if (error) throw error;
 }
 
