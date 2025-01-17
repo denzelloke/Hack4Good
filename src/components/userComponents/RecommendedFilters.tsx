@@ -1,4 +1,4 @@
-import { Button, Title, Text } from '@mantine/core';
+import { Button, Text } from '@mantine/core';
 import { IconCookie, IconBottle, IconBasket, IconPencil, IconBook, IconBox } from '@tabler/icons-react'; // Import relevant icons
 
 interface RecommendedFiltersProps {
@@ -20,24 +20,14 @@ export function RecommendedFilters({
 
   return (
     <div>
-      <Title order={4} mt="xl" mb="md"
-      style={{
-        fontSize: '22px', // Make the font size larger
-        color: 'black', // A strong color for the title
-        textAlign: 'left', // Center the title
-        letterSpacing: '1px', // Add slight spacing between letters for a more refined look
-        textTransform: 'uppercase', // Make the text uppercase for emphasis
-        fontFamily: 'Arial, sans-serif', // Use a clean, modern font
-      }}
-      >CATEGORIES</Title>
-      <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', paddingTop: "20px" }}>
         <Button 
           variant={!selectedCategory ? 'filled' : 'light'}
           onClick={() => onCategoryChange(null)}
           style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         >
           <IconBox size={24} /> {/* Default icon for 'All Products' */}
-          <Text>All Products</Text>
+          <Text>All Products</Text> 
         </Button>
 
         {categories.map((category) => (

@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Container, Text} from '@mantine/core';
-import AuctionCard, { AuctionItem } from '../../components/userComponents/auctionComponents/AuctionCard';
+import AuctionCard from '../../components/userComponents/auctionComponents/AuctionCard';
+import { AuctionItem } from '../../types';
 
 // Mock data for the auction item
 const mockAuctionItem: AuctionItem = {
     id: '1',
     name: 'Luxury Chair',
     description: 'A handcrafted luxury chair made from premium materials.',
-    imageUrl: 'https://via.placeholder.com/400',
+    url: 'https://via.placeholder.com/400',
     currentBid: 150,
     auctionEndTime: new Date(Date.now() + 3600 * 1000).toISOString(), // 1 hour from now
 };
