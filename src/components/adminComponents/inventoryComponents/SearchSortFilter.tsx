@@ -1,46 +1,78 @@
 import React from "react";
-import { Select, Switch, Button, Group, Text } from "@mantine/core";
+import { Select, SegmentedControl, Group, Text, Badge, ScrollArea } from "@mantine/core";
 
-interface SearchSortFilter {
+interface SearchSortFilterProps {
   selectedCategory: string | null;
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>;
-  showInStock: boolean;
-  setShowInStock: React.Dispatch<React.SetStateAction<boolean>>;
-  sortByPoints: boolean;
-  setSortByPoints: React.Dispatch<React.SetStateAction<boolean>>;
+  stockFilter: string;
+  setStockFilter: React.Dispatch<React.SetStateAction<string>>;
+  sortOption: string;
+  setSortOption: React.Dispatch<React.SetStateAction<string>>;
   categories: string[];
 }
 
 const SearchSortFilter: React.FC<SearchSortFilterProps> = ({
   selectedCategory,
   setSelectedCategory,
-  showInStock,
-  setShowInStock,
-  sortByPoints,
-  setSortByPoints,
+  stockFilter,
+  setStockFilter,
+  sortOption,
+  setSortOption,
   categories,
 }) => {
   return (
-    <Group position="apart" style={{ marginBottom: "20px" }}>
-      {/* Category Filter */}
-      <Select
-        label="Filter by Category"
-        value={selectedCategory}
-        onChange={setSelectedCategory}
-        data={[{ value: "", label: "All" }, ...categories.map((category) => ({ value: category, label: category }))]}
-        style={{ width: "200px" }}
+    <Group justify="apart" style={{ marginBottom: "10px", flexWrap: "wrap" }} spacing="md">
+      {/* Category Filter Bar */}
+      <ScrollArea style={{ maxWidth: "65%" }} offsetScrollbars>
+        <Group spacing="sm" noWrap>
+          <Badge
+            onClick={() => setSelectedCategory(null)}
+            color={!selectedCategory ? "blue" : "gray"}
+            variant="filled"
+            style={{ cursor: "pointer" }}
+          >
+            All Products
+          </Badge>
+          {categories.map((category) => (
+            <Badge
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              color={selectedCategory === category ? "blue" : "gray"}
+              variant="filled"
+              style={{ cursor: "pointer" }}
+            >
+              {category}
+            </Badge>
+          ))}
+        </Group>
+      </ScrollArea>
+
+      {/* Stock Filter */}
+      <SegmentedControl
+        value={stockFilter}
+        onChange={setStockFilter}
+        data={[
+          { label: "Not In Stock", value: "not_in_stock" },
+          { label: "All", value: "all" },
+          { label: "In Stock", value: "in_stock" },
+        ]}
+        style={{ maxWidth: "20%" }}
       />
 
-      {/* In Stock Filter */}
-      <Group position="center">
-        <Text>Show In-Stock Items</Text>
-        <Switch checked={showInStock} onChange={(event) => setShowInStock(event.currentTarget.checked)} />
-      </Group>
-
-      {/* Sort by Points */}
-      <Button onClick={() => setSortByPoints((prev) => !prev)}>
-        Sort by Points {sortByPoints ? "(Descending)" : ""}
-      </Button>
+      {/* Sort Options */}
+      <Select
+        placeholder="Sort Options"
+        value={sortOption}
+        onChange={setSortOption}
+        data={[
+          { value: "", label: "None" },
+          { value: "points_asc", label: "Ascending Points" },
+          { value: "points_desc", label: "Descending Points" },
+          { value: "stock_asc", label: "Ascending Stock" },
+          { value: "stock_desc", label: "Descending Stock" },
+        ]}
+        style={{ maxWidth: "15%" }}
+      />
     </Group>
   );
 };
