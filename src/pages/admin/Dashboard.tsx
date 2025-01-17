@@ -1,5 +1,6 @@
 import { Card, Text, Grid, Group, Button, Divider } from "@mantine/core";
 import { IconUsers, IconFileText, IconBox } from "@tabler/icons-react";
+import { useNavigate } from "react-router";
 
 export default function Dashboard() {
   // Placeholder data for the overview statistics (these could come from your API)
@@ -8,7 +9,8 @@ export default function Dashboard() {
     transactionCount: 450,   // Number of transactions
     inventoryCount: 58,    // Number of items in inventory
   };
-
+  const navigate = useNavigate();
+  
   return (
     <div style={{ padding: '20px' }}>
       <Text align="center" size="xl" weight={600} style={{ marginBottom: '20px' }}>
@@ -28,7 +30,7 @@ export default function Dashboard() {
             </Group>
             <Divider my="sm" />
             <Text size="sm" color="dimmed">Total number of people in the system</Text>
-            <Button variant="light" color="green" fullWidth style={{ marginTop: '10px' }}>
+            <Button onClick={() => navigate("/admin/people")} variant="light" color="green" fullWidth style={{ marginTop: '10px' }}>
               View People
             </Button>
           </Card>
@@ -46,7 +48,7 @@ export default function Dashboard() {
             </Group>
             <Divider my="sm" />
             <Text size="sm" color="dimmed">Total number of transactions</Text>
-            <Button variant="light" color="blue" fullWidth style={{ marginTop: '10px' }}>
+            <Button onClick={() => navigate("/admin/transactions")} variant="light" color="blue" fullWidth style={{ marginTop: '10px' }}>
               View Transactions
             </Button>
           </Card>
@@ -64,8 +66,8 @@ export default function Dashboard() {
             </Group>
             <Divider my="sm" />
             <Text size="sm" color="dimmed">Total number of items in inventory</Text>
-            <Button variant="light" color="orange" fullWidth style={{ marginTop: '10px' }}>
-              View Inventory
+            <Button onClick={() => navigate("/admin/inventory")} variant="light" color="orange" fullWidth style={{ marginTop: '10px' }}>
+            View Inventory
             </Button>
           </Card>
         </Grid.Col>

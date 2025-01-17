@@ -3,7 +3,6 @@ import { Table, Paper, Button, Group } from "@mantine/core";
 import { Product } from "../../../types";
 import InventoryRestock from "./InventoryRestock";
 
-
 interface InventoryTableProps {
   filteredProducts: Product[];
   handleOpenModal: (product: Product) => void;
@@ -42,7 +41,11 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
 
   return (
     <>
-      <Paper shadow="sm" p="lg" style={{ borderRadius: "10px", marginTop: "20px" }}>
+      <Paper
+        shadow="sm"
+        p="lg"
+        style={{ borderRadius: "10px", marginTop: "20px" }}
+      >
         <Table highlightOnHover withColumnBorders>
           <thead style={{ backgroundColor: "#f5f7fa", borderRadius: "8px" }}>
             <tr>
@@ -51,12 +54,16 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
               <th style={{ width: "15%" }}>Category</th>
               <th style={{ width: "15%" }}>Stock</th>
               <th style={{ width: "10%" }}>Points</th>
-              <th style={{ width: "40%" }}>Action</th> {/* Column for buttons */}
+              <th style={{ width: "40%" }}>Action</th>{" "}
+              {/* Column for buttons */}
             </tr>
           </thead>
           <tbody>
             {filteredProducts.map((product) => (
-              <tr key={product.id} style={{ transition: "background-color 0.2s" }}>
+              <tr
+                key={product.id}
+                style={{ transition: "background-color 0.2s" }}
+              >
                 <td>{product.name}</td>
                 <td style={{ textAlign: "center" }}>{product.id}</td>
                 <td style={{ textAlign: "center" }}>{product.category}</td>
@@ -72,7 +79,10 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
                 </td>
                 <td style={{ textAlign: "center" }}>{product.points}</td>
                 <td style={{ textAlign: "center" }}>
-                  <Group align="row" style={{ justifyContent: "center", gap: 16 }}>
+                  <Group
+                    align="row"
+                    style={{ justifyContent: "center", gap: 16 }}
+                  >
                     <Button
                       variant="outline"
                       color="blue"
@@ -85,7 +95,7 @@ const InventoryTable: React.FC<InventoryTableProps> = ({
                       variant="outline"
                       color="green"
                       size="sm"
-                      onClick={() => openRestockModal(product)} 
+                      onClick={() => openRestockModal(product)}
                     >
                       Restock
                     </Button>

@@ -24,7 +24,7 @@ const SearchSortFilter: React.FC<SearchSortFilterProps> = ({
     <Group justify="apart" style={{ marginBottom: "10px", flexWrap: "wrap" }} spacing="md">
       {/* Category Filter Bar */}
       <ScrollArea style={{ maxWidth: "65%" }} offsetScrollbars>
-        <Group spacing="sm" noWrap>
+        <Group spacing="sm">
           <Badge
             onClick={() => setSelectedCategory(null)}
             color={!selectedCategory ? "blue" : "gray"}
