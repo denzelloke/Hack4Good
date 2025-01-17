@@ -1,48 +1,85 @@
 import React, { useState } from "react";
-import { Product } from "../../../types";
 import { FileInput } from "@mantine/core";
+import { Product } from "../../../types";
 
 interface ProductAddFormProps {
   onSubmit: (newProduct: Product) => void;
+  maxImageSize?: number; // in bytes, default 5MB
 }
 
-const ProductAddForm: React.FC<ProductAddFormProps> = ({ onSubmit }) => {
+const ProductAddForm: React.FC<ProductAddFormProps> = ({ 
+  onSubmit,
+  maxImageSize = 5 * 1024 * 1024 // 5MB default
+}) => {
   const [product, setProduct] = useState<Product>({
     id: "",
     name: "",
     description: "",
-    img: "",
+    img: null, 
     points: 0,
     stock: 0,
     url: "",
-    category: "Snacks", // Default category
+    category: "Snacks",
   });
+  const [imageError, setImageError] = useState<string>("");
+  const [imagePreview, setImagePreview] = useState<string>("");  // For displaying preview
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setProduct((prevProduct) => ({
-      ...prevProduct,
+    setProduct(prev => ({
+      ...prev,
       [name]: value,
     }));
   };
 
   const handleImageChange = (file: File | null) => {
     if (file) {
-      // Convert the file to a base64 URL (or you can handle it differently)
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProduct((prevProduct) => ({
-          ...prevProduct,
-          img: reader.result as string, // Store the image data URL in the state
-        }));
-      };
-      reader.readAsDataURL(file);
+      // Reset error state
+      setImageError("");
+
+      // Validate file size
+      if (file.size > maxImageSize) {
+        setImageError(`File size must be less than ${maxImageSize / (1024 * 1024)}MB`);
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        setImageError('Please upload an image file');
+        return;
+      }
+
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+
+      // Store the actual file
+      setProduct(prev => ({
+        ...prev,
+        img: file
+      }));
+
+      // Clean up the preview URL when component unmounts
+      return () => URL.revokeObjectURL(previewUrl);
+    } else {
+      setImagePreview("");
+      setProduct(prev => ({
+        ...prev,
+        img: null
+      }));
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(product); // Pass the new product to the parent
+    
+    // Ensure there's an image before submitting
+    if (!product.img) {
+      setImageError('Please select an image');
+      return;
+    }
+
+    onSubmit(product);
   };
 
   return (
@@ -103,14 +140,32 @@ const ProductAddForm: React.FC<ProductAddFormProps> = ({ onSubmit }) => {
       <FileInput
         id="img"
         name="img"
-        value={product.img} // This holds the image data URL or the path
-        onChange={handleImageChange} // Handle image selection
-        required
-        label="Upload Image"
+        accept="image/*"
+        onChange={handleImageChange}
+        error={imageError}
         style={{
           marginBottom: "16px",
         }}
       />
+      {imageError && (
+        <p style={{ color: "#ff4444", fontSize: "14px", marginBottom: "16px" }}>
+          {imageError}
+        </p>
+      )}
+      {imagePreview && (
+        <div style={{ marginBottom: "16px" }}>
+          <img 
+            src={imagePreview} 
+            alt="Preview" 
+            style={{
+              width: "100%",
+              maxHeight: "200px",
+              objectFit: "contain",
+              borderRadius: "4px",
+            }}
+          />
+        </div>
+      )}
 
       <label htmlFor="points" style={{ marginBottom: "8px", fontWeight: "600" }}>
         Points:
