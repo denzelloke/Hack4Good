@@ -52,8 +52,8 @@ export const getAllVouchers = async () => {
 
 export const getUserVouchers = async () => {
   const client = getClient();
-  const id = getUserId();
-  const { data, error } = await client.from("vouchers").select().eq("id", id);
+  const id = await getUserId();
+  const { data, error } = await client.from("vouchers").select().eq("user_id", id);
   if (error) throw error;
   return data;
 }
@@ -134,5 +134,16 @@ export const getBids = async () => {
   const client = getClient();
   const { data, error } = await client.from("bids").select();
   if (error) throw error;
-  return data;
+  return data.sort((a, b) => b.points - a.points);
 };
+
+export const addBid = async (bid: number, product_id: number) => {
+  const client = getClient();
+  const id = await getUserId();
+  const { error } = await client.from("bids").insert({
+    points: bid,
+    user_id : id,
+    product_id
+  })
+  if (error) throw error;
+}

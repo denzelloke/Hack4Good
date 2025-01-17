@@ -17,11 +17,11 @@ export default function AuctionPage() {
     const fetchData = async () => {
       try {
         const [fetchedAuctionItem] = await getAuctionItem();
-        setAuctionItem(fetchedAuctionItem);
 
-        const fetchedBids = await getBids();
+        const fetchedBids = (await getBids()).filter(bid => bid.product_id === fetchedAuctionItem.id);
         setBids(fetchedBids);
-
+        setAuctionItem({...fetchedAuctionItem, currentBid: fetchedBids[0].points, auctionEndTime: new Date(Date.now() + 3600 * 1000).toISOString() });
+        
         const fetchedUsers = await getAllUsers(); // Fetch all users
         setUsers(fetchedUsers);
       } catch (error) {
@@ -32,14 +32,15 @@ export default function AuctionPage() {
     fetchData();
   }, []);
 
-  const handlePlaceBid = () => {
-    console.log('Place Bid clicked');
-    
+  const handlePlaceBid = (bid : any) => {
+    console.log('Place Bid clicked', bid);
   };
 
   if (!auctionItem) {
     return <Text>Loading auction item...</Text>;
   }
+
+  console.log('prefilter bids',bids);
 
   return (
     <Container size="md" py="xl">
@@ -49,7 +50,7 @@ export default function AuctionPage() {
         onBidClick={handlePlaceBid}
         minimumIncrement={minimumIncrement}
       />
-      <Leaderboard bids={bids.filter(bid => bid.product_id === auctionItem.product_id)} users={users} />
+      <Leaderboard bids={bids} users={users} />
     </Container>
   );
 }

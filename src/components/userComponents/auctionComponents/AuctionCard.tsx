@@ -13,7 +13,9 @@ interface AuctionCardProps {
 }
 
 function AuctionCard({ auctionItem, timeLeft, onBidClick, minimumIncrement }: AuctionCardProps) {
+    console.log('auctionItem', auctionItem);
     const handlePlaceBid = () => {
+        console.log()
         const newBid = auctionItem.currentBid + minimumIncrement;
         onBidClick(newBid);
     };
