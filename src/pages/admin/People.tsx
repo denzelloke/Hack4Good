@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Table, Loader, Text, Button, Center } from "@mantine/core";
+import { Table, Loader, Text, Button, Center, TextInput } from "@mantine/core"; // Import TextInput
 import { getStudentUsers } from "../../backend/database";
 import { User } from "../../types";
 import AdjustPointsModal from "../../components/adminComponents/people/AdjustPointModal"; // Import the modal component
@@ -8,6 +8,7 @@ export default function People() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [modalUser, setModalUser] = useState<User | null>(null); // Track the user for the modal
+  const [search, setSearch] = useState<string>(""); // State to hold the search query
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -23,6 +24,11 @@ export default function People() {
 
     fetchUsers();
   }, []);
+
+  // Filter users based on the search query
+  const filteredUsers = users.filter((user) =>
+    user.username.toLowerCase().includes(search.toLowerCase())
+  );
 
   if (loading) {
     return (
@@ -41,6 +47,15 @@ export default function People() {
       <Text size="xl" fw={600} align="center" mb="md">
         Users
       </Text>
+      
+      {/* Search Bar */}
+      <TextInput
+        placeholder="Search by username"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)} // Update search state on input change
+        style={{ marginBottom: "20px" }}
+      />
+
       <Table
         striped
         highlightOnHover
@@ -60,8 +75,8 @@ export default function People() {
           </tr>
         </thead>
         <tbody>
-          {users.length > 0 ? (
-            users.map((user, index) => (
+          {filteredUsers.length > 0 ? (
+            filteredUsers.map((user, index) => (
               <tr
                 key={user.id}
                 style={{
@@ -94,6 +109,7 @@ export default function People() {
           )}
         </tbody>
       </Table>
+
       {modalUser && (
         <AdjustPointsModal
           user={modalUser}
@@ -101,7 +117,6 @@ export default function People() {
           onSave={(updatedUser) => {
             setUsers((prev) =>
               prev.map((u) => (u.id === updatedUser.id ? updatedUser : u))
-            //BACKEND HERE?
             );
             setModalUser(null); // Close the modal after saving
           }}
