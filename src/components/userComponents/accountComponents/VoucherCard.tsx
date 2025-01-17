@@ -77,7 +77,7 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
             style={{
               width: '100px',
               height: '100px',
-              backgroundImage: `url(${product.url})`,
+              backgroundImage: `url(${product.url})`,       //TODO: FIX THIS SHIT
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               borderRadius: '8px',
@@ -86,9 +86,9 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
           />
         )}
 
-        {/* Product Details */}
+        {/* Product Details */}                           
         <Box style={{ flex: 1 }}>
-          <Text  
+          <Text                                               //TODO: FIX THIS SHIT TOO
           style={{
             fontSize: rem(20) 
             }}
@@ -134,7 +134,7 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
         size="md"
       >
         <Box>
-          {product && (
+          {product && (                          //AND FIX THIS SHIT TOO
             <>
               <Text size="lg" fw={700}>{product.name}</Text>
               <Text size="sm"><strong>Category:</strong> {product.category}</Text>
