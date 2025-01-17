@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Table, Loader, Text, Button, Center } from "@mantine/core";
 import { getStudentUsers } from "../../backend/database";
 import { User } from "../../types";
+import { updateUserPoints } from "../../backend/database";
 import AdjustPointsModal from "../../components/adminComponents/people/AdjustPointModal"; // Import the modal component
 
 export default function People() {
@@ -101,8 +102,8 @@ export default function People() {
           onSave={(updatedUser) => {
             setUsers((prev) =>
               prev.map((u) => (u.id === updatedUser.id ? updatedUser : u))
-            //BACKEND HERE?
             );
+            updateUserPoints(updatedUser.id, updatedUser.points);
             setModalUser(null); // Close the modal after saving
           }}
         />

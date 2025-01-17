@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Text, Group, Image, Button, Box, Stack } from "@mantine/core";
 import { Product } from "../../../types";
+import { getImageUrl } from "../../../backend/storage";
 
 interface InventoryProductProps {
   opened: boolean;
@@ -25,7 +26,7 @@ const InventoryProduct: React.FC<InventoryProductProps> = ({ opened, onClose, pr
       >
         {/* Product Image */}
         <Image
-          src={product.url}
+          src={getImageUrl(product.url)}
           alt={product.name}
           width={200}
           height={200}

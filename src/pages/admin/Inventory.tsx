@@ -3,6 +3,7 @@ import { Product } from "../../types";
 import { getAllProducts } from "../../backend/database";
 import { Modal } from "@mantine/core";
 import { updateProductStock, deleteProduct, createProduct } from "../../backend/database";
+import { generateFilePath, uploadImage } from "../../backend/storage"
 import InventoryProduct from "../../components/adminComponents/inventoryComponents/InventoryProduct";
 import SearchSortFilter from "../../components/adminComponents/inventoryComponents/SearchSortFilter";
 import InventoryTable from "../../components/adminComponents/inventoryComponents/InventoryTable";
@@ -109,6 +110,7 @@ export default function Inventory() {
   //LINK TO DATABASE
   const handleAddProduct = (newProduct: Product) => {
     setProducts([...products, newProduct]);
+    createProduct(newProduct);
     handleCloseAddProductModal(); // Close the modal after adding product
   };
 
@@ -132,8 +134,10 @@ export default function Inventory() {
       >
         <ProductAddForm
           onSubmit={(data) => {
-            //Handle submission
-            console.log("Product request data:", data);
+            if (!data.img) throw new Error("No img attached.");
+            const path = generateFilePath(data.img);
+            uploadImage(data.img, path);
+            handleAddProduct({...data, url: path, points : Number(data.points), stock: Number(data.stock) });
             handleCloseAddProductModal();
           }}
         />
