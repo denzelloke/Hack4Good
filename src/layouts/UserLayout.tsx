@@ -19,9 +19,10 @@ import { useMantineTheme } from "@mantine/core";
 export default function UserLayout() {
   const theme = useMantineTheme();
   const blue = theme.colors.blue[6];
+  const location = useLocation(); // Get the current location
+
   const { session, loading, isAdmin } = useAuth();
   const [user, setUser] = useState<User | null>(null);
-  const location = useLocation(); // Get the current location
 
   // Fetch user data on component load
   useEffect(() => {
@@ -50,7 +51,7 @@ export default function UserLayout() {
 
   // Function to determine if the current path matches the given route
   const isActive = (path: string) => location.pathname === path;
-  console.log(location.pathname);
+  
   return (
     <AppShell header={{ height: 60 }} padding="md">
       <AppShell.Header>
