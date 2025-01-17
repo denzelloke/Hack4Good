@@ -1,7 +1,7 @@
 import AuctionTimer from "./AuctionTimer.tsx";
 import AuctionItemDetails from "./AuctionItemDetails.tsx";
-import PlaceBidButton from "./PlaceBidButton.tsx"
-import {Card, Image } from '@mantine/core';
+import PlaceBidButton from "./PlaceBidButton.tsx";
+import { Card, Image } from '@mantine/core';
 
 export interface AuctionItem {
     id: string;
@@ -15,10 +15,16 @@ export interface AuctionItem {
 interface AuctionCardProps {
     auctionItem: AuctionItem;
     timeLeft: number;
-    onBidClick: () => void;
+    onBidClick: (newBid: number) => void;
+    minimumIncrement: number;
 }
 
-function AuctionCard({ auctionItem, timeLeft, onBidClick }: AuctionCardProps) {
+function AuctionCard({ auctionItem, timeLeft, onBidClick, minimumIncrement }: AuctionCardProps) {
+    const handlePlaceBid = () => {
+        const newBid = auctionItem.currentBid + minimumIncrement;
+        onBidClick(newBid);
+    };
+
     return (
         <Card shadow="sm" padding="lg" radius="md" withBorder>
             <Card.Section>
@@ -33,7 +39,13 @@ function AuctionCard({ auctionItem, timeLeft, onBidClick }: AuctionCardProps) {
                 auctionEndTime={auctionItem.auctionEndTime}
                 onAuctionEnd={() => console.log('Auction Ended')}
             />
-            <PlaceBidButton isDisabled={timeLeft <= 0} onClick={onBidClick} />
+            <PlaceBidButton
+                isDisabled={timeLeft <= 0}
+                onClick={handlePlaceBid}
+                currentBid={auctionItem.currentBid}
+                minimumIncrement={minimumIncrement}
+                onPlaceBid={handlePlaceBid}
+            />
         </Card>
     );
 }

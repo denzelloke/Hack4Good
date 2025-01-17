@@ -14,6 +14,7 @@ const mockAuctionItem: AuctionItem = {
 
 export default function AuctionPage() {
     const [auctionItem, setAuctionItem] = useState<AuctionItem | null>(null);
+    const minimumIncrement = 10;
 
     useEffect(() => {
         // Simulate fetching data from the backend
@@ -30,7 +31,7 @@ export default function AuctionPage() {
 
     return (
         <Container size="md" py="xl">
-            <AuctionCard auctionItem={auctionItem} timeLeft={3600} onBidClick={handlePlaceBid} />
+            <AuctionCard auctionItem={auctionItem} timeLeft={3600} onBidClick={handlePlaceBid} minimumIncrement={minimumIncrement} />
         </Container>
     );
 }
