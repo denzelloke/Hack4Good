@@ -93,7 +93,7 @@ export default function AdminLayout() {
           </Box>
 
           {/* User Section */}
-          <Box p="md" bg="blue.0" className="rounded-lg">
+          <Box p="md" bg="blue.0">
             <Text size="lg" fw={600} className="text-blue-8">
               {admin?.username || "Admin"}
             </Text>
@@ -102,15 +102,35 @@ export default function AdminLayout() {
             </Text>
           </Box>
 
-          <Divider my="md" />
-
           {/* Navigation Links */}
           <Stack className="flex-grow">
             {navLinks.map((link) => (
-
+              <NavLink
+                key={link.to}
+                to={link.to}
+                style={{
+                  display: "flex",
+                  transition: "transform 0.2s ease, filter 0.2s ease",
+                  transform: isActive(link.to) ? "scale(1.1)" : "scale(1)",
+                  filter: isActive(link.to)
+                    ? "drop-shadow(0 0 8px rgba(0, 123, 255, 0.6))"
+                    : "none",
+                  alignItems: "center",
+                  padding: "10px 20px",
+                  borderRadius: "8px",
+                  color: blue, // Blue when active, gray otherwise
+                  textDecoration: "none", // Remove underline from the link
+                }}
+              >
+                <Group pl="md">
+                  <Box>{link.icon}</Box>
+                  <Text size="md" weight={500}>
+                    {link.label}
+                  </Text>
+                </Group>
+              </NavLink>
             ))}
           </Stack>
-
 
           <Divider my="md" />
 
