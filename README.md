@@ -1,4 +1,19 @@
-# Getting Started
+# How to use for demo
+Go to https://bbb-mini-mart.vercel.app/
+
+As the project is for a closed system (i.e. public users should not be able to access into it by creating an account), demo users will need to use the following credentials:
+
+### User account
+Username: test_user
+Password: password
+
+### Admin account
+Username: test_admin
+Password: password
+
+# Documentation
+
+## Getting Started (Local Development)
 
 (all commands are in windows terminal, adjust for whatever os you use)
 
@@ -24,7 +39,11 @@ Step 5. Build & deploy website
 
 `npm run dev`
 
-# References
+## Postgres schema
+
+![image](https://github.com/user-attachments/assets/6146bcd6-aa64-49c6-98cb-cf460f3b0ab2)
+
+## Tech Stack
 
 [Mantine](https://mantine.dev/) is a component library with drag and drop components (i.e. Buttons, Forms, Tables etc.) you can use to speed up development time with high quality, easy to use components. 
 
@@ -34,55 +53,3 @@ Example:
  `import { IconHeart, IconShoppingCart } from '@tabler/icons-react';`
 
 [React Router](https://reactrouter.com/start/library/) is a router framework that makes page navigation easy and fast. [NavLink](https://reactrouter.com/start/library/navigating#navlink) and [useNavigate](https://reactrouter.com/start/library/navigating#usenavigate) should be the only things you have to be aware about.
-
-# Blackboxing backend
-
-1. Create a new function in db/database.ts to return your dummy data. 
-ex. (remb to make a new class on types.ts with variables matching ur function!)
-```
-export const getAllProducts = async () => {
-  const products = [
-    {
-      name: 'Oreo',
-      price: 300,
-      description: 'A tasty snack',
-      img: 'path-to-image',
-      stock: 50,
-      category: "Snacks"
-    }
-  ]
-  return products
-};
-
-```
-
-2. Import the function wherever you use it in your front end
-```
-import { getAllProducts } from "../../db/database";
-```
-
-3. Use your data in this pattern:
-```
-export default function Market(){
-...
-const [products, setProducts] = useState<Product[]>([]);
-getAllProducts().then((products) => setProducts(products));
-...
-return (
-<div>
- ... use your data here as if you have it ...
-</div>
-)}
-```
-Note: This introduces async behaviour you might want to be aware of, but if you directly copy paste the above it shouldn't matter.
-
-For reference though this is the relevant documentation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
-
-TLDR is your webpage will have two states.
-
-Initial: Your data hasn't arrived yet, the website loads with the default value. (In above example, it will load up with products value being empty array.
-
-After fetch: your data arrives from supabase (above is getAllProducts()) and your products value updates. This triggers the webpage to reload with all your data now properly displayed.
-
-
-This can be a source of bugs if you don't handle the initial state gracefully so just a heads up :)
