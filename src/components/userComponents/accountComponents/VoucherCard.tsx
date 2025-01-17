@@ -1,7 +1,8 @@
-import { Card, Box, Text, rem, Modal, Button, Group, Badge } from '@mantine/core';
+import { Card, Box, Text, rem, Modal, Button, Group, Badge, Image } from '@mantine/core';
 import { useState } from 'react';
 import { claimVoucher } from '../../../backend/database';
 import { Product, Voucher } from '../../../types';
+import { getImageUrl } from '../../../backend/storage';
 
 interface VoucherCardProps {
   voucher: Voucher;
@@ -73,17 +74,19 @@ export function VoucherCard({ voucher, product }: VoucherCardProps) {
       >
         {/* Product Image */}
         {product && (
-          <Box
+          <Card.Section>
+          <Image
+            src={getImageUrl(product.url)}
+            height={100}
+            width={100}
+            alt={product.name}
             style={{
-              width: '100px',
-              height: '100px',
-              backgroundImage: `url(${product.url})`,       //TODO: FIX THIS SHIT
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              borderRadius: '8px',
-              marginRight: '16px',
+              objectFit: 'cover',
+              borderRadius: rem(12),
+              boxShadow: '0px 4px 16px rgba(0, 0, 0, 0.1)',
             }}
           />
+        </Card.Section>
         )}
 
         {/* Product Details */}                           
