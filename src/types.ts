@@ -41,7 +41,20 @@ export interface Voucher {
   claimed_on: any;
 }
 
-export interface AuctionItem extends Product {
+export interface AuctionItem {
+  id: string;
+  product_id: string;
+  name: string;
+  description: string;
+  url: string
   currentBid: number;
-  auctionEndTime: string;
+  auctionEndTime: any;
+}
+
+export interface AuctionBid {
+  id: string;
+  product_id: string;
+  user_id: string;
+  points: number;
+  created_at: any;
 }
