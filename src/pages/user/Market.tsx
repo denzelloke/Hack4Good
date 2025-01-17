@@ -96,7 +96,6 @@ export default function Market() {
       >
         <ProductRequestForm onSubmit={(data) => {
           //Handle submission
-          console.log('Product request data:', data);
           closeRequestModal();
         }} />
       </Modal>

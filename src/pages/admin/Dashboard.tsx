@@ -1,14 +1,38 @@
+import { getUserCount, getVoucherCount, getProductCount } from "../../backend/database";
 import { Card, Text, Grid, Group, Button, Divider } from "@mantine/core";
 import { IconUsers, IconFileText, IconBox } from "@tabler/icons-react";
 import { useNavigate } from "react-router";
+import { useState, useEffect } from "react";
 
 export default function Dashboard() {
-  // Placeholder data for the overview statistics (these could come from your API)
-  const overviewData = {
-    peopleCount: 120,   // Number of people
-    transactionCount: 450,   // Number of transactions
-    inventoryCount: 58,    // Number of items in inventory
-  };
+  const [overviewData, setOverviewData] = useState({
+    peopleCount: 0,   // Number of people (users)
+    transactionCount: 0,   // Number of transactions (vouchers)
+    inventoryCount: 0,    // Number of items in inventory (products)
+  });
+
+  useEffect(() => {
+    const fetchOverviewData = async () => {
+      try {
+        const [userCount, voucherCount, productCount] = await Promise.all([
+          getUserCount(),
+          getVoucherCount(),
+          getProductCount(),
+        ]);
+
+        setOverviewData({
+          peopleCount: userCount,
+          transactionCount: voucherCount,
+          inventoryCount: productCount,
+        });
+      } catch (error) {
+        console.error('Error fetching overview data:', error);
+      }
+    };
+
+    fetchOverviewData();
+  }, []);
+
   const navigate = useNavigate();
   
   return (

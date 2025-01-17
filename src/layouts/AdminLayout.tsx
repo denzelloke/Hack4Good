@@ -94,7 +94,6 @@ export default function AdminLayout() {
             />
           </Box>
 
-
           {/* User Section */}
           <Box p="md" bg="blue.0">
             <Text size="lg" fw={600} className="text-blue-8">
