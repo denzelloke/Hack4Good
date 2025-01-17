@@ -45,6 +45,8 @@ export function CartList({ item, handleUpdateQuantity, handleRemoveItem }: CartI
           style={{
             borderRadius: '8px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            maxHeight: '40px',
+            maxWidth: '40px'
           }}
         />
         <div style={{ flex: 1 }}>
