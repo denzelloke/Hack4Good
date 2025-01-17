@@ -9,6 +9,9 @@ import Cart from "./pages/user/Cart";
 import Account from "./pages/user/Account";
 import Auction from "./pages/user/Auction";
 import Inventory from "./pages/admin/Inventory";
+import People from "./pages/admin/People"
+import Transactions from "./pages/admin/Transactions";
+import Dashboard from "./pages/admin/Dashboard";
 
 export default function App() {
   return (
@@ -22,7 +25,10 @@ export default function App() {
             <Route path="/auction" element={<Auction />} />
           </Route>
           <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
             <Route path="inventory" element={<Inventory />} />
+            <Route path ="people" element={<People />} />
+            <Route path ="transactions" element={<Transactions />} />
           </Route>
         </Routes>
       </BrowserRouter>
