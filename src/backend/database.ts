@@ -1,9 +1,7 @@
 import { getClient } from "./supabase";
 import { CartItem, Product } from "../types";
-import { SupabaseAuthClient } from "@supabase/supabase-js/dist/module/lib/SupabaseAuthClient";
-import { IconPointerSearch } from "@tabler/icons-react";
 
-const getUserId = async () => {
+export const getUserId = async () => {
   const client = getClient();
   const { data : { user  } }  = await client.auth.getUser();
   if (!user || !user.id){
@@ -158,7 +156,7 @@ export const getBids = async () => {
   return data.sort((a, b) => b.points - a.points);
 };
 
-export const addBid = async (bid: number, product_id: number) => {
+export const createBid = async (bid: number, product_id: number) => {
   const client = getClient();
   const id = await getUserId();
   const { error } = await client.from("bids").insert({

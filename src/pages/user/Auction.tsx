@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container, Text } from '@mantine/core';
 
 import { AuctionItem, AuctionBid, User } from '../../types';
-import { getAuctionItem, getBids, getAllUsers } from "../../backend/database";
+import { getAuctionItem, getBids, getAllUsers, createBid, getUserId } from "../../backend/database";
 
 import AuctionCard from '../../components/userComponents/auctionComponents/AuctionCard';
 import Leaderboard from '../../components/userComponents/auctionComponents/Leaderboard';
@@ -32,8 +32,20 @@ export default function AuctionPage() {
     fetchData();
   }, []);
 
-  const handlePlaceBid = (bid : any) => {
+  const handlePlaceBid = async (bid : number) => {
     console.log('Place Bid clicked', bid);
+    if (!auctionItem || !auctionItem.id){
+      throw new Error("Cannot placed bid yet.");
+    }
+    const user_id = await getUserId();
+    setBids([{
+      points: bid,
+      user_id,
+      product_id: '1',
+      created_at: Date.now(),
+      id: '1'
+    },...bids])
+    createBid(bid, Number(auctionItem.id));
   };
 
   if (!auctionItem) {
