@@ -74,7 +74,6 @@ return (
 </div>
 )}
 ```
-
 Note: This introduces async behaviour you might want to be aware of, but if you directly copy paste the above it shouldn't matter.
 
 For reference though this is the relevant documentation: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
