@@ -36,7 +36,6 @@ export const getVoucher = async () => {
 
 export const claimVoucher = async (id : string) => {
   const client = getClient();
-  console.log("claimVoucher",id);
   const { error } = await client.from("vouchers").update({claimed_on: new Date().toISOString()}).eq("id",id);
   if (error) throw error;
 }
