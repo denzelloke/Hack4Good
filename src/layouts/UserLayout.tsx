@@ -12,7 +12,8 @@ import {
 import {
   IconShoppingCart,
   IconBuildingStore,
-  IconUser
+  IconUser,
+  IconGavel
 } from "@tabler/icons-react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -57,6 +58,12 @@ export default function UserLayout() {
             <Tooltip label="Mart">
               <NavLink to="/">
                 <IconBuildingStore />
+              </NavLink>
+            </Tooltip>
+
+            <Tooltip label="Auction">
+              <NavLink to="/auction">
+                <IconGavel />
               </NavLink>
             </Tooltip>
 
