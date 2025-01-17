@@ -7,7 +7,7 @@ export default function Login() {
   const navigate = useNavigate();
   const { login, loading } = useAuth();
 
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<string>("user");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -17,8 +17,8 @@ export default function Login() {
     setError(null);
 
     try {
-      await login(username, password, isAdmin);
-      if (isAdmin) {
+      await login(username, password, isAdmin == "admin");
+      if (isAdmin == "admin") {
         navigate("/admin");
       } else {
         navigate("/");
@@ -36,8 +36,8 @@ export default function Login() {
       <form onSubmit={handleSubmit}>
         <Radio.Group
           label="Login as"
-          value={isAdmin ? "user" : "admin"}
-          onChange={(value) => setIsAdmin(value == "admin")}
+          value={isAdmin}
+          onChange={(value) => setIsAdmin(value)}
           mb="lg"
         >
           <Group>
