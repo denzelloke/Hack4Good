@@ -60,13 +60,15 @@ export default function AdminLayout() {
     }
   };
 
+  
+
   return (
     <AppShell
       header={{ height: 60 }}
       padding="md"
       navbar={{
         width: 250,
-        padding: "md",
+        padding: "16px",
         height: "100vh",
         position: "fixed",
       }}
@@ -78,7 +80,7 @@ export default function AdminLayout() {
       }}
     >
       <AppShell.Navbar>
-        <Stack align="center" spacing="xl" mt="md">
+        <Stack align="center" mt="md">
           <Text fw={600} size="xl">
             {admin?.username || "Admin"}
           </Text>
@@ -100,7 +102,7 @@ export default function AdminLayout() {
             padding: "8px", 
             borderRadius: "4px",
           })}>
-            <Group spacing="sm">
+            <Group>
               <IconDashboard size={24} />
               <Text size="md" fw={500}>
                 Dashboard
@@ -113,7 +115,7 @@ export default function AdminLayout() {
             padding: "8px", 
             borderRadius: "4px",
           })}>
-            <Group spacing="sm">
+            <Group>
               <IconBox size={24} />
               <Text size="md" fw={500}>
                 Inventory
@@ -126,7 +128,7 @@ export default function AdminLayout() {
             padding: "8px", 
             borderRadius: "4px",
           })}>
-            <Group spacing="sm">
+            <Group>
               <IconUsers size={24} />
               <Text size="md" fw={500}>
                 People
@@ -139,7 +141,7 @@ export default function AdminLayout() {
             padding: "8px", 
             borderRadius: "4px",
           })}>
-            <Group spacing="sm">
+            <Group>
               <IconFileText size={24} />
               <Text size="md" fw={500}>
                 Transactions

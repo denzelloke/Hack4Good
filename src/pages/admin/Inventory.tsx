@@ -9,10 +9,10 @@ export default function Inventory() {
   const [products, setProducts] = useState<Product[]>([]); // Initializing with an empty array
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [showInStock, setShowInStock] = useState(false);
-  const [sortByPoints, setSortByPoints] = useState(false);
   const [openedModal, setOpenedModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [stockFilter, setStockFilter] = useState<string>("all"); // Default to "All"
+  const [sortOption, setSortOption] = useState<string>("none");
 
   useEffect(() => {
     // Fetch products from the database
@@ -22,24 +22,41 @@ export default function Inventory() {
   }, []); // Empty dependency array to run only once when the component mounts
 
   useEffect(() => {
-    // Filter products based on category, stock, and sort by points
+    // Filter products based on category, stock, and sort by criteria
     let filtered = [...products];
 
+    // Filter by selected category
     if (selectedCategory) {
       filtered = filtered.filter((product) => product.category === selectedCategory);
     }
 
-    if (showInStock) {
+    // Filter by stock status
+    if (stockFilter === "in-stock") {
       filtered = filtered.filter((product) => product.stock > 0);
+    } else if (stockFilter === "out-of-stock") {
+      filtered = filtered.filter((product) => product.stock === 0);
     }
 
-    // Sort products by points if required
-    if (sortByPoints) {
-      filtered = filtered.sort((a, b) => b.points - a.points); // Sorting in descending order
+    // Sort products based on selected sort option
+    switch (sortOption) {
+      case "points-asc":
+        filtered.sort((a, b) => a.points - b.points); // Ascending by points
+        break;
+      case "points-desc":
+        filtered.sort((a, b) => b.points - a.points); // Descending by points
+        break;
+      case "stock-asc":
+        filtered.sort((a, b) => a.stock - b.stock); // Ascending by stock
+        break;
+      case "stock-desc":
+        filtered.sort((a, b) => b.stock - a.stock); // Descending by stock
+        break;
+      default:
+        break; // "none" does not sort
     }
 
     setFilteredProducts(filtered);
-  }, [selectedCategory, showInStock, sortByPoints, products]); // Re-run when any of these values change
+  }, [selectedCategory, stockFilter, sortOption, products]); // Re-run when any of these values change
 
   // Get unique categories for filter options
   const categories = Array.from(new Set(products.map((product) => product.category)));
@@ -55,12 +72,11 @@ export default function Inventory() {
   };
 
   // Function to restock the product
-  //LINK TO DATABASE HERE
   const handleRestock = (product: Product, change: number) => {
     const updatedProducts = products.map((p) =>
-      p.id === product.id ? { ...p, stock: p.stock + change } : p
+      p.id === product.id ? { ...p, stock: change } : p
     );
-    setProducts(updatedProducts); // Update the state with the new stock
+    setProducts(updatedProducts);
   };
 
   // Function to delete the product
@@ -71,28 +87,25 @@ export default function Inventory() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      {/* Search Filters and Sorting */}
+    <div>
       <SearchSortFilter
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
-        showInStock={showInStock}
-        setShowInStock={setShowInStock}
-        sortByPoints={sortByPoints}
-        setSortByPoints={setSortByPoints}
+        stockFilter={stockFilter}
+        setStockFilter={setStockFilter}
+        sortOption={sortOption}
+        setSortOption={setSortOption}
         categories={categories}
       />
-
-      {/* Inventory Table with new functions */}
       <InventoryTable
         filteredProducts={filteredProducts}
         handleOpenModal={handleOpenModal}
         handleRestock={handleRestock}
         handleDelete={handleDelete}
       />
-
-      {/* Inventory Product Modal */}
-      <InventoryProduct opened={openedModal} onClose={handleCloseModal} product={selectedProduct} />
+      {openedModal && selectedProduct && (
+        <InventoryProduct opened={openedModal} onClose={handleCloseModal} product={selectedProduct} />
+      )}
     </div>
   );
 }
