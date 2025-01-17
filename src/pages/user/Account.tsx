@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import { getUser, getVoucher, getProduct } from '../../backend/database';
 import { User, Voucher, Product } from '../../types';
 import { Container, Box, Text, Divider } from '@mantine/core';
-import { ProfileCard } from '../../components/accountComponents/ProfileCard';
-import { VoucherFilter } from '../../components/accountComponents/VoucherFilter';
-import { VoucherCard } from '../../components/accountComponents/VoucherCard';
+import { ProfileCard } from '../../components/userComponents/accountComponents/ProfileCard';
+import { VoucherFilter } from '../../components/userComponents/accountComponents/VoucherFilter';
+import { VoucherCard } from '../../components/userComponents/accountComponents/VoucherCard';
 
 export default function Account() {
   const [user, setUser] = useState<User | null>(null);

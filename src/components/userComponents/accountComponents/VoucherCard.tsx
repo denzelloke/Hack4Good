@@ -1,6 +1,6 @@
 import { Card, Box, Text, rem, Modal, Button, Group, Badge } from '@mantine/core';
 import { useState } from 'react';
-import { Product, Voucher } from '../../types';
+import { Product, Voucher } from '../../../types';
 
 interface VoucherCardProps {
   voucher: Voucher;

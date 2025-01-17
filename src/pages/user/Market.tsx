@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Container, Grid, Text, Modal, Divider, } from '@mantine/core';
-import { ProductCard } from '../../components/marketComponents/ProductCard';
-import { SearchNav } from '../../components/SearchNav';
-import { RecommendedFilters } from '../../components/RecommendedFilters';
+import { ProductCard } from '../../components/userComponents/marketComponents/ProductCard';
+import { SearchNav } from '../../components/userComponents/SearchNav';
+import { RecommendedFilters } from '../../components/userComponents/RecommendedFilters';
 import { Product } from '../../types';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../slices/cartSlice';
-import { ProductModal } from '../../components/marketComponents/ProductModal';
-import { ProductRequestForm } from '../../components/marketComponents/RequestForm';
-import RequestProductButton from '../../components/marketComponents/RequestProductButton';
+import { ProductModal } from '../../components/userComponents/marketComponents/ProductModal';
+import { ProductRequestForm } from '../../components/userComponents/marketComponents/RequestForm';
+import RequestProductButton from '../../components/userComponents/marketComponents/RequestProductButton';
 
 import { getAllProducts } from "../../backend/database";
 

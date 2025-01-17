@@ -1,5 +1,5 @@
 import { Card, Image, Text, Badge, Group, rem } from '@mantine/core';
-import { User } from '../../types';
+import { User } from '../../../types';
 import { LogoutButton } from './LogoutButton';
 
 interface ProfileCardProps {

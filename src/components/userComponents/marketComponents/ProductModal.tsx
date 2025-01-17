@@ -1,6 +1,6 @@
 import { Modal, Image, Text, Button, Divider, Group, } from '@mantine/core';
 import { useState, useEffect } from 'react';
-import { Product } from '../../types';
+import { Product } from '../../../types';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 

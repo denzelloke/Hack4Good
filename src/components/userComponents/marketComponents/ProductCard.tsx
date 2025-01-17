@@ -1,7 +1,7 @@
 
 import { Card, Image, Text, Group, Button, rem, Divider, } from '@mantine/core';
 import { useState } from 'react';
-import { Product } from '../../types';
+import { Product } from '../../../types';
 
 interface ProductCardProps {
   product: Product;
