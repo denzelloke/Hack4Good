@@ -10,7 +10,8 @@ import { ProductModal } from '../../components/userComponents/marketComponents/P
 import { ProductRequestForm } from '../../components/userComponents/marketComponents/RequestForm';
 import RequestProductButton from '../../components/userComponents/marketComponents/RequestProductButton';
 
-import { getAllProducts } from "../../backend/database";
+import { getAllProducts, getAuctionItem } from "../../backend/database";
+import AuctionBanner from '../../components/userComponents/marketComponents/AuctionBanner';
 
 
 export default function Market() {
@@ -18,6 +19,7 @@ export default function Market() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
+  const [auctionItem, setAuctionItem] = useState<AuctionItem | null>(null);
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,6 +28,19 @@ export default function Market() {
   useEffect(() => {
     getAllProducts().then((products) => setProducts(products));
   }, []);
+
+  useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const [fetchedAuctionItem] = await getAuctionItem();
+          setAuctionItem(fetchedAuctionItem);
+        } catch (error) {
+          console.error('Error fetching auction data:', error);
+        }
+      };
+  
+      fetchData();
+    }, []);
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name
@@ -61,6 +76,9 @@ export default function Market() {
   const closeRequestModal = () => setIsRequestModalOpen(false);
 
   return (
+    <div>
+    {auctionItem && <AuctionBanner product={auctionItem} />}
+
     <Container size="xl" py="xl">
       <SearchNav searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       <RecommendedFilters
@@ -103,5 +121,6 @@ export default function Market() {
       {/* Use the RequestProductButton Component */}
       <RequestProductButton label="Request a product" onClick={openRequestModal} />
     </Container>
+    </div>
   );
 }
