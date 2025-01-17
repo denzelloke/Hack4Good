@@ -1,28 +1,38 @@
 import { useAuth } from "../backend/authProvider";
-import { Navigate, Outlet, NavLink } from "react-router-dom";
+import { useMantineTheme } from "@mantine/core";
+import { Navigate, Outlet, NavLink, useLocation } from "react-router-dom";
 import {
   AppShell,
   Group,
-  Image,
   Stack,
   Divider,
   Button,
   Text,
+  Image,
   Loader,
+  Box,
 } from "@mantine/core";
 import {
   IconDashboard,
   IconBox,
   IconUsers,
   IconFileText,
+  IconLogout,
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { getUser } from "../backend/database";
 import { User } from "../types";
+import { getImageUrl } from "../backend/storage";
 
 export default function AdminLayout() {
   const { session, loading, isAdmin, logout } = useAuth();
   const [admin, setAdmin] = useState<User | null>(null);
+
+  const theme = useMantineTheme();
+  const blue = theme.colors.blue[6];
+  const location = useLocation(); // Get the current location
+
+  const isActive = (path: string) => location.pathname === path;
 
   useEffect(() => {
     const fetchAdminData = async () => {
@@ -37,15 +47,14 @@ export default function AdminLayout() {
         console.error("Failed to fetch admin data", error);
       }
     };
-
     fetchAdminData();
   }, []);
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <Box className="flex justify-center items-center h-screen">
         <Loader />
-      </div>
+      </Box>
     );
   }
 
@@ -53,132 +62,96 @@ export default function AdminLayout() {
     return <Navigate to={session ? "/" : "/login"} replace />;
   }
 
-  const handleLogout = () => {
-    logout();
-  };
 
-  if (location.pathname === "/admin") {
-    return <Navigate to="/admin/dashboard" replace />;
-  }  
+  const navLinks = [
+    { label: "Dashboard", to: "/admin", icon: <IconDashboard /> },
+    { label: "Inventory", to: "/admin/inventory", icon: <IconBox /> },
+    { label: "People", to: "/admin/people", icon: <IconUsers /> },
+    {
+      label: "Transactions",
+      to: "/admin/transactions",
+      icon: <IconFileText />,
+    },
+  ];
 
   return (
     <AppShell
-      header={{ height: 60 }}
       padding="md"
       navbar={{
         width: 250,
-        padding: "16px",
         height: "100vh",
         position: "fixed",
       }}
-      styles={{
-        navbar: {
-          background: "linear-gradient(135deg, rgb(221, 238, 251),rgb(168, 213, 248))",
-          boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
-        },
-      }}
+
     >
       <AppShell.Navbar>
-        <Stack align="center" mt="md">
-          <Text fw={600} size="xl">
-            {admin?.username || "Admin"}
-          </Text>
-          <Text size="sm" fw={500}>
-            {new Date().toLocaleString("en-UK", {
-              weekday: "long",
-              month: "short",
-              day: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            })}
-          </Text>
-          <Divider />
+        <Stack>
+          <Box p="md">
+            <Image
+              src={getImageUrl("Logo.png")}
+              alt="Logo"
+              className="w-32 mb-2"
+            />
+          </Box>
 
-          {/* Navigation */}
-          <NavLink to="/admin/dashboard" style={({ isActive }) => ({
-            backgroundColor: isActive ? "#e1bee7" : "transparent", 
-            padding: "8px", 
-            borderRadius: "4px",
-          })}>
-            <Group>
-              <IconDashboard size={24} />
-              <Text size="md" fw={500}>
-                Dashboard
-              </Text>
-            </Group>
-          </NavLink>
 
-          <NavLink to="/admin/inventory" style={({ isActive }) => ({
-            backgroundColor: isActive ? "#e1bee7" : "transparent", 
-            padding: "8px", 
-            borderRadius: "4px",
-          })}>
-            <Group>
-              <IconBox size={24} />
-              <Text size="md" fw={500}>
-                Inventory
-              </Text>
-            </Group>
-          </NavLink>
+          {/* User Section */}
+          <Box p="md" bg="blue.0">
+            <Text size="lg" fw={600} className="text-blue-8">
+              {admin?.username || "Admin"}
+            </Text>
+            <Text size="sm" c="dimmed">
+              Administrator
+            </Text>
+          </Box>
 
-          <NavLink to="/admin/people" style={({ isActive }) => ({
-            backgroundColor: isActive ? "#e1bee7" : "transparent", 
-            padding: "8px", 
-            borderRadius: "4px",
-          })}>
-            <Group>
-              <IconUsers size={24} />
-              <Text size="md" fw={500}>
-                People
-              </Text>
-            </Group>
-          </NavLink>
 
-          <NavLink to="/admin/transactions" style={({ isActive }) => ({
-            backgroundColor: isActive ? "#e1bee7" : "transparent", 
-            padding: "8px", 
-            borderRadius: "4px",
-          })}>
-            <Group>
-              <IconFileText size={24} />
-              <Text size="md" fw={500}>
-                Transactions
-              </Text>
-            </Group>
-          </NavLink>
+          {/* Navigation Links */}
+          <Stack className="flex-grow">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                style={{
+                  display: "flex",
+                  transition: "transform 0.2s ease, filter 0.2s ease",
+                  transform: isActive(link.to) ? "scale(1.1)" : "scale(1)",
+                  filter: isActive(link.to)
+                    ? "drop-shadow(0 0 8px rgba(0, 123, 255, 0.6))"
+                    : "none",
+                  alignItems: "center",
+                  padding: "10px 20px",
+                  borderRadius: "8px",
+                  color: blue, // Blue when active, gray otherwise
+                  textDecoration: "none", // Remove underline from the link
+                }}
+              >
+                <Group pl="md">
+                  <Box>{link.icon}</Box>
+                  <Text size="md" weight={500}>
+                    {link.label}
+                  </Text>
+                </Group>
+              </NavLink>
+            ))}
+          </Stack>
+
+          <Divider my="md" />
+
+          {/* Logout Section */}
+          <Button
+            variant="subtle"
+            color="red"
+            fullWidth
+            leftSection={<IconLogout size={20} />}
+            onClick={logout}
+            className="mb-4"
+          >
+            Logout
+          </Button>
         </Stack>
-
-        <Divider />
-
-        {/* Logout Button */}
-        <Button
-          variant="light"
-          color="red"
-          size="md"
-          onClick={handleLogout}
-        >
-          Logout
-        </Button>
       </AppShell.Navbar>
 
-      {/* Header */}
-      <AppShell.Header>
-        <Group h="100%" px="md" justify="space-between">
-          <Image
-            src="/assets/Logo.png"
-            alt="Logo"
-            width={110}
-            height={60}
-            style={{ cursor: "pointer" }}
-          />
-          <Text fw={500} size="lg">
-            Admin Panel
-          </Text>
-        </Group>
-      </AppShell.Header>
-
-      {/* Main Content */}
       <AppShell.Main>
         <Outlet />
       </AppShell.Main>

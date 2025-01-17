@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getUser, getVoucher, getAllProducts } from "../../backend/database";
 import { User, Voucher, Product } from "../../types";
-import { Container, Box, Text, Divider } from "@mantine/core";
+import { Container, Box } from "@mantine/core";
 import { ProfileCard } from "../../components/userComponents/accountComponents/ProfileCard";
 import { VoucherFilter } from "../../components/userComponents/accountComponents/VoucherFilter";
 import { VoucherCard } from "../../components/userComponents/accountComponents/VoucherCard";
@@ -49,8 +49,9 @@ export default function Account() {
         <Box mt="lg">
           {filteredVouchers.map((voucher) => {
             const product = products.find(
-              (prod) => prod.id === String(voucher.product_id)
+              (prod) => prod.id === (voucher.product_id)      
             );
+            console.log('HELLO Voucher:', voucher, 'HELLO Product:', product);
             return (
               <VoucherCard
                 key={voucher.id}
