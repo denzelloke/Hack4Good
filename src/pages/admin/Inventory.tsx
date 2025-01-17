@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { Product } from "../../types";
 import { getAllProducts } from "../../backend/database";
+import { Modal, Button } from "@mantine/core";
 import InventoryProduct from "../../components/adminComponents/inventoryComponents/InventoryProduct";
 import SearchSortFilter from "../../components/adminComponents/inventoryComponents/SearchSortFilter";
 import InventoryTable from "../../components/adminComponents/inventoryComponents/InventoryTable";
+import ProductAddForm from "../../components/adminComponents/inventoryComponents/ProductAddForm";
 
 export default function Inventory() {
   const [products, setProducts] = useState<Product[]>([]); // Initializing with an empty array
@@ -13,6 +15,7 @@ export default function Inventory() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [stockFilter, setStockFilter] = useState<string>("all"); // Default to "All"
   const [sortOption, setSortOption] = useState<string>("none");
+  const [isAddFormOpen, setIsAddFormOpen] = useState(false);
 
   useEffect(() => {
     // Fetch products from the database
@@ -80,10 +83,23 @@ export default function Inventory() {
   };
 
   // Function to delete the product
-  //LINK TO DATABASE HERE
   const handleDelete = (productId: string) => {
     const updatedProducts = products.filter((product) => product.id !== productId);
     setProducts(updatedProducts); // Update the state by removing the product
+  };
+
+  const handleOpenAddProductModal = () => {
+    setIsAddFormOpen(true); // Open the modal
+  };
+
+  const handleCloseAddProductModal = () => {
+    setIsAddFormOpen(false); // Close the modal
+  };
+
+  //LINK TO DATABASE
+  const handleAddProduct = (newProduct: Product) => {
+    setProducts([...products, newProduct]);
+    handleCloseAddProductModal(); // Close the modal after adding product
   };
 
   return (
@@ -97,6 +113,25 @@ export default function Inventory() {
         setSortOption={setSortOption}
         categories={categories}
       />
+
+<Modal 
+      opened={isAddFormOpen}
+      onClose={handleCloseAddProductModal}
+      title="Add a Product"
+      size="lg"
+      >
+        <ProductAddForm onSubmit={(data) => {
+          //Handle submission
+          console.log('Product request data:', data);
+          handleCloseAddProductModal();
+        }} />
+      </Modal>
+
+      {/* Use the RequestProductButton Component */}
+      <Button onClick={handleOpenAddProductModal}>
+        Add a Product
+      </Button>
+
       <InventoryTable
         filteredProducts={filteredProducts}
         handleOpenModal={handleOpenModal}
@@ -106,6 +141,8 @@ export default function Inventory() {
       {openedModal && selectedProduct && (
         <InventoryProduct opened={openedModal} onClose={handleCloseModal} product={selectedProduct} />
       )}
+
+
     </div>
   );
 }

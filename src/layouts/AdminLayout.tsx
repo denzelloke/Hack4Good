@@ -54,10 +54,7 @@ export default function AdminLayout() {
   }
 
   const handleLogout = () => {
-    const confirmed = window.confirm("Are you sure you want to log out?");
-    if (confirmed) {
-      logout();
-    }
+    logout();
   };
 
   
@@ -74,7 +71,7 @@ export default function AdminLayout() {
       }}
       styles={{
         navbar: {
-          background: "linear-gradient(135deg, #f3e5f5, #e1bee7)",
+          background: "linear-gradient(135deg, rgb(221, 238, 251),rgb(168, 213, 248))",
           boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
         },
       }}
