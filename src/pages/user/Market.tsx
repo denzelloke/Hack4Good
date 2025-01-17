@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
-import { Container, Grid, Text, Modal, Button, Box } from '@mantine/core';
-import { ProductCard } from '../../components/ProductCard';
-import { SearchNav } from '../../components/SearchNav';
-import { RecommendedFilters } from '../../components/RecommendedFilters';
+import { Container, Grid, Text, Modal, Divider, } from '@mantine/core';
+import { ProductCard } from '../../components/userComponents/marketComponents/ProductCard';
+import { SearchNav } from '../../components/userComponents/SearchNav';
+import { RecommendedFilters } from '../../components/userComponents/RecommendedFilters';
 import { Product } from '../../types';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../slices/cartSlice';
-import { ProductModal } from '../../components/ProductModal';
-import { ProductRequestForm } from '../../components/RequestForm';
+import { ProductModal } from '../../components/userComponents/marketComponents/ProductModal';
+import { ProductRequestForm } from '../../components/userComponents/marketComponents/RequestForm';
+import RequestProductButton from '../../components/userComponents/marketComponents/RequestProductButton';
 
 import { getAllProducts } from "../../backend/database";
 
@@ -61,6 +62,21 @@ export default function Market() {
 
   return (
     <Container size="xl" py="xl">
+
+    <Text
+    fw={900}
+    style={{
+      fontSize: '25px', // Make the font size larger
+      color: 'black', // A strong color for the title
+      textAlign: 'left', // Center the title
+      letterSpacing: '1px', // Add slight spacing between letters for a more refined look
+      textTransform: 'uppercase', // Make the text uppercase for emphasis
+      fontFamily: 'Arial, sans-serif', // Use a clean, modern font
+    }}>
+      Welcome to the Market!
+    </Text>
+
+    <Divider mb="md"/>
       <SearchNav searchQuery={searchQuery} onSearchChange={setSearchQuery} />
       <RecommendedFilters
         selectedCategory={selectedCategory}
@@ -100,16 +116,8 @@ export default function Market() {
         }} />
       </Modal>
 
-      {/* Request Button */} 
-      <Box style={{ position: 'fixed', bottom: '30px', right: '30px' }}>
-        <Button
-        onClick={openRequestModal}
-        variant="filled"
-        color="blue"
-        >
-          Request a Product
-        </Button>
-      </Box>
+      {/* Use the RequestProductButton Component */}
+      <RequestProductButton onClick={openRequestModal} />
     </Container>
   );
 }

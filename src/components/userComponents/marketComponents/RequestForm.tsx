@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TextInput, Textarea, Button, Group, Box, Notification, Slider, Text } from '@mantine/core';
-import { ProductRequestFormData } from '../types';
+import { ProductRequestFormData } from '../../../types';
 
 interface ProductRequestFormProps {
   onSubmit: (data: ProductRequestFormData) => void;
