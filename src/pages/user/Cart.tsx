@@ -1,11 +1,11 @@
 // Cart.tsx
 import { useDispatch, useSelector } from 'react-redux';
 import { Container, Text, Divider, Grid } from '@mantine/core';
-import { RootState } from '../../store'; // Import RootState from your store file
+import { RootState } from '../../store';
 import { removeFromCart, updateQuantity, clearCart } from '../../slices/cartSlice';
 import { purchaseVouchers } from '../../backend/database';
-import { CartList } from '../../components/cartComponents/CartList';
-import { OrderSummary } from '../../components/cartComponents/OrderSummary';
+import { CartList } from '../../components/userComponents/cartComponents/CartList';
+import { OrderSummary } from '../../components/userComponents/cartComponents/OrderSummary';
 
 export default function Cart() {
   const dispatch = useDispatch();

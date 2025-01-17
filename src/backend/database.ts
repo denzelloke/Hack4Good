@@ -3,7 +3,7 @@ import { CartItem } from "../types";
 
 export const getAllProducts = async () => {
   const client = getClient();
-  const { data, error } = await client.from("product").select();
+  const { data, error } = await client.from("products").select();
   if (error) throw error;
   return data;
 };

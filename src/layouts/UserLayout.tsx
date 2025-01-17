@@ -64,23 +64,6 @@ export default function UserLayout() {
 
           {/* Navigation */}
           <Group gap={rem(32)}>
-          
-            <Badge 
-            variant="outline" 
-            radius="sm" 
-            color="#390961" 
-            size="lg"
-            style={{
-              position: 'relative',
-              bottom: '3px',
-              left: '5px',
-              outline: '2px solid #6b26a3',
-            }}
-            >
-              Points: {user ? user.points : 'Loading...'}
-            </Badge>
-           
-
             <Tooltip label="Mart">
               <NavLink to="/">
                 <IconBuildingStore />
