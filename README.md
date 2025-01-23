@@ -1,3 +1,7 @@
+# Video Demo Link
+https://youtu.be/oUWSrqQz67c
+
+
 # How to use for demo
 Go to https://bbb-mini-mart.vercel.app/
 
@@ -12,6 +16,7 @@ As the project is for a closed system (i.e. public users should not be able to a
 **Username**: test_admin
 
 **Password**: password
+
 
 # Documentation
 
